@@ -43,6 +43,14 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
+app.get("/register", (req, res) => {
+  res.render("doop_register");
+});
+
+app.get("/login", (req, res) => {
+  res.render("doop_login");
+});
+
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
 });

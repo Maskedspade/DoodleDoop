@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+  <head>
+    <title>Doodle Doop Registration Page</title>
+
+    <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
+    <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+
+    <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+    <script type="text/javascript" src="/scripts/app.js"></script>
+    <script type="text/javascript" src="/scripts/validate-registration.js"></script>
+  </head>
+
+  <body onload="document.registration.userid.focus();">
+    <header>
+      <h1>DoodleDoop</h1>
+    </header>
+
+    <form name='registration' onSubmit="return formValidation();">
+      <ul>
+        <li><input type="text" name="name" size="50" placeholder="name" /></li>
+
+        <li><input type="text" name="email" size="50" placeholder="email" /></li>
+
+        <li><input type="password" name="passid" size="50" placeholder="password" /></li>
+
+        <li><input type="password" name="passid2" size="50" placeholder="password again" /></li>
+
+        <li><input type="submit" name="submit" value="Submit" /></li>
+      </ul>
+    </form>
+
+
+  </body>
+</html>
