@@ -51,6 +51,10 @@ app.get("/login", (req, res) => {
   res.render("doop_login");
 });
 
+app.get("/create_event", (req,res) => {
+  res.render("create_event");
+});
+
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
 });
