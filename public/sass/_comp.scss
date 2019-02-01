@@ -16,9 +16,13 @@ input, button, textarea {
 }
 
 @mixin input($padding-top-bottom) {
+  color: $color-dark-grey;
   border:none;
-  border-bottom: 1px solid $color-light-grey;
+  width: 270px;
+  text-indent: 3px;
+  border-bottom: 1px solid $color-dark-grey;
   padding: $padding-top-bottom 0;
+  background: $color-black;
 }
 
 %content-wrapper {
@@ -50,6 +54,26 @@ input, button, textarea {
   color: $color-primary-contrast;
 }
 
+.error-msg {
+  color: $color-dark-bg-error;
+}
+
 input {
   @include input(10px);
+  &:focus,
+  &:hover {
+    outline: none;
+    border-bottom: 1px solid $color-light-grey;
+  }
+}
+
+.btn-submit {
+  margin-top: 2em;
+  width: 50%;
+  border: none;
+
+  &:hover{
+    color: $color-primary-contrast;
+    border: none;
+  }
 }

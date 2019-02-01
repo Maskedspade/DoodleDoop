@@ -21,14 +21,23 @@ body {
     border-bottom: 1px solid $color-white;
     padding-bottom: 0.75em;
   }
-
-  .content-wrapper {
-    @extend %content-wrapper;
-    background-color: $color-black;
-  }
-
-  .event-wrapper {
-    @extend %event-wrapper;
-  }
 }
 
+.content-wrapper {
+  @extend %content-wrapper;
+  background-color: $color-black;
+}
+
+.event-wrapper {
+  @extend %event-wrapper;
+}
+
+#login,
+#registration {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+}
