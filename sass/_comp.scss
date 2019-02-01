@@ -1,0 +1,22 @@
+@import 'setup';
+
+@mixin btns($width) {
+  height: 44px;
+  background-color: $color-secondary;
+  border: none;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.50);
+  width: $width;
+}
+
+%flexbox{
+  display: flex;
+  align-items: center;
+}
+
+.btn-sm {
+  @include  btns(88px);
+}
+
+.btn-lg {
+  @include btns(270px);
+}

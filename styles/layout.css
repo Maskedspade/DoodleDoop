@@ -1,0 +1,29 @@
+.btn-sm {
+  height: 44px;
+  background-color: #97cdd0;
+  border: none;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+  width: 88px;
+}
+
+.btn-lg {
+  height: 44px;
+  background-color: #97cdd0;
+  border: none;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+  width: 270px;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+  background-color: #fffcf6;
+}
+
+/*# sourceMappingURL=layout.css.map */

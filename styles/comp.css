@@ -1,0 +1,15 @@
+.btn-lg, .btn-sm, .btn {
+  height: 44px;
+  background: #97cdd0;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+}
+
+.btn-sm {
+  width: 88px;
+}
+
+.btn-lg {
+  width: 270px;
+}
+
+/*# sourceMappingURL=comp.css.map */
