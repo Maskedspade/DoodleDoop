@@ -23,9 +23,9 @@ module.exports = (knex) => {
     res.render("doop_who_is_this");
   });
 
-  // router.get("/create_event", (req,res) => {
-  //   res.render("create_event");
-  // });
+  router.get("/create_event", (req,res) => {
+    res.render("create_event");
+  });
 
   return router;
 };
