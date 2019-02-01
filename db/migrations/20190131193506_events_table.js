@@ -8,7 +8,7 @@ exports.up = function(knex, Promise) {
     t.string('location');
     t.integer('user_id').unsigned();
 
-    t.foreign('user_id').references('users.id').onDelete('CASCADE');
+    t.foreign('user_id').references('users.id');
   });
 };
 

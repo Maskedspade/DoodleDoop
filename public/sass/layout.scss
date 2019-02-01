@@ -8,3 +8,10 @@ html {
 *, *:before, *:after {
   box-sizing: inherit;
 }
+
+header {
+ .header {
+    @extend %flexbox;
+  }
+}
+

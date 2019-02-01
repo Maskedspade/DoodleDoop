@@ -6,7 +6,7 @@ exports.up = function(knex, Promise) {
     t.integer("count");
 
     t.integer('event_id').unsigned();
-    t.foreign('event_id').references('events.id').onDelete('CASCADE');
+    t.foreign('event_id').references('events.id');
   });
 };
 
