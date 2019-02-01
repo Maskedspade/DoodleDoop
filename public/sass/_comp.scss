@@ -25,6 +25,12 @@ input, button, textarea {
   background: $color-black;
 }
 
+@mixin underlined-text($width, $border-bottom, $padding-bottom) {
+  width: $width;
+  border-bottom: $border-bottom;
+  padding-bottom: $padding-bottom;
+}
+
 %content-wrapper {
   border-radius: 3px;
   border: 1px solid $color-grey-black;

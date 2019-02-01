@@ -11,15 +11,23 @@ html {
 body {
   background-color: $color-black !important;
   h1,
+  h2,
   h3,
   p {
     color: $color-white;
   }
 
+  h1 {
+    margin-top: 2em;
+  }
+
+  h2 {
+    @include underlined-text(100%, 1px solid $color-dark-grey, 0.75em);
+    transform: translateX(10px);
+  }
+
   h3 {
-    width: 100%;
-    border-bottom: 1px solid $color-white;
-    padding-bottom: 0.75em;
+    @include underlined-text(100%, 1px solid $color-dark-grey, 0.75em);
   }
 }
 

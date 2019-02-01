@@ -1,0 +1,116 @@
+ul {
+  list-style: none;
+}
+
+input:focus, button:focus, textarea:focus {
+  outline: none;
+}
+
+.content-wrapper {
+  border-radius: 3px;
+  border: 1px solid #606060;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+  padding: 5em;
+  margin: 2em auto;
+}
+
+.event-wrapper {
+  border-radius: 3px;
+  background: #7da5a7;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+  padding: 3em;
+  margin: 2em 0;
+}
+
+.btn-sm {
+  border: none;
+  border-radius: 2px;
+  width: 132px;
+  font-size: 2em;
+  background-color: #f7e9c0;
+}
+
+.btn-lg {
+  border: none;
+  border-radius: 2px;
+  width: 270px;
+  border: 5px solid #f7e9c0;
+  background-color: #404040;
+  color: #f7e9c0;
+}
+
+.error-msg {
+  color: #ff6e6e;
+}
+
+input {
+  color: #999;
+  border: none;
+  width: 270px;
+  text-indent: 3px;
+  border-bottom: 1px solid #999;
+  padding: 10px 0;
+  background: #404040;
+}
+input:focus, input:hover {
+  outline: none;
+  border-bottom: 1px solid #e1e1e1;
+}
+
+.btn-submit {
+  margin-top: 2em;
+  width: 50%;
+  border: none;
+}
+.btn-submit:hover {
+  color: #f7e9c0;
+  border: none;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+  background-color: #404040 !important;
+}
+body h1,
+body h2,
+body h3,
+body p {
+  color: #fffcf6;
+}
+body h1 {
+  margin-top: 2em;
+}
+body h2 {
+  width: 100%;
+  border-bottom: 1px solid #999;
+  padding-bottom: 0.75em;
+  transform: translateX(10px);
+}
+body h3 {
+  width: 100%;
+  border-bottom: 1px solid #999;
+  padding-bottom: 0.75em;
+}
+
+.content-wrapper {
+  background-color: #404040;
+}
+
+#login,
+#registration {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+}
+
+/*# sourceMappingURL=layout.css.map */
