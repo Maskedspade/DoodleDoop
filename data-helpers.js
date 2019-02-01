@@ -1,10 +1,14 @@
-module.exports = function makeDataHelpers(db) {
+module.exports = function makeDataHelpers(knex) {
   return {
 
     //SAVE NEW TWEET TO DB
-    saveTweet: (newTweet, callback) => {
-        db.collection("tweets").insert(newTweet);
-        callback(null, true);
+    selectUniversal: (entity) => {
+      knex
+        .select("*")
+        .from(entity)
+        .then((results) => {
+          res.json(results);
+      });
     },
 
     //GET ALL TWEETS IN DB, SORT BY NEWEST FIRST

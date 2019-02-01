@@ -6,8 +6,11 @@ const PORT        = process.env.PORT || 8080;
 const ENV         = process.env.ENV || "development";
 const express     = require("express");
 const bodyParser  = require("body-parser");
+const cookieSession = require('cookie-session');
+const cookieParser = require('cookie-parser');
 const sass        = require("node-sass-middleware");
 const app         = express();
+const bcrypt = require('bcrypt');
 
 const knexConfig  = require("./knexfile");
 const knex        = require("knex")(knexConfig[ENV]);
@@ -36,6 +39,13 @@ app.use("/styles", sass({
   outputStyle: 'expanded'
 }));
 
+app.set('trust proxy', 1);
+app.use(cookieSession({
+  name: 'session',
+  keys: ['key1','key2'],
+  maxAge: 24 * 60 * 60 * 1000
+}));
+app.use(cookieParser());
 
 app.use(express.static("public"));
 
@@ -43,32 +53,7 @@ app.use(express.static("public"));
 app.use("/api/users", usersRoutes(knex));
 
 // Home page
-
 app.use("/", doopRoutes(knex));
-
-app.get("/", (req, res) => {
-knex
-      .select("*")
-      .from("users")
-      .then((results) => {
-        res.json(results);
-    });
-
-  res.render("index");
-});
-
-app.get("/register", (req, res) => {
-  res.render("doop_register");
-});
-
-app.get("/login", (req, res) => {
-  res.render("doop_login");
-});
-
-app.get("/create_event", (req,res) => {
-  res.render("create_event");
-});
-
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);

@@ -15,34 +15,76 @@ module.exports = (knex) => {
   });
 
   router.post("/", (req, res) => {
-    if (!req.body) {
-      res.status(400).json({ error: 'invalid request: no data in POST body'});
+    if (!req.body.form) {
+      res.status(400).json({ error: 'invalid request'});
       return;
     }
 
-    const userEmail = req.body.userEmail;
-    const userPassword = req.body.userPassword;
-
-    knex
-      .select('email', 'password')
-      .from("users")
-      .then((results) => {
-
-        results.forEach(key => console.log(key.email, "hey"));
-        if (!results.find(key => key.email === userEmail)) {
-          res.send('Sorry, this email doesnt exist.');
-          return;
-        } else {
-          if (!results.find(key => key.password === userPassword)) {
-            res.send('Sorry, wrong password.');
-            return;
-          } else {
-            res.send('success');
+    if (req.body.form === 'login') {
+      const userEmail = req.body.userEmail;
+      const userPassword = req.body.userPassword;
+      knex
+        .select('email', 'password')
+        .from("users")
+        .then((results) => {
+          if(!(userEmail && userPassword)) {
+            res.send('Cannot be blank.');
             return;
           }
-        }
+          if (!results.find(key => key.email === userEmail)) {
+            res.send('Sorry, this email does not exist.');
+            return;
+          } else {
+            if (!results.find(key => key.password === userPassword)) {
+              res.send('Sorry, wrong password.');
+              return;
+            } else {
+              req.session.user = userEmail;
+              res.send('success');
+              return;
+            }
+          }
+        });
+      }
 
-    });
+    if (req.body.form === 'registration') {
+      const userName = req.body.userName;
+      const userEmail = req.body.userEmail;
+      const userPassword = req.body.userPassword;
+      const userPassword2 = req.body.userPassword2;
+      knex
+        .select('email')
+        .from("users")
+        .then((results) => {
+          if(!(userEmail && userPassword && userPassword2 && userName)) {
+            res.send('Cannot be blank.');
+            return;
+          }
+          if (results.find(key => key.email === userEmail)) {
+            res.send('Email already exists');
+            return;
+          } else {
+            if (userPassword !== userPassword2) {
+              res.send('Password does not match');
+              return;
+            } else {
+              knex('user')
+                .insert({id: 4, name: userName, email: userEmail, password: userPassword});
+              res.send('success');
+              return;
+            }
+          }
+        });
+      }
+
+    if (req.body.form === 'identity') {
+      const userIdentity = req.body.userIdentity;
+
+      res.send(req.body.userIdentity);
+      console.log(userIdentity);
+      }
+
+
 
   });
 
