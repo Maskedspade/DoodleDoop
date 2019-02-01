@@ -6,30 +6,34 @@
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
     <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
     <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
   </head>
 
   <body>
-    <header>
-      <h1>DoodleDoop</h1>
+    <header class="container">
+      <h1 class="row justify-content-start">DoodleDoop</h1>
       <% include partials/_header %>
     </header>
 
-    <section class="content-wrapper">
-      <button class="btn-lg">Create an Event</button>
-      <div class="event-wrapper">
-        <h3>Events Title</h3>
-        <p class="event-description">
-          This is event is hosted by your beloved friend. It takes place right after midterms we can do get drunk and do hard drug.
-        </p>
-        <button class="btn-sm">View</button>
+    <section class="container content-wrapper">
+      <h3 class="row justify-content-center">Build yourself a simple invitation for your big events.</h3>
+      <p class="row justify-content-center text-center">Create an event today. <br>Send your invitation to your friends. <br> It's that easy!</p>
+      <button class="row justify-content-center btn-lg" style="margin: 0 auto;">Create an Event</button>
+
+      <button class="row justify-content-center btn-lg" style="margin-left: auto; transform: translateX(-0.8em); display: none;">Create an Event</button>
+      <div class="row event-wrapper justify-content-around">
+        <div class="col-sm-8">
+          <h3 class="row">Events Title</h3>
+          <p class="row">
+            This is event is hosted by your beloved friend. It takes place right after midterms we can do get drunk and do hard drug.
+          </p>
+        </div>
+        <button class="col-sm-2 align-self-center btn-sm">View</button>
       </div>
 
-      <h3>This is a tiny app for your big events.</h3>
-      <p>Create an event today. <br>Send your invitation to your friends. <br> It's that easy!</p>
-      <button class="btn-lg">Create an Event</button>
     </section>
   </body>
 </html>

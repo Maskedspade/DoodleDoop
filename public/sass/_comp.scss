@@ -10,32 +10,70 @@ input, button, textarea {
   }
 }
 @mixin btns($width) {
-  height: 30px;
-  background-color: $color-secondary;
   border: none;
   border-radius: 2px;
   width: $width;
 }
 
 @mixin input($padding-top-bottom) {
+  color: $color-dark-grey;
   border:none;
+  width: 270px;
+  text-indent: 3px;
   border-bottom: 1px solid $color-dark-grey;
   padding: $padding-top-bottom 0;
+  background: $color-black;
 }
 
-%flexbox{
-  display: flex;
-  align-items: center;
+%content-wrapper {
+  border-radius: 3px;
+  border: 1px solid $color-grey-black;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.50);
+  padding: 5em;
+  margin: 2em auto
+}
+
+%event-wrapper {
+  border-radius: 3px;
+  background: $color-primary;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.50);
+  padding: 3em;
+  margin: 2em 0;
 }
 
 .btn-sm {
-  @include  btns(88px);
+  @include  btns(132px);
+  font-size: 2em;
+  background-color: $color-primary-contrast;
 }
 
 .btn-lg {
   @include btns(270px);
+  border: 5px solid $color-primary-contrast;
+  background-color: $color-black;
+  color: $color-primary-contrast;
+}
+
+.error-msg {
+  color: $color-dark-bg-error;
 }
 
 input {
   @include input(10px);
+  &:focus,
+  &:hover {
+    outline: none;
+    border-bottom: 1px solid $color-light-grey;
+  }
+}
+
+.btn-submit {
+  margin-top: 2em;
+  width: 50%;
+  border: none;
+
+  &:hover{
+    color: $color-primary-contrast;
+    border: none;
+  }
 }
