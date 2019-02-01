@@ -1,5 +1,5 @@
 $color-primary: #7da5a7;
-$color-primary-contrast: #97cdd0;
+$color-primary-contrast: #f7e9c0;
 $color-primary-focus: #7DABAD;
 $color-secondary: #97cdd0;
 $color-light-bg-error: #d50000;
@@ -21,4 +21,20 @@ $font-size-small: 12px;
 $font-size-regular: 16px;
 $font-size-large: 24px;
 $font-size-x-large: 40px;
+
+$grid-columns: 12;
+$grid-gutter-width: 30px;
+
+$grid-breakpoints: (
+  xs: 0,
+  small: 480px,
+  md: 768px,
+  lg: 1024px
+);
+
+$container-max-widths: (
+  sm: 420px,
+  md: 720px,
+  lg: 960px,
+);
 
