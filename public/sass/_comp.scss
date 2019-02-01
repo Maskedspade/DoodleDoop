@@ -1,10 +1,19 @@
 @import 'setup';
 
+ul {
+  list-style: none;
+}
+
+input, button, textarea {
+  &:focus {
+    outline: none;
+  }
+}
 @mixin btns($width) {
-  height: 44px;
+  height: 30px;
   background-color: $color-secondary;
   border: none;
-  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.50);
+  border-radius: 2px;
   width: $width;
 }
 

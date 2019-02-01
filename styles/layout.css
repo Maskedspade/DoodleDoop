@@ -14,16 +14,18 @@
   width: 270px;
 }
 
+input {
+  border: none;
+  border-bottom: 1px solid #999;
+  padding: 10px 0;
+}
+
 html {
   box-sizing: border-box;
 }
 
 *, *:before, *:after {
   box-sizing: inherit;
-}
-
-body {
-  background-color: #fffcf6;
 }
 
 /*# sourceMappingURL=layout.css.map */
