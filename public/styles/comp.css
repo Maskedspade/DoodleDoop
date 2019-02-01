@@ -1,0 +1,21 @@
+.btn-sm {
+  height: 44px;
+  background-color: #fffcf6;
+  border-radius: 2px;
+  width: 88px;
+}
+
+.btn-lg {
+  height: 44px;
+  background-color: #fffcf6;
+  border-radius: 2px;
+  width: 270px;
+}
+
+input {
+  border: none;
+  border-bottom: 1px solid #fffcf6;
+  padding: 10px 0;
+}
+
+/*# sourceMappingURL=comp.css.map */
