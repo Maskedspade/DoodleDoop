@@ -43,7 +43,32 @@ app.use(express.static("public"));
 app.use("/api/users", usersRoutes(knex));
 
 // Home page
+
 app.use("/", doopRoutes(knex));
+
+app.get("/", (req, res) => {
+knex
+      .select("*")
+      .from("users")
+      .then((results) => {
+        res.json(results);
+    });
+
+  res.render("index");
+});
+
+app.get("/register", (req, res) => {
+  res.render("doop_register");
+});
+
+app.get("/login", (req, res) => {
+  res.render("doop_login");
+});
+
+app.get("/create_event", (req,res) => {
+  res.render("create_event");
+});
+
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);

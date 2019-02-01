@@ -22,7 +22,8 @@ $(() => {
             $('ul').append(errorMsg);
           }
         }
-      });
+      }
+    );
   };
 
   //JQUERY EVENT-EMITTERS BELOW

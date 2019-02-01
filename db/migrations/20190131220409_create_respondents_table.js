@@ -7,7 +7,7 @@ exports.up = function(knex, Promise) {
     t.integer("willattend");
 
     t.integer('timeslot_id').unsigned();
-    t.foreign('timeslot_id').references('timeslots.id').onDelete('CASCADE');
+    t.foreign('timeslot_id').references('timeslots.id');
   });
 };
 
