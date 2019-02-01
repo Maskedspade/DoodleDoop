@@ -8,7 +8,23 @@ const router  = express.Router();
 module.exports = (knex) => {
 
  router.get("/", (req, res) => {
-    res.render("index");
+
+  if (req.session.user) {
+    knex
+      .select("*")
+      .from("users")
+      .where('email', req.session.user)
+      .then((results) => {
+        const test = results[0]['name'];
+        const templateVars ={
+          userName: test,
+        };
+                console.log(test);
+  res.render('index', templateVars);
+    });
+  } else {
+    res.redirect('/login');
+  }
   });
 
   router.get("/register", (req, res) => {

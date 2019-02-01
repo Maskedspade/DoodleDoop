@@ -39,7 +39,7 @@ module.exports = (knex) => {
               res.send('Sorry, wrong password.');
               return;
             } else {
-              req.session.user = userEmail;
+              req.session.user = userEmail;  //HERE COOKIE IS SET!!!
               res.send('success');
               return;
             }
@@ -69,7 +69,7 @@ module.exports = (knex) => {
               return;
             } else {
               knex('users')
-                .insert({name: userName, email: userEmail, password: userPassword})
+                .insert({id: 4, name: userName, email: userEmail, password: userPassword})
                 .then(() => res.send('success'));
               return;
             }

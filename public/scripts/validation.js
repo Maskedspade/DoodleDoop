@@ -59,7 +59,6 @@ $(() => {
     );
   };
 
-
   //JQUERY EVENT-EMITTERS BELOW
   $('#login').on('submit', submitLogin);
   $('#registration').on('submit', submitRegistration);
