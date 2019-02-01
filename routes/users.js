@@ -28,17 +28,15 @@ module.exports = (knex) => {
       .from("users")
       .then((results) => {
 
+        results.forEach(key => console.log(key.email, "hey"));
         if (!results.find(key => key.email === userEmail)) {
-          console.log('email doesnt exist');
-          res.send('email doesnt exist');
+          res.send('Sorry, this email doesnt exist.');
           return;
         } else {
           if (!results.find(key => key.password === userPassword)) {
-            console.log('wrong password');
-            res.send('wrong password');
+            res.send('Sorry, wrong password.');
             return;
           } else {
-            console.log('success');
             res.send('success');
             return;
           }

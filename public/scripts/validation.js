@@ -2,7 +2,7 @@ $(() => {
 
   const submitLogin = () => {
     event.preventDefault();
-
+    $('.error-msg').remove();
     const userEmail = $("#login input[name='email']").val();
     const userPassword = $("#login input[name='passid']").val();
 
@@ -18,7 +18,8 @@ $(() => {
             window.location.href = '/';
           }
           else {
-
+            const errorMsg = $(`<p class="error-msg"> ${hint} </p>`);
+            $('ul').append(errorMsg);
           }
         }
       });
