@@ -68,9 +68,9 @@ module.exports = (knex) => {
               res.send('Password does not match');
               return;
             } else {
-              knex('user')
-                .insert({id: 4, name: userName, email: userEmail, password: userPassword});
-              res.send('success');
+              knex('users')
+                .insert({name: userName, email: userEmail, password: userPassword})
+                .then(() => res.send('success'));
               return;
             }
           }
