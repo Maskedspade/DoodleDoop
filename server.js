@@ -33,6 +33,8 @@ app.use("/styles", sass({
   debug: true,
   outputStyle: 'expanded'
 }));
+
+
 app.use(express.static("public"));
 
 // Mount all resource routes
@@ -54,6 +56,7 @@ app.get("/login", (req, res) => {
 app.get("/create_event", (req,res) => {
   res.render("create_event");
 });
+
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);

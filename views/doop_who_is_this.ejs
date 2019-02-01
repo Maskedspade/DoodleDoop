@@ -2,7 +2,7 @@
 <html lang="en"><head>
 <meta charset="utf-8">
   <head>
-    <title>Doodle Doop Registration Page</title>
+    <title>Doodle Doop Login Page</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
@@ -14,25 +14,21 @@
     <script type="text/javascript" src="/scripts/validation.js"></script>
   </head>
 
-  <body>
+  <body >
     <header>
       <h1>DoodleDoop</h1>
     </header>
 
-    <form id='registration'>
-      <ul>
-        <li><input type="text" name="name" placeholder="name" /></li>
-
-        <li><input type="email" name="email" placeholder="email" /></li>
-
-        <li><input type="password" name="passid" placeholder="password" /></li>
-
-        <li><input type="password" name="passid2" placeholder="password again" /></li>
-
-        <li><input type="submit" name="submit" value="Submit" /></li>
-      </ul>
-    </form>
-
+    <section>
+      <div class="event-wrapper">
+        <h1> WHO IS THIS???</h1>
+        <form id="who-is-this">
+          <input type="radio" name="identity" value="event host" checked>event host<br>
+          <input type="radio" name="identity" value="first-time guest">first-time guest<br>
+          <input type="radio" name="identity" value="returning guest">returning guest
+        </form>
+      </div>
+    </section>
 
   </body>
 </html>

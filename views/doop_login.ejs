@@ -11,24 +11,26 @@
 
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
-    <script type="text/javascript" src="/scripts/validate-registration.js"></script>
+    <script type="text/javascript" src="/scripts/validation.js"></script>
   </head>
 
-  <body onload="document.registration.userid.focus();">
+  <body>
     <header>
       <h1>DoodleDoop</h1>
     </header>
 
-    <form name='login' onSubmit="return formValidation();">
+    <form id='login'>
       <ul>
-        <li><input type="email" name="email" size="50" placeholder="email" /></li>
 
-        <li><input type="password" name="passid" size="50" placeholder="password" /></li>
+        <li><input type="email" name="email" placeholder="email" /></li>
+
+        <li><input type="password" name="passid" placeholder="password" /></li>
 
         <li><input type="submit" name="submit" value="Submit" /></li>
+
       </ul>
     </form>
 
+
   </body>
 </html>
-
