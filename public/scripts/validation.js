@@ -19,8 +19,8 @@ $(() => {
             window.location.href = '/';
           }
           else {
-            const errorMsg = $(`<p class="error-msg"> ${hint} </p>`);
-            $('ul').append(errorMsg);
+            const errorMsg = $(`<p class="row justify-content-center error-msg"> ${hint} </p>`);
+            $('#before-err-msg').after(errorMsg);
           }
         }
       }
@@ -51,8 +51,8 @@ $(() => {
             window.location.href = '/';
           }
           else {
-            const errorMsg = $(`<p class="error-msg"> ${hint} </p>`);
-            $('ul').append(errorMsg);
+            const errorMsg = $(`<p class="row justify-content-center error-msg"> ${hint} </p>`);
+            $('#before-err-msg').after(errorMsg);
           }
         }
       }
