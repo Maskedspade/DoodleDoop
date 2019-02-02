@@ -18,21 +18,23 @@
       <a href="/"><h1 class="row justify-content-start">DoodleDoop</h1></a>
     </header>
 
-    <form name="create" class="create-event" onSubmit="return formValidation();">
-      <ul>
-        <li><input type="text" name="title" placeholder="EVENT TITLE" /></li>
+    <form name="create" class="container" id="create-event"onSubmit="return formValidation();">
+      <h3 class="row">Create an Event</h3>
 
-        <li><input type="text" name="description" placeholder="Description here" /></li>
+      <input type="text" name="title" placeholder="EVENT TITLE" style="width: 50%"/>
 
-        <li><input type="text" name="location" placeholder="Location here" /></li>
+      <input class="row" type="text" name="description" placeholder="Description here" />
 
-        <li><input type="text" name="timeslot" placeholder="Date and time here" /></li>
-        <li><input type="text" name="timeslot" placeholder="Date and time here" /></li>
+      <input class="row" type="text" name="location" placeholder="Location here" style="width: 50%"/>
 
+      <input class="row"type="text" name="timeslot" placeholder="Date and time here" style="width: 50%"/>
 
-        <a href="/" name="cancel" class="btn btn-sm btn-cancel">Cancel</a>
-        <li><input type="submit" name="submit" value="Submit" /></li>
-      </ul>
+      <button class="row" id="add-timeslot">Add timeslot &#43;</button>
+
+      <div class="row justify-content-between">
+        <a href="/" name="cancel" class="col-sm-2 text-center" style="margin-top: 35px">Cancel</a>
+        <input class="col-sm-2 btn-submit" type="submit" name="submit" value="Submit" />
+      </div>
     </form>
 
 

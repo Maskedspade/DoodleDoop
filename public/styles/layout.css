@@ -6,7 +6,7 @@ input:focus, button:focus, textarea:focus {
   outline: none;
 }
 
-#login,
+#create-event, #login,
 #registration,
 #who-is-this,
 #returning-guest,
@@ -17,7 +17,6 @@ input:focus, button:focus, textarea:focus {
   left: 50%;
   margin-right: -50%;
   transform: translate(-50%, -50%);
-  width: 300px;
 }
 
 .content-wrapper {
@@ -34,6 +33,16 @@ input:focus, button:focus, textarea:focus {
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
   padding: 3em;
   margin: 2em 0;
+}
+
+#add-timeslot {
+  background-color: Transparent;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
+  color: #f7e9c0;
 }
 
 .btn-sm {
@@ -156,6 +165,23 @@ body p {
   width: 100%;
   border-bottom: 1px solid #e1e1e1;
   padding-bottom: 0.75em;
+}
+
+#login,
+#registration,
+#who-is-this,
+#returning-guest,
+#first-time-guest,
+#event-host {
+  width: 300px;
+}
+
+#create-event {
+  width: 70%;
+}
+
+#add-timeslot {
+  margin: 10px 0;
 }
 
 /*# sourceMappingURL=layout.css.map */

@@ -50,4 +50,16 @@ body {
 #first-time-guest,
 #event-host {
   @extend %centered-form;
+  width: 300px;
 }
+
+#create-event {
+  @extend %centered-form;
+  width: 70%;
+}
+
+#add-timeslot {
+  @extend %button-to-link;
+  margin: 10px 0;
+}
+
