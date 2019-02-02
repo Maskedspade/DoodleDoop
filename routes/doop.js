@@ -24,7 +24,7 @@ router.get("/", (req, res) => {
         templateVars.userName = results[0]['name'];
         templateVars.userEmail = results[0]['email'];
 
-        if (results[0]['url'] !== undefined) {
+        if (results[0]['hosturl'] !== undefined) {
           results.forEach( (key) => {
             let obj = {
               eventTitle: null,
@@ -34,7 +34,7 @@ router.get("/", (req, res) => {
             };
 
             obj.eventTitle = key['title'];
-            obj.eventUrl = key['url'];
+            obj.eventUrl = key['hosturl'];
             obj.eventDes = key['description'];
             obj.eventLo = key['location'];
 

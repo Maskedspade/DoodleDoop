@@ -56,7 +56,7 @@ $(() => {
  //      }
  //    );
  //  };
->>>>>>> ffe2b89dfbce13dd201276e7a196ff8dd2b0c6dd
+
 
 
  // const submitEvent = (event) => {
@@ -98,11 +98,11 @@ $(() => {
 
   //JQUERY EVENT-EMITTERS BELOW
   // $('#create-event').on('submit', submitEvent);
-<<<<<<< HEAD
+
   $('#add-timeslot').on('click', addTimeslot);
-=======
+
   // $('form').on('submit', addTimeslot);
->>>>>>> ffe2b89dfbce13dd201276e7a196ff8dd2b0c6dd
+
 
 
 
