@@ -9,6 +9,7 @@ input, button, textarea {
     outline: none;
   }
 }
+
 @mixin btns($width) {
   border: none;
   border-radius: 2px;
@@ -65,9 +66,12 @@ input, button, textarea {
   color: $color-primary-contrast;
 }
 
+.form-check {
+  margin: 1.5em 0;
+}
 
 .btn-sm {
-  @include  btns(132px);
+  @include btns(132px);
   font-size: 2em;
   background-color: $color-primary-contrast;
   &:hover {
@@ -79,22 +83,26 @@ input, button, textarea {
   }
 }
 
-.form-check {
-  margin: 1.5em 0;
-}
-
-.btn-lg {
+@mixin btn-lg($color-border, $color, $color-border-hover) {
   @include btns(270px);
-  border: 3px solid $color-primary-contrast;
+  border: 3px solid $color-border;
   background-color: $color-black;
-  color: $color-primary-contrast;
+  color: $color;
   &:hover {
-    border: 3px solid $color-primary-contrast-focus;
+    border: 3px solid $color-border-hover;
     cursor: pointer;
   }
   &:focus {
     outline: none;
   }
+}
+
+.btn-lg {
+  @include btn-lg($color-primary-contrast, $color-primary-contrast, $color-primary-contrast-focus);
+}
+
+.btn-lg-err {
+  @include btn-lg($color-dark-bg-error, $color-dark-bg-error, $color-light-bg-error);
 }
 
 .error-msg {
