@@ -7,25 +7,55 @@ const router  = express.Router();
 
 module.exports = (knex) => {
 
- router.get("/", (req, res) => {
+router.get("/", (req, res) => {
+
+  const templateVars = {};
+  let eventList = [];
 
   if (req.session.user) {
     knex
       .select("*")
       .from("users")
+      .innerJoin('events', 'users.id', 'events.user_id')
       .where('email', req.session.user)
       .then((results) => {
-        const test = results[0]['name'];
-        const templateVars ={
-          userName: test,
-        };
-                console.log(test);
-  res.render('index', templateVars);
+
+        templateVars.userStatus = true;
+        templateVars.userName = results[0]['name'];
+        templateVars.userEmail = results[0]['email'];
+
+        if (results[0]['url'] !== undefined) {
+          results.forEach( (key) => {
+            let obj = {
+              eventTitle: null,
+              eventUrl: null,
+              eventDes: null,
+              eventLo: null,
+            };
+
+            obj.eventTitle = key['title'];
+            obj.eventUrl = key['url'];
+            obj.eventDes = key['description'];
+            obj.eventLo = key['location'];
+
+            eventList.push(obj);
+          });
+        }
+        templateVars.userEvents = eventList;
+
+        res.render('index', templateVars);
     });
   } else {
-    res.redirect('/login');
+    console.log('hey');
+    templateVars.userStatus = false;
+    templateVars.userName = null;
+    templateVars.userEmail = null;
+    templateVars.userEvents = eventList;
+
+   res.render('index', templateVars);
   }
-  });
+});
+
 
   router.get("/register", (req, res) => {
     res.render("doop_register");
