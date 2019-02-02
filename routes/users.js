@@ -82,6 +82,17 @@ module.exports = (knex) => {
   });
 
   router.post("/new-event", (req, res) => {
+    if (req.body.form !== 'new-event') {
+      res.status(400).json({ error: 'invalid request'});
+      return;
+    }
+
+    const test = [req.body.eventTitle, req.body.eventDes, req.body.eventLo, req.body.timeslots];
+
+    console.log(test);
+
+
+
     knex
       .select("*")
       .from("users")

@@ -1,6 +1,5 @@
 $(function() {
-  console.log('hey');
-  console.log($('input[name="datetimes"]'));
+
   $('input[name="datetimes"]').daterangepicker({
     timePicker: true,
     startDate: moment().startOf('hour'),
