@@ -72,6 +72,10 @@ router.get("/", (req, res) => {
       res.render("create_event");
   });
 
+  router.get("/event", (req, res) => {
+    res.render("event");
+  });
+
   router.post("/events", (req, res) => {
     res.render("events");
   });
