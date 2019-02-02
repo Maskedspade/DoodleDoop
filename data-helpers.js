@@ -42,12 +42,8 @@ module.exports = {
     return text;
   },
 
-  generateRandomID: () => {
-    return 'b' + generateRandomString(3);
-  },
-
   generateRandomURL: () => {
-    return 'b' + generateRandomString(5);
+    return 'doodledoop' + generateRandomString(13);
   },
 
   validateEmail: (email) => {

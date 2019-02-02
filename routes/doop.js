@@ -3,7 +3,7 @@
 const express = require('express');
 const router  = express.Router();
 
-// const dataHelper = require("../data-helper");
+const dataHelpers = require('../data-helper');
 
 module.exports = (knex) => {
 
