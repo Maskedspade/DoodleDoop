@@ -7,7 +7,8 @@ input:focus, button:focus, textarea:focus {
 }
 
 #login,
-#registration {
+#registration,
+#who-is-this {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -42,6 +43,10 @@ input:focus, button:focus, textarea:focus {
 .btn-sm:hover {
   background-color: #f8e2a3;
   cursor: pointer;
+}
+
+.form-check {
+  margin: 1.5em 0;
 }
 
 .btn-lg {
@@ -96,10 +101,18 @@ input.row {
   margin-top: 1.5em;
   border: none;
 }
-.btn-submit:hover, .btn-submit:focus {
+.btn-submit:hover {
   color: #f7e9c0;
   border: none;
   cursor: pointer;
+}
+.btn-submit:focus {
+  border: none;
+}
+
+label {
+  color: #fffcf6;
+  margin-left: 1.5em;
 }
 
 html {

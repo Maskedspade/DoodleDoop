@@ -66,6 +66,10 @@ input, button, textarea {
   }
 }
 
+.form-check {
+  margin: 1.5em 0;
+}
+
 .btn-lg {
   @include btns(270px);
   border: 3px solid $color-primary-contrast;
@@ -118,4 +122,11 @@ input.row {
   }
   &:focus {
     border: none;
+  }
 }
+
+label {
+  color: $color-white;
+  margin-left: 1.5em;
+}
+
