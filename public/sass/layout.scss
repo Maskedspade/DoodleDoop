@@ -58,7 +58,8 @@ body {
   width: 70%;
 }
 
-#add-timeslot {
+#add-timeslot,
+#edit-input {
   @extend %button-to-link;
   margin: 10px 0;
 }
