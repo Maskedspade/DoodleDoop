@@ -116,6 +116,11 @@ a:visited {
   color: #f7e9c0;
 }
 
+textarea {
+  background-color: #404040;
+  color: #999;
+}
+
 input {
   color: #999;
   border: none;
