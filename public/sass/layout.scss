@@ -26,10 +26,6 @@ body {
     transform: translateX(10px);
   }
 
-  h3 {
-    @include underlined-text(100%, 1px solid $color-light-grey, 0.75em);
-  }
-
   p {
     margin: 2em 0;
   }
@@ -42,10 +38,16 @@ body {
 
 .event-wrapper {
   @extend %event-wrapper;
+  h3 {
+    @include underlined-text(100%, 1px solid $color-light-grey, 0.75em);
+  }
 }
 
 #login,
 #registration,
-#who-is-this {
+#who-is-this,
+#returning-guest,
+#first-time-guest,
+#event-host {
   @extend %centered-form;
 }
