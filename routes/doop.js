@@ -46,7 +46,6 @@ router.get("/", (req, res) => {
         res.render('index', templateVars);
     });
   } else {
-    console.log('hey');
     templateVars.userStatus = false;
     templateVars.userName = null;
     templateVars.userEmail = null;
