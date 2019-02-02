@@ -68,8 +68,12 @@ router.get("/", (req, res) => {
     res.render("doop_who_is_this");
   });
 
-  router.get("/create_event", (req,res) => {
+  router.get("/create_event", (req, res) => {
     res.render("create_event");
+  });
+
+  router.get("/event", (req, res) => {
+    res.render("event");
   });
 
   return router;

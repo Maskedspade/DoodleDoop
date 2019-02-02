@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Your Event Invitation</title>
+
+    <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
+    <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+    <script type="text/javascript" src="/scripts/app.js"></script>
+  </head>
+
+  <body>
+    <header class="container">
+      <h1 class="row justify-content-start">DoodleDoop</h1>
+    </header>
+
+    <section class="container content-wrapper">
+      <h3 class="row text-center">Event Invitation</h3>
+
+      <div class="row">
+        <input class="col-auto" type="text" name="title" placeholder="EVENT TITLE" />
+        <button class="col-auto align-self-end" id="edit-input">Edit</button>
+      </div>
+
+      <div class="row">
+        <input class="col-auto" type="text" name="description" placeholder="Description here" />
+        <button class="col-auto align-self-end" id="edit-input">Edit</button>
+      </div>
+
+      <div class="row">
+        <input class="col-auto" type="text" name="location" placeholder="Location here" />
+        <button class="col-auto align-self-end" id="edit-input">Edit</button>
+      </div>
+
+      <div class="row">
+        <input class="col-auto" type="text" name="timeslot" placeholder="Date and time here" />
+        <button class="col-auto align-self-end" id="edit-input">Edit</button>
+        <button class="col-auto align-self-end" id="delete-input">Delete</button>
+      </div>
+
+
+      <button class="row justify-content-center btn-lg" style="margin-left: auto; transform: translateX(-0.8em); display: none;">Create an Event &#43;</button>
+
+
+
+      <a href="/create_event" class="row justify-content-end">Create New &#43;</a>
+    </section>
+  </body>
+</html>
