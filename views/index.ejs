@@ -17,7 +17,6 @@
       <h1 class="row justify-content-start">Doodle Doop</h1>
     </header>
 
-<h1><%=userEvents%></h1>
     <section class="container content-wrapper">
       <h2 class="row justify-content-center text-center">Build yourself a simple invitation for your big event.</h3>
       <p class="row justify-content-center text-center">Create an event today. <br>Send your invitation to your friends. <br> It's that easy!</p>
@@ -25,17 +24,21 @@
 
       <button class="row justify-content-center btn-lg" style="margin-left: auto; transform: translateX(-0.8em); display: none;">Create an Event &#43;</button>
 
+<% if (userStatus === true && userEvents[0] !== undefined)
+{for (let key in userEvents){%>
+
       <div class="row event-wrapper justify-content-around">
 
         <div class="col-sm-8">
-          <h3 class="row">Events Title</h3>
+          <h3 class="row"><%=userEvents[key].eventTitle%></h3>
           <p class="row">
-            This is event is hosted by your beloved friend. It takes place right after midterms we can do get drunk and do hard drug.
+            <%=userEvents[key].eventDes%>
           </p>
         </div>
-
         <button class="col-sm-2 align-self-center btn-sm">View</button>
+
       </div>
+<%}}%>
 
       <a href="/create_event" class="row justify-content-end">Create New &#43;</a>
     </section>
