@@ -69,11 +69,16 @@ router.get("/", (req, res) => {
   });
 
   router.get("/create_event", (req, res) => {
-    res.render("create_event");
+      res.render("create_event");
   });
 
-  router.get("/event", (req, res) => {
-    res.render("event");
+  router.post("/events", (req, res) => {
+    res.render("events");
+  });
+
+  router.post("/logout", (req, res) => {
+    req.session = null;
+    res.redirect('/');
   });
 
   return router;

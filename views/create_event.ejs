@@ -10,7 +10,7 @@
 
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
-    <script type="text/javascript" src="/scripts/validate-registration.js"></script>
+
   </head>
 
   <body>
@@ -18,7 +18,7 @@
       <a href="/"><h1 class="row justify-content-start">DoodleDoop</h1></a>
     </header>
 
-    <form name="create" class="container" id="create-event" onSubmit="return formValidation();">
+    <form name="create" class="container" id="create-event">
       <h3 class="row">Create an Event</h3>
 
       <input class="row" type="text" name="title" placeholder="EVENT TITLE" style="width: 50%"/>
@@ -38,5 +38,6 @@
     </form>
 
 
+<input type="text" name="datetimes" />
   </body>
 </html>
