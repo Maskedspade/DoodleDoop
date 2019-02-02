@@ -18,7 +18,7 @@ input, button, textarea {
 @mixin input($padding-top-bottom) {
   color: $color-dark-grey;
   border:none;
-  width: 270px;
+  width: 100%;
   text-indent: 3px;
   border-bottom: 1px solid $color-dark-grey;
   padding: $padding-top-bottom 0;
@@ -102,13 +102,20 @@ input {
   }
 }
 
+input.row {
+  margin-left: 0;
+  margin-right: 0;
+}
+
 .btn-submit {
-  margin-top: 2em;
-  width: 50%;
+  margin-top: 1.5em;
   border: none;
 
-  &:hover{
+  &:hover {
     color: $color-primary-contrast;
     border: none;
+    cursor: pointer;
   }
+  &:focus {
+    border: none;
 }

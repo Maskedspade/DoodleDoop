@@ -76,7 +76,7 @@ a:visited {
 input {
   color: #999;
   border: none;
-  width: 270px;
+  width: 100%;
   text-indent: 3px;
   border-bottom: 1px solid #999;
   padding: 10px 0;
@@ -87,14 +87,19 @@ input:focus, input:hover {
   border-bottom: 1px solid #e1e1e1;
 }
 
+input.row {
+  margin-left: 0;
+  margin-right: 0;
+}
+
 .btn-submit {
-  margin-top: 2em;
-  width: 50%;
+  margin-top: 1.5em;
   border: none;
 }
-.btn-submit:hover {
+.btn-submit:hover, .btn-submit:focus {
   color: #f7e9c0;
   border: none;
+  cursor: pointer;
 }
 
 html {
