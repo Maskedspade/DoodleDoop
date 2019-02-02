@@ -47,6 +47,10 @@ input:focus, button:focus, textarea:focus {
   color: #f7e9c0;
 }
 
+.form-check {
+  margin: 1.5em 0;
+}
+
 .btn-sm {
   border: none;
   border-radius: 2px;
@@ -62,10 +66,6 @@ input:focus, button:focus, textarea:focus {
   outline: none;
 }
 
-.form-check {
-  margin: 1.5em 0;
-}
-
 .btn-lg {
   border: none;
   border-radius: 2px;
@@ -79,6 +79,22 @@ input:focus, button:focus, textarea:focus {
   cursor: pointer;
 }
 .btn-lg:focus {
+  outline: none;
+}
+
+.btn-lg-err {
+  border: none;
+  border-radius: 2px;
+  width: 270px;
+  border: 3px solid #ff6e6e;
+  background-color: #404040;
+  color: #ff6e6e;
+}
+.btn-lg-err:hover {
+  border: 3px solid #d50000;
+  cursor: pointer;
+}
+.btn-lg-err:focus {
   outline: none;
 }
 
