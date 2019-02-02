@@ -8,14 +8,14 @@ const dataHelpers = require('../data-helpers');
 
 module.exports = (knex) => {
 
-  router.get("/", (req, res) => {
-    knex
-      .select("*")
-      .from("users")
-      .then((results) => {
-        res.json(results);
-    });
-  });
+  // router.get("/", (req, res) => {
+  //   knex
+  //     .select("*")
+  //     .from("users")
+  //     .then((results) => {
+  //       res.json(results);
+  //   });
+  // });
 
   router.post("/", (req, res) => {
     if (!req.body.form) {
@@ -42,7 +42,7 @@ module.exports = (knex) => {
               res.send('Sorry, wrong password.');
               return;
             } else {
-              req.session.user = userEmail;  //HERE COOKIE IS SET!!!
+              req.session.user = userEmail;  //SET USER COOKIE HERE
               res.send('success');
               return;
             }
@@ -79,16 +79,15 @@ module.exports = (knex) => {
           }
         });
       }
+  });
 
-    if (req.body.form === 'identity') {
-      const userIdentity = req.body.userIdentity;
-
-      res.send(req.body.userIdentity);
-      console.log(userIdentity);
-      }
-
-
-
+  router.post("/new-event", (req, res) => {
+    knex
+      .select("*")
+      .from("users")
+      .then((results) => {
+        res.json(results);
+    });
   });
 
   return router;

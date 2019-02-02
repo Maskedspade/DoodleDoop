@@ -1,41 +1,46 @@
 $(() => {
 
-  // $.ajax({
-  //   method: "GET",
-  //   url: "/api/users"
-  // }).done((users) => {
-  //   for(user of users) {
-  //     $("<div>").text(user.name).appendTo($("body"));
-  //   }
-  // });;
+ // const submitEvent = (event) => {
+ //    event.preventDefault();
+ //    $('.error-msg').remove();
 
- const submitIdentity = (event) => {
-    event.preventDefault();
-    // $('.error-msg').remove();
+ //    const eventTitle = $("#create-event input[name='title']").val();
+ //    const eventDes = $("#create-event input[name='description']").val();
+ //    const eventLo = $("#create-event input[name='location']").val();
+ //    const slotArray = document.querySelectorAll('input[name="timeslot"]');
 
-    const checked = $("input[type='radio'][name='identity']:checked").val();
+ //    let timeSlots = [];
 
-    $.ajax(
-      { method: 'POST',
-        url: '/api/users',
-        data:{
-          form: 'identity',
-          userIdentity: checked,
-        },
-        success: (hint) => {
-          // if (hint === 'success') {
-          //   window.location.href = '/';
-          // }
-          // else {
-          //   const errorMsg = $(`<p class="error-msg"> ${hint} </p>`);
-          //   $('ul').append(errorMsg);
-          // }
-        }
-      }
-    );
-  };
+ //    slotArray.forEach( key => timeSlots.push(key.value));
+ //    console.log(timeSlots);
+
+ //    $.ajax(
+ //      { method: 'POST',
+ //        url: '/api/users/new-event',
+ //        data:{
+ //          form: 'new-event',
+ //          eventTitle: eventTitle,
+ //          eventDes: eventDes,
+ //          eventLo: eventLo,
+ //          eventTS: eventTS,
+ //        },
+ //        success: (hint) => {
+ //          if (hint === 'success') {
+ //            // window.location.href = '/';
+ //          }
+ //          else {
+ //            const errorMsg = $(`<p class="error-msg"> ${hint} </p>`);
+ //            $('ul').append(errorMsg);
+ //          }
+ //        }
+ //      }
+ //    );
+ //  };
 
   //JQUERY EVENT-EMITTERS BELOW
-  $('#who-is-this').on('submit', submitIdentity);
+  // $('#create-event').on('submit', submitEvent);
+  // $('form').on('submit', addTimeslot);
+
+
 
 });
