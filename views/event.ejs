@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Home Page</title>
+    <title>Your Event Invitation</title>
 
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
     <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
@@ -14,25 +14,32 @@
 
   <body>
     <header class="container">
-      <h1 class="row justify-content-start">Doodle Doop</h1>
+      <h1 class="row justify-content-start">DoodleDoop</h1>
     </header>
 
     <section class="container content-wrapper">
-      <h3 class="row justify-content-center text-center">Event Invitation</h3>
+      <h3 class="row text-center">Event Invitation</h3>
 
-      <div class="row justify-content-start">
-        <input class="col-auto" type="text" name="title" placeholder="EVENT TITLE" style="width: 50%"/>
-        <button class="col-auto edit-input">Edit</button>
+      <div class="row">
+        <input class="col-auto" type="text" name="title" placeholder="EVENT TITLE" />
+        <button class="col-auto align-self-end" id="edit-input">Edit</button>
       </div>
 
-      <div class="row justify-content-start">
+      <div class="row">
         <input class="col-auto" type="text" name="description" placeholder="Description here" />
-        <button class="col-auto edit-input">Edit</button>
+        <button class="col-auto align-self-end" id="edit-input">Edit</button>
       </div>
 
-      <input class="row" type="text" name="location" placeholder="Location here" style="width: 50%"/>
+      <div class="row">
+        <input class="col-auto" type="text" name="location" placeholder="Location here" />
+        <button class="col-auto align-self-end" id="edit-input">Edit</button>
+      </div>
 
-      <input class="row"type="text" name="timeslot" placeholder="Date and time here" style="width: 50%"/>
+      <div class="row">
+        <input class="col-auto" type="text" name="timeslot" placeholder="Date and time here" />
+        <button class="col-auto align-self-end" id="edit-input">Edit</button>
+        <button class="col-auto align-self-end" id="delete-input">Delete</button>
+      </div>
 
 
       <button class="row justify-content-center btn-lg" style="margin-left: auto; transform: translateX(-0.8em); display: none;">Create an Event &#43;</button>

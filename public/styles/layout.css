@@ -35,7 +35,9 @@ input:focus, button:focus, textarea:focus {
   margin: 2em 0;
 }
 
-#add-timeslot {
+#add-timeslot,
+#edit-input,
+#delete-input {
   background-color: Transparent;
   background-repeat: no-repeat;
   border: none;
@@ -188,6 +190,10 @@ body p {
 
 #add-timeslot {
   margin: 10px 0;
+}
+
+#delete-input {
+  color: #ff6e6e;
 }
 
 #link-view-event {

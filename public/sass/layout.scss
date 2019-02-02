@@ -59,11 +59,18 @@ body {
 }
 
 #add-timeslot,
-#edit-input {
+#edit-input,
+#delete-input {
   @extend %button-to-link;
+}
+
+#add-timeslot {
   margin: 10px 0;
 }
 
+#delete-input {
+  color: $color-dark-bg-error;
+}
 #link-view-event {
   color: $color-black;
 }
