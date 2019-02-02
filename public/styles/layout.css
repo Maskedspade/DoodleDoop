@@ -8,7 +8,10 @@ input:focus, button:focus, textarea:focus {
 
 #login,
 #registration,
-#who-is-this {
+#who-is-this,
+#returning-guest,
+#first-time-guest,
+#event-host {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -141,17 +144,18 @@ body h2 {
   padding-bottom: 0.75em;
   transform: translateX(10px);
 }
-body h3 {
-  width: 100%;
-  border-bottom: 1px solid #e1e1e1;
-  padding-bottom: 0.75em;
-}
 body p {
   margin: 2em 0;
 }
 
 .content-wrapper {
   background-color: #404040;
+}
+
+.event-wrapper h3 {
+  width: 100%;
+  border-bottom: 1px solid #e1e1e1;
+  padding-bottom: 0.75em;
 }
 
 /*# sourceMappingURL=layout.css.map */

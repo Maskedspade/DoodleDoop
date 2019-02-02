@@ -20,7 +20,7 @@
 
     <section>
       <div class="container">
-        <form id="who-is-this">
+        <form id="who-is-this" style="display: none">
           <h3 class="row justify-content-center"> Who is this?</h3>
           <div class="row form-check">
             <input class="form-check-input" type="radio" name="gridRadios"checked>
@@ -39,6 +39,35 @@
 
           <input class="row justify-content-end btn-submit" type="submit" name="submit" value="Next >" />
 
+        </form>
+
+        <form id="returning-guest" style="display:none">
+          <h3 class="row justify-content-center">Hey, friend!</h3>
+          <input class="row" type="email" name="email" placeholder="Your email here"/>
+          <div class="row justify-content-between">
+            <input class="col btn-submit"type="submit" name="submit" value="< Back" />
+            <input class="col btn-submit"type="submit" name="submit" value="Submit" />
+          </div>
+        </form>
+
+        <form id="first-time-guest" style="display:none">
+          <h3 class="row justify-content-center">Hey, new friend!</h3>
+          <input class="row" type="email" name="email" placeholder="Email"/>
+          <input class="row" type="email" name="email" placeholder="Name"/>
+          <div class="row justify-content-between">
+            <input class="col btn-submit"type="submit" name="submit" value="< Back" />
+            <input class="col btn-submit"type="submit" name="submit" value="Submit" />
+          </div>
+        </form>
+
+        <form id="event-host">
+          <h3 class="row justify-content-center">Hey, new friend!</h3>
+          <input class="row" type="email" name="email" placeholder="Your email"/>
+          <input class="row" type="password" name="passid" placeholder="Your password"/>
+          <div class="row justify-content-between">
+            <input class="col btn-submit"type="submit" name="submit" value="< Back" />
+            <input class="col btn-submit"type="submit" name="submit" value="Submit" />
+          </div>
         </form>
       </div>
     </section>
