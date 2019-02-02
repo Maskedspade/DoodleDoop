@@ -6,11 +6,21 @@ input:focus, button:focus, textarea:focus {
   outline: none;
 }
 
+#login,
+#registration {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+}
+
 .content-wrapper {
   border-radius: 3px;
   border: 1px solid #606060;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
-  padding: 5em;
+  padding: 5em !important;
   margin: 2em auto;
 }
 
@@ -29,18 +39,38 @@ input:focus, button:focus, textarea:focus {
   font-size: 2em;
   background-color: #f7e9c0;
 }
+.btn-sm:hover {
+  background-color: #f8e2a3;
+  cursor: pointer;
+}
 
 .btn-lg {
   border: none;
   border-radius: 2px;
   width: 270px;
-  border: 5px solid #f7e9c0;
+  border: 3px solid #f7e9c0;
   background-color: #404040;
   color: #f7e9c0;
+}
+.btn-lg:hover {
+  border: 3px solid #f8e2a3;
+  cursor: pointer;
 }
 
 .error-msg {
   color: #ff6e6e;
+}
+
+a {
+  font-size: 1em;
+  color: #f7e9c0;
+}
+a:hover {
+  border: none;
+  color: #f8e2a3 !important;
+}
+a:visited {
+  color: #f7e9c0;
 }
 
 input {
@@ -95,22 +125,15 @@ body h2 {
 }
 body h3 {
   width: 100%;
-  border-bottom: 1px solid #999;
+  border-bottom: 1px solid #e1e1e1;
   padding-bottom: 0.75em;
+}
+body p {
+  margin: 2em 0;
 }
 
 .content-wrapper {
   background-color: #404040;
-}
-
-#login,
-#registration {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-right: -50%;
-  transform: translate(-50%, -50%);
-  width: 300px;
 }
 
 /*# sourceMappingURL=layout.css.map */

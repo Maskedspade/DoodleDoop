@@ -31,11 +31,20 @@ input, button, textarea {
   padding-bottom: $padding-bottom;
 }
 
+%centered-form {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+}
+
 %content-wrapper {
   border-radius: 3px;
   border: 1px solid $color-grey-black;
   box-shadow: 0 2px 4px 0 rgba(0,0,0,0.50);
-  padding: 5em;
+  padding: 5em !important;
   margin: 2em auto
 }
 
@@ -51,17 +60,37 @@ input, button, textarea {
   @include  btns(132px);
   font-size: 2em;
   background-color: $color-primary-contrast;
+  &:hover {
+    background-color: $color-primary-contrast-focus;
+    cursor: pointer;
+  }
 }
 
 .btn-lg {
   @include btns(270px);
-  border: 5px solid $color-primary-contrast;
+  border: 3px solid $color-primary-contrast;
   background-color: $color-black;
   color: $color-primary-contrast;
+  &:hover {
+    border: 3px solid $color-primary-contrast-focus;
+    cursor: pointer;
+  }
 }
 
 .error-msg {
   color: $color-dark-bg-error;
+}
+
+a {
+  font-size: 1em;
+  color: $color-primary-contrast;
+  &:hover {
+    border: none;
+    color: $color-primary-contrast-focus !important;
+  }
+  &:visited {
+    color: $color-primary-contrast;
+  }
 }
 
 input {
