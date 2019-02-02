@@ -123,6 +123,11 @@ a {
   }
 }
 
+textarea {
+  background-color: $color-black;
+  color: $color-dark-grey;
+}
+
 input {
   @include input(10px);
   &:focus,
