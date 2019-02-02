@@ -7,7 +7,8 @@ module.exports = {
   },
 
   createTimestap: () => {
-
+      const date = new Date();
+      return date;
   },
 
   calcDaysAgo: (timestamp) => {
