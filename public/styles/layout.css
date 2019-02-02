@@ -36,7 +36,7 @@ input:focus, button:focus, textarea:focus {
 }
 
 #add-timeslot,
-#edit-input,
+.edit-input,
 #delete-input {
   background-color: Transparent;
   background-repeat: no-repeat;
@@ -102,6 +102,18 @@ input:focus, button:focus, textarea:focus {
   color: #ff6e6e;
   font-size: 12px;
   margin: 0;
+}
+
+#add-timeslot {
+  margin: 10px 0;
+}
+
+#delete-input {
+  color: #ff6e6e;
+}
+
+#link-view-event {
+  color: #404040;
 }
 
 a {
@@ -215,16 +227,8 @@ body p {
   width: 70%;
 }
 
-#add-timeslot {
-  margin: 10px 0;
-}
-
-#delete-input {
-  color: #ff6e6e;
-}
-
-#link-view-event {
-  color: #404040;
+.host-input-on-save {
+  border: none;
 }
 
 /*# sourceMappingURL=layout.css.map */

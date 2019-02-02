@@ -1,10 +1,11 @@
 $(() => {
 
- const addTimeslot = (event) => {
+  // adds a new timeslot input field
+  const addTimeslot = (event) => {
     event.preventDefault();
 
     const $divPair = $('<div>');
-    const $deletebtn = $('<button class="row" id="delete-slot">delete </button>');
+    const $deletebtn = $('<button class="row" id="delete-slot">delete</button>');
 
     $deletebtn.on('click', function(event){
       event.preventDefault();
@@ -16,6 +17,31 @@ $(() => {
 
     $('#create-event').append($divPair);
   };
+
+  // disable/enable Readonly attribute in input and textarea in event pages
+  // saves user input as placeholder
+  const editInput = (function(event) {
+    event.preventDefault();
+    const changingInput = $(this).prev();
+    // if(changingInput.hasClass('host-input-on-save')) {
+    //   changingInput.removeClass('host-input-on-save');
+    // }
+    if($(this).text() === 'Edit') {
+      changingInput.removeAttr('readonly').select();
+    }else{
+      const userInput = $(this).val();
+      $(this).attr('placeholder', userInput);
+      // changingInput.addClass('host-input-on-save');
+      changingInput.attr('readonly', 'readonly');
+    }
+  });
+
+  // usage: toggle edit button <-> save button
+  const toggleBtn = (function(event) {
+    event.preventDefault();
+    $(this).text($(this).text() === 'Edit' ? 'Save' : 'Edit');
+  });
+
 
  // const submitEvent = (event) => {
  //    event.preventDefault();
@@ -97,6 +123,8 @@ $(() => {
   // $('#create-event').on('submit', submitEvent);
 
   $('#add-timeslot').on('click', addTimeslot);
+  $('.edit-input').on('click', editInput);
+  $('.edit-input').on('click', toggleBtn);
 
 
 

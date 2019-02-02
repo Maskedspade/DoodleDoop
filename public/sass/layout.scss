@@ -58,19 +58,9 @@ body {
   width: 70%;
 }
 
-#add-timeslot,
-#edit-input,
-#delete-input {
-  @extend %button-to-link;
+.host-input-on-save {
+  border: none;
 }
 
-#add-timeslot {
-  margin: 10px 0;
-}
 
-#delete-input {
-  color: $color-dark-bg-error;
-}
-#link-view-event {
-  color: $color-black;
-}
+

@@ -111,6 +111,24 @@ input, button, textarea {
   margin: 0;
 }
 
+#add-timeslot,
+.edit-input,
+#delete-input {
+  @extend %button-to-link;
+}
+
+#add-timeslot {
+  margin: 10px 0;
+}
+
+#delete-input {
+  color: $color-dark-bg-error;
+}
+
+#link-view-event {
+  color: $color-black;
+}
+
 a {
   font-size: 1em;
   color: $color-primary-contrast;
