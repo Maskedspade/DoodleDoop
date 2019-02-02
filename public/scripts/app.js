@@ -1,20 +1,17 @@
 $(() => {
 
-
  const addTimeslot = (event) => {
     event.preventDefault();
 
     const $divPair = $('<div>');
-
-    const $deletebtn = $('<button class="row" id="delete-slot">delete &#43;</button>');
-    console.log($deletebtn, 'delete btn')
+    const $deletebtn = $('<button class="row" id="delete-slot">delete </button>');
 
     $deletebtn.on('click', function(event){
       event.preventDefault();
       $(this).parent().remove();
     });
 
-    $divPair.append($('<input class="row" type="text" name="timeslot" placeholder="Date and time here" style="width: 50%"/>'));
+    $divPair.append($('<input class="row" type="text" name="datetimes" placeholder="Date and time here" style="width: 50%"/>'));
     $divPair.append($deletebtn);
 
     $('#create-event').append($divPair);
@@ -100,8 +97,6 @@ $(() => {
   // $('#create-event').on('submit', submitEvent);
 
   $('#add-timeslot').on('click', addTimeslot);
-
-  // $('form').on('submit', addTimeslot);
 
 
 
