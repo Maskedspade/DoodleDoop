@@ -1,12 +1,32 @@
-<div class="row justify-content-end">
-  <p class="col-auto">Hello, someone</p>
-</div>
+<%if (userStatus) {
+%>
 
-<div class="row justify-content-end">
-  <form method="GET" action="/login">
-    <button class="btn-sm" style="margin-right:1em">Login</button>
-  </form>
-  <form method="GET" action="/register">
-    <button class="btn-sm">Register</button>
-  </form>
-</div>
+  <div class="row justify-content-end">
+    <p class="col-auto">Hello, <%=userName%></p>
+  </div>
+
+  <div class="row justify-content-end">
+    <form method="GET" action="/logout">
+      <button class="btn-sm" style="margin-right:1em">Logout</button>
+    </form>
+  </div>
+
+<%
+}
+else {%>
+
+  <div class="row justify-content-end">
+    <p class="col-auto">Hello, stranger</p>
+  </div>
+
+  <div class="row justify-content-end">
+    <form method="GET" action="/login">
+      <button class="btn-sm" style="margin-right:1em">Login</button>
+    </form>
+    <form method="GET" action="/register">
+      <button class="btn-sm">Register</button>
+    </form>
+  </div>
+
+<%}%>
+
