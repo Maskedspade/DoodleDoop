@@ -56,6 +56,9 @@ input:focus, button:focus, textarea:focus {
   background-color: #f8e2a3;
   cursor: pointer;
 }
+.btn-sm:focus {
+  outline: none;
+}
 
 .form-check {
   margin: 1.5em 0;
@@ -72,6 +75,9 @@ input:focus, button:focus, textarea:focus {
 .btn-lg:hover {
   border: 3px solid #f8e2a3;
   cursor: pointer;
+}
+.btn-lg:focus {
+  outline: none;
 }
 
 .error-msg {
@@ -182,6 +188,10 @@ body p {
 
 #add-timeslot {
   margin: 10px 0;
+}
+
+#link-view-event {
+  color: #404040;
 }
 
 /*# sourceMappingURL=layout.css.map */
