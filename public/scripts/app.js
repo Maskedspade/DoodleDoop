@@ -33,15 +33,13 @@ $(() => {
   const editInput = (function(event) {
     event.preventDefault();
     const changingInput = $(this).prev();
-    // if(changingInput.hasClass('host-input-on-save')) {
-    //   changingInput.removeClass('host-input-on-save');
-    // }
     if($(this).text() === 'Edit') {
       changingInput.removeAttr('readonly').select();
+      changingInput.removeClass('host-input-on-save');
     }else{
       const userInput = $(this).val();
       $(this).attr('placeholder', userInput);
-      // changingInput.addClass('host-input-on-save');
+      changingInput.addClass('host-input-on-save');
       changingInput.attr('readonly', 'readonly');
     }
   });
@@ -168,6 +166,9 @@ $(() => {
  //      }
  //    );
  //  };
+
+  // all inputs on event page have no borders unless on edit mode
+  $('.edit-input').prev().addClass('host-input-on-save');
 
   //JQUERY EVENT-EMITTERS BELOW
   $('#create-event').on('submit', submitEvent);
