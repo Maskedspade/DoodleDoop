@@ -48,7 +48,8 @@ body {
 #who-is-this,
 #returning-guest,
 #first-time-guest,
-#event-host {
+#event-host,
+#not-found {
   @extend %centered-form;
   width: 300px;
 }
