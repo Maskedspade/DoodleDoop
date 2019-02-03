@@ -93,78 +93,78 @@ module.exports = (knex) => {
   });
 
 
-  // HOST URL BELOW ***********************************************
-  router.get("/event/:hostLongURL", (req, res) => {
-    const hostURL = req.params.hostLongURL;
+  // // HOST URL BELOW ***********************************************
+  // router.get("/event/:hostLongURL", (req, res) => {
+  //   const hostURL = req.params.hostLongURL;
 
-    const templateVars = {};
+  //   const templateVars = {};
 
-    if (req.session.user) {
-      knex
-        .select('*')
-        .from('events')
-        .innerJoin('timeslots', 'events.identity', 'timeslots.event_identity')
-        .innerJoin('users', 'events.user_identity', 'user.identity')
-        .where('hosturl', hostURL)
-        .then((results) => {
+  //   if (req.session.user) {
+  //     knex
+  //       .select('*')
+  //       .from('events')
+  //       .innerJoin('timeslots', 'events.identity', 'timeslots.event_identity')
+  //       .innerJoin('users', 'events.user_identity', 'users.identity')
+  //       .where('hosturl', hostURL)
+  //       .then((results) => {
 
-          // templateVars.userStatus = true;
-          // templateVars.userName = resu
+  //         // templateVars.userStatus = true;
+  //         // templateVars.userName = resu
 
-    //       console.log(results);
+  //   //       console.log(results);
 
-    //   knex
-    //     .select("*")
-    //     .from("users")
-    //     .innerJoin('events', 'users.id', 'events.user_id')
-    //     .where('email', req.session.user)
-    //     .then((results) => {
+  //   //   knex
+  //   //     .select("*")
+  //   //     .from("users")
+  //   //     .innerJoin('events', 'users.id', 'events.user_id')
+  //   //     .where('email', req.session.user)
+  //   //     .then((results) => {
 
-    //       templateVars.userStatus = true;
-    //       templateVars.userName = results[0]['name'];
-    //       templateVars.userEmail = results[0]['email'];
+  //   //       templateVars.userStatus = true;
+  //   //       templateVars.userName = results[0]['name'];
+  //   //       templateVars.userEmail = results[0]['email'];
 
-    //       if (results[0]['hosturl'] !== undefined) {
-    //         results.forEach( (key) => {
-    //           let obj = {
-    //             eventTitle: null,
-    //             eventUrl: null,
-    //             eventDes: null,
-    //             eventLo: null,
-    //           };
+  //   //       if (results[0]['hosturl'] !== undefined) {
+  //   //         results.forEach( (key) => {
+  //   //           let obj = {
+  //   //             eventTitle: null,
+  //   //             eventUrl: null,
+  //   //             eventDes: null,
+  //   //             eventLo: null,
+  //   //           };
 
-    //           obj.eventTitle = key['title'];
-    //           obj.eventUrl = key['hosturl'];
-    //           obj.eventDes = key['description'];
-    //           obj.eventLo = key['location'];
+  //   //           obj.eventTitle = key['title'];
+  //   //           obj.eventUrl = key['hosturl'];
+  //   //           obj.eventDes = key['description'];
+  //   //           obj.eventLo = key['location'];
 
-    //           eventList.push(obj);
-    //         });
-    //       }
-    //       templateVars.userEvents = eventList;
+  //   //           eventList.push(obj);
+  //   //         });
+  //   //       }
+  //   //       templateVars.userEvents = eventList;
 
-    //       res.render('index', templateVars);
-    //   });
-    // } else {
-    //   templateVars.userStatus = false;
-    //   templateVars.userName = null;
-    //   templateVars.userEmail = null;
-    //   templateVars.userEvents = eventList;
-    // knex
-    //   .select('*')
-    //   .from('events')
-    //   .innerJoin('timeslots', 'events.id', 'timeslots.event_id')
-    //   .innerJoin('respondents', 'timeslots.id', 'respondents.timeslot_id')
-    //   .where('hosturl', hostURL)
-    //   .then((results) => {
-    //     console.log(results);
+  //   //       res.render('index', templateVars);
+  //   //   });
+  //   // } else {
+  //   //   templateVars.userStatus = false;
+  //   //   templateVars.userName = null;
+  //   //   templateVars.userEmail = null;
+  //   //   templateVars.userEvents = eventList;
+  //   // knex
+  //   //   .select('*')
+  //   //   .from('events')
+  //   //   .innerJoin('timeslots', 'events.id', 'timeslots.event_id')
+  //   //   .innerJoin('respondents', 'timeslots.id', 'respondents.timeslot_id')
+  //   //   .where('hosturl', hostURL)
+  //   //   .then((results) => {
+  //   //     console.log(results);
 
-    //     res.render("event");
-    //   });
+  //   //     res.render("event");
+  //   //   });
 
-      });
-    }
-  });
+  //     });
+  //   }
+  // });
 
   // SHORT URL BELOW ***********************************************
   router.get("/event/:guestShortURL", (req, res) => {
@@ -176,7 +176,9 @@ module.exports = (knex) => {
         .from('events')
         .where('guesturl', guestURL)
         .then((results) => {
-          if (results[0]['identity']) {
+
+        // ERROR HANDLING IF DATA NOT PRESENT IN DB
+        if (results.length > 0) {
 
             if (req.session.user) {
               //WHEN LOGGED-IN USER VISIT HIS OWN GUEST URL
@@ -192,7 +194,7 @@ module.exports = (knex) => {
                 .select("*")
                 .from("users")
                 .innerJoin('events', 'users.identity', 'events.user_identity')
-                .where('identity', req.session.user)
+                .where('users.identity', req.session.user)
                 .then((results) => {
                   templateVars.userName = results[0]['name'];
                   templateVars.userEmail = results[0]['email'];
@@ -234,13 +236,11 @@ module.exports = (knex) => {
               res.render("doop_who_is_this", templateVars);
             }
 
-          }
-
           //WHEN SHORT URL DOES NOT EXIST IN DB
-          if (!results[0]['identity']) {
-            res.render("no_events_found");
-          }
-        });
+        } else {
+          res.render("no_events_found");
+        }
+      });
   });
 
 
