@@ -6,13 +6,7 @@ $(() => {
 
     const $divPair = $('<div>');
     const $deletebtn = $('<button class="row" id="delete-slot">delete</button>');
-    const $deletebtn = $('<button class="row" id="delete-slot">delete </button>');
     const $datetimes = $('<input class="row" type="text" name="datetimes" placeholder="Date and time here" style="width: 50%"/>');
-
-    $deletebtn.on('click', function(event){
-      event.preventDefault();
-      $(this).parent().remove();
-    });
 
     $datetimes.daterangepicker({
       timePicker: true,
@@ -21,6 +15,11 @@ $(() => {
       locale: {
         format: 'M/DD hh:mm A'
       }
+    });
+
+    $deletebtn.on('click', function(event){
+      event.preventDefault();
+      $(this).parent().remove();
     });
 
     $divPair.append($datetimes);

@@ -3,7 +3,7 @@
 const express = require('express');
 const router  = express.Router();
 
-const dataHelpers = require('../data-helpers');
+const helpers = require('../helpers');
 
 
 module.exports = (knex) => {
@@ -87,10 +87,62 @@ module.exports = (knex) => {
       return;
     }
 
-    const test = [req.body.eventTitle, req.body.eventDes, req.body.eventLo, req.body.timeslots];
+    const eventTitle = req.body.eventTitle;
+    const eventDes = req.body.eventDes;
+    const eventLo = req.body.eventLo;
+    const timeslots = req.body.timeslots;
 
-    console.log(test);
+    const checkForRepeated = (timeslots) => {
+      let counts = [];
+      for(let i = 0; i <= timeslots.length; i++) {
+          if(counts[timeslots[i]] === undefined) {
+              counts[timeslots[i]] = 1;
+          } else {
+              return true;
+          }
+      }
+      return false;
+    };
 
+    const checkEmpty = (eventTitle, eventDes, eventLo, timeslots) => {
+      if (!eventTitle) {
+        return false;
+      }
+      if (!eventDes) {
+        return false;
+      }
+      if (!eventLo) {
+        return false;
+      }
+      for (let key in timeslots) {
+        if (timeslots[key] === undefined) {
+          return false;
+        }
+      }
+      if (eventTitle.split(' ').join('') === '') {
+        return false;
+      }
+      if (eventDes.split(' ').join('') === '') {
+        return false;
+      }
+      if (eventLo.split(' ').join('') === '') {
+        return false;
+      }
+      return true;
+    };
+
+    if (checkEmpty(eventTitle, eventDes, eventLo, timeslots)) {
+      if(checkForRepeated(timeslots)) {
+        res.send('Please make sure all timeslots are unique');
+      } else {
+          knex('events')
+            .insert({id: 4, name: userName, email: userEmail, password: userPassword})
+            .then(() => res.send('success'));
+          return;
+      }
+    } else {
+      res.send('Please fill all required');
+    }
 
 
     knex
