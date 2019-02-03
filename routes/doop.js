@@ -10,7 +10,7 @@ module.exports = (knex) => {
   //VISIT HOME PAGE
   router.get("/", (req, res) => {
 
-    if (req.session.user) { //FEED EJS DATA TO LOGGED-IN USER
+    if (req.session.user) { //EJS DATA AS LOGGED-IN USER
       const templateVars = {};
       let eventList = [];
       knex
@@ -45,7 +45,7 @@ module.exports = (knex) => {
 
           res.render('index', templateVars);
       });
-    } else { //FEED EJS DATA TO GUEST
+    } else { //EJS DATA AS GUEST
       const templateVars = {
         userStatus: false,
         userName: null,
@@ -155,32 +155,77 @@ module.exports = (knex) => {
     }
   });
 
+  // SHORT URL BELOW ***********************************************
   router.get("/event/:guestShortURL", (req, res) => {
     const guestURL = req.params.guestShortURL;
+    const templateVars = {};
 
       knex
-        .select('id')
+        .select('hosturl', 'user_id')
         .from('events')
         .where('guesturl', guestURL)
         .then((results) => {
-          if (results['id']) {
-            const templateVars = {
-              guestURL: guestURL,
-            };
-          } else {
+          if (results[0]['id']) {
+
+            if (req.session.user) {
+              if (req.session.user === results[0]['user_id']) {
+                res.redirect(`/event/${results[0]['longurl']}`);
+              }
+
+              templateVars.userStatus = true;
+
+              knex
+                .select("*")
+                .from("users")
+                .innerJoin('events', 'users.id', 'events.user_id')
+                .where('id', req.session.user)
+                .then((results) => {
+                  templateVars.userName = results[0]['name'];
+                  templateVars.userEmail = results[0]['email'];
+
+                  let eventList = [];
+
+                  if (results[0]['hosturl'] !== undefined) {
+                    results.forEach( (key) => {
+                      let obj = {
+                        eventTitle: null,
+                        eventUrl: null,
+                        eventDes: null,
+                        eventLo: null,
+                      };
+
+                      obj.eventTitle = key['title'];
+                      obj.eventUrl = key['hosturl'];
+                      obj.eventDes = key['description'];
+                      obj.eventLo = key['location'];
+
+                      eventList.push(obj);
+                    });
+                  }
+
+                  templateVars.userEvents = eventList;
+
+                  templateVars.guestURL = guestURL;
+                  res.render("doop_who_is_this", templateVars);
+                });
+
+            } else {
+              templateVars.userStatus = false;
+              templateVars.userName = null;
+              templateVars.userEmail = null;
+              templateVars.userEvents = [];
+
+              templateVars.guestURL = guestURL;
+              res.render("doop_who_is_this", templateVars);
+            }
+
+          }
+
+          if (!results[0]['id']) {
             res.render("no_events_found");
           }
 
         });
-
-
-    if (req.session.user) {
-      templateVars.userStatus = true;
-    } else {
-      templateVars.userStatus = false;
-    }
-
-    res.render("doop_who_is_this", templateVars);
   });
 
 

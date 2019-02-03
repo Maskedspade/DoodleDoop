@@ -27,6 +27,7 @@ module.exports = (knex) => {
     if (req.body.form === 'login') {
       const userEmail = req.body.userEmail;
       const userPassword = req.body.userPassword;
+
       knex
         .select('email', 'password')
         .from("users")
@@ -43,7 +44,7 @@ module.exports = (knex) => {
               res.send('Sorry, wrong password.');
               return;
             } else {
-              req.session.user = userEmail;  //SET USER COOKIE HERE
+              req.session.user = userEmail;  //SET USER COOKIE TO EMAIL
               res.send('success');
               return;
             }
@@ -56,6 +57,7 @@ module.exports = (knex) => {
       const userEmail = req.body.userEmail;
       const userPassword = req.body.userPassword;
       const userPassword2 = req.body.userPassword2;
+
       knex
         .select('email')
         .from("users")
@@ -72,9 +74,14 @@ module.exports = (knex) => {
               res.send('Password does not match');
               return;
             } else {
+              const uniqueIDForUser = helpers.genRandomNum();
+
               knex('users')
-                .insert({id: 4, name: userName, email: userEmail, password: userPassword})
-                .then(() => res.send('success'));
+                .insert({id: uniqueIDForUser, name: userName, email: userEmail, password: userPassword})
+                .then(() => {
+                  req.session.user = userEmail; //SET USER COOKIE TO EMAIL
+                  res.send('success');
+                });
               return;
             }
           }
@@ -189,7 +196,7 @@ module.exports = (knex) => {
         } else {
           //WRITE LOGGED IN USERS DATA TO SERVER
           knex
-            .select("id")
+            .select('id')
             .from("users")
             .where('email', req.session.user)
             .then((results) => {
@@ -210,7 +217,7 @@ module.exports = (knex) => {
                 let newObj = {
                   id: helpers.genRandomNum(),
                   slot: slot,
-                  count: 0,
+                  count: 1, // USE COUNT 1 TO INDICATE "TIMESLOT IS STILL ON"
                   event_id: uniqueIDForEvent,
                 };
                 uniqueTimeslots.push(newObj);
@@ -219,7 +226,7 @@ module.exports = (knex) => {
               let newObjNotGOING = {
                 id: helpers.genRandomNum(),
                 slot: 'NOT GOING',
-                count: 0,
+                count: 1,
                 event_id: uniqueIDForEvent,
               };
 
