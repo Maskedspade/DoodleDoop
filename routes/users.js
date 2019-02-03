@@ -44,9 +44,16 @@ module.exports = (knex) => {
               res.send('Sorry, wrong password.');
               return;
             } else {
+              knex
+                .select('identity')
+                .from('users')
+                .where('email', userEmail)
+                .then(() => {
               req.session.user = results[0]['identity'];  //SET USER COOKIE TO IDENTITY
               res.send('success');
               return;
+                });
+
             }
           }
         });
@@ -81,6 +88,7 @@ module.exports = (knex) => {
                   knex
                     .select('identity')
                     .from('users')
+                    .where('email', userEmail)
                     .then((output) => {
                       req.session.user = output[0]['identity']; //SET USER COOKIE TO IDENTITY
                       res.send('success');
