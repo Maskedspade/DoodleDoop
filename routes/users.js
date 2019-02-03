@@ -138,6 +138,7 @@ module.exports = (knex) => {
         res.send('Please make sure all timeslots are unique');
       } else {
 
+
         // INPUTS ALL VALID AND GOOD TO GO INSIDE DATABASE
           const uniqueIDForEvent = helpers.genRandomNum();
           const uniqueHostURL = helpers.genHostURL();
@@ -185,6 +186,22 @@ module.exports = (knex) => {
         } else {
           // knex() HERE PUT W
         }
+        // if (req.session.user === undefined) {
+
+        //   const uniqueIDForEvent = helpers.createTimestamp();
+
+        //   knex('events')
+        //     .insert({id: uniqueIDForEvent, hosturl: helpers.genHostURL(), title: eventTitle, description: eventDes, location: eventLo, user_id: 0})
+        //     .then(() => {
+        //       knex('timeslots')
+        //         .insert({id: helper.createTimestamp(), slot: 'NOT GOING', count: 0, event_id: })
+        //     });
+        //   return;
+
+        // } else {
+        //   // knex()
+        // }
+
 
       }
     } else {

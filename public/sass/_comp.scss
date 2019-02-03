@@ -113,7 +113,7 @@ input, button, textarea {
 
 #add-timeslot,
 .edit-input,
-#delete-input {
+.delete-input {
   @extend %button-to-link;
 }
 
@@ -121,7 +121,7 @@ input, button, textarea {
   margin: 10px 0;
 }
 
-#delete-input {
+.delete-input {
   color: $color-dark-bg-error;
 }
 
