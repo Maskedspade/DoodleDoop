@@ -7,15 +7,15 @@
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
     <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
     <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
     <script type="text/javascript" src="/scripts/picktime.js"></script>
 
-<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
   </head>
 
@@ -24,25 +24,26 @@
       <a href="/"><h1 class="row justify-content-start">DoodleDoop</h1></a>
     </header>
 
-    <form name="create" class="container" id="create-event">
-      <h3 class="row">Create an Event</h3>
+    <section class="container content-wrapper">
+      <form name="create" id="create-event">
+        <h3 class="row">Create an Event</h3>
 
-      <input class="row" type="text" name="title" placeholder="EVENT TITLE" style="width: 50%"/>
+        <input class="row" type="text" name="title" placeholder="EVENT TITLE" style="width: 50%"/>
 
-      <input class="row" type="text" name="description" placeholder="Description here" />
+        <input class="row" type="text" name="description" placeholder="Description here" />
 
-      <input class="row" type="text" name="location" placeholder="Location here" style="width: 50%"/>
+        <input class="row" type="text" name="location" placeholder="Location here" style="width: 50%"/>
 
-      <input class="row" type="text" name="datetimes" placeholder="Date and time here" style="width: 50%"/>
+        <input class="row" type="text" name="datetimes" placeholder="Date and time here" style="width: 50%" id="last-input"/>
 
-      <button class="row" id="add-timeslot">Add timeslot &#43;</button>
+        <button class="row" id="add-timeslot">Add timeslot &#43;</button>
 
-      <div class="row justify-content-between">
-        <a href="/" name="cancel" class="col-sm-2 text-center" style="margin-top: 35px">Cancel</a>
-        <input class="col-sm-2 btn-submit" type="submit" name="submit" value="Submit" />
-      </div>
-    </form>
-
+        <div class="row justify-content-between">
+          <a href="/" name="cancel" class="col-sm-2 text-center" style="margin-top: 35px">Cancel</a>
+          <input class="col-sm-2 btn-submit" type="submit" name="submit" value="Submit" />
+        </div>
+      </form>
+    </section>
   </body>
 
 

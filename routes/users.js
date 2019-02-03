@@ -137,21 +137,21 @@ module.exports = (knex) => {
       if(checkForRepeated(timeslots)) {
         res.send('Please make sure all timeslots are unique');
       } else {
-        if (req.session.user === undefined) {
+        // if (req.session.user === undefined) {
 
-          const uniqueIDForEvent = helpers.createTimestamp();
+        //   const uniqueIDForEvent = helpers.createTimestamp();
 
-          knex('events')
-            .insert({id: uniqueIDForEvent, hosturl: helpers.genHostURL(), title: eventTitle, description: eventDes, location: eventLo, user_id: 0})
-            .then(() => {
-              knex('timeslots')
-                .insert({id: helper.createTimestamp(), slot: 'NOT GOING', count: 0, event_id: })
-            });
-          return;
+        //   knex('events')
+        //     .insert({id: uniqueIDForEvent, hosturl: helpers.genHostURL(), title: eventTitle, description: eventDes, location: eventLo, user_id: 0})
+        //     .then(() => {
+        //       knex('timeslots')
+        //         .insert({id: helper.createTimestamp(), slot: 'NOT GOING', count: 0, event_id: })
+        //     });
+        //   return;
 
-        } else {
-          // knex()
-        }
+        // } else {
+        //   // knex()
+        // }
 
         res.send('success');
       }

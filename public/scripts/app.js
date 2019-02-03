@@ -4,9 +4,9 @@ $(() => {
   const addTimeslot = (event) => {
     event.preventDefault();
 
-    const $divPair = $('<div>');
-    const $deletebtn = $('<button class="row" id="delete-slot">delete</button>');
-    const $datetimes = $('<input class="row" type="text" name="datetimes" placeholder="Date and time here" style="width: 50%"/>');
+    const $divPair = $('<div class="row">');
+    const $datetimes = $('<input class="col-sm-6" type="text" name="datetimes" placeholder="Date and time here" style="width: 50%"/>');
+    const $deletebtn = $('<button class="col-auto delete-input" id="delete-slot">delete</button>');
 
     $datetimes.daterangepicker({
       timePicker: true,
@@ -25,7 +25,7 @@ $(() => {
     $divPair.append($datetimes);
     $divPair.append($deletebtn);
 
-    $('#create-event').append($divPair);
+    $('#last-input').after($divPair);
   };
 
   // disable/enable Readonly attribute in input and textarea in event pages

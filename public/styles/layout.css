@@ -37,7 +37,7 @@ input:focus, button:focus, textarea:focus {
 
 #add-timeslot,
 .edit-input,
-#delete-input {
+.delete-input {
   background-color: Transparent;
   background-repeat: no-repeat;
   border: none;
@@ -108,7 +108,7 @@ input:focus, button:focus, textarea:focus {
   margin: 10px 0;
 }
 
-#delete-input {
+.delete-input {
   color: #ff6e6e;
 }
 
