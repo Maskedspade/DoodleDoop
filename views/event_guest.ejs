@@ -22,16 +22,26 @@
         <h3 class="col-auto text-center">Event Invitation</h3>
       </div>
 
-      <div class="row user-input">
-        <input class="form-check-input" type="checkbox" value="" id="timeslotcheck1">
-        <label class="form-check-label" for="timeslotcheck1">first timeslot here</label>
+      <div class="row">
+        <button id="whether-going">I'm not going.</button>
       </div>
 
-      <div class="row justify-content-end">
-        <input class="col-auto btn-submit"type="submit" name="submit" value="Cancel" />
-        <input class="col-auto btn-submit" type="submit" name="submit" values="Save Change" />
-      </div>
+      <form class="user-input" id="timeslot-form">
+        <div class="row">
+          <input class="form-check-input" type="checkbox" value="" id="timeslotcheck1">
+          <label class="form-check-label" for="timeslotcheck1">first timeslot here</label>
+        </div>
 
+        <div class="row">
+          <input class="form-check-input" type="checkbox" value="" id="timeslotcheck2">
+          <label class="form-check-label" for="timeslotcheck2">second timeslot here</label>
+        </div>
+
+        <div class="row justify-content-end">
+          <input class="col-auto btn-submit"type="submit" name="submit" value="Cancel" />
+          <input class="col-auto btn-submit" type="submit" name="submit" values="Save Change" />
+        </div>
+      </form>
 
     </section>
   </body>

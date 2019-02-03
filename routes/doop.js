@@ -87,6 +87,11 @@ module.exports = (knex) => {
   //     res.render("no_events_found");
   // });
 
+  router.get("/event_guest", (req, res) => {
+      res.render("event_guest");
+  });
+
+
   // HOST URL BELOW ***********************************************
   router.get("/event/:hostLongURL", (req, res) => {
     const hostURL = req.params.hostLongURL;

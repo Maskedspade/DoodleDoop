@@ -91,6 +91,14 @@ $(() => {
     );
   };
 
+  const whetherGoing = (event) => {
+    event.preventDefault();
+    console.log("cliked");
+    const timeslotForm = $('#timeslot-form input');
+    timeslotForm.attr('disabled') ? timeslotForm.removeAttr('disabled', false) : timeslotForm.attr('disabled', true);
+  };
+
+
   // all inputs on event page have no borders unless on edit mode
   $('.edit-input').prev().addClass('host-input-on-save');
 
@@ -99,5 +107,7 @@ $(() => {
   $('#add-timeslot').on('click', addTimeslot);
   $('.edit-input').on('click', editInput);
   $('.edit-input').on('click', toggleBtn);
+
+  $('#whether-going').on('click', whetherGoing);
 
 });
