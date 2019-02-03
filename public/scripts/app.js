@@ -93,8 +93,7 @@ $(() => {
 
   const whetherGoing = (event) => {
     event.preventDefault();
-    console.log("cliked");
-    const timeslotForm = $('#timeslot-form input');
+    const timeslotForm = $('#timeslot-form .form-check-input');
     timeslotForm.attr('disabled') ? timeslotForm.removeAttr('disabled', false) : timeslotForm.attr('disabled', true);
   };
 
@@ -108,6 +107,6 @@ $(() => {
   $('.edit-input').on('click', editInput);
   $('.edit-input').on('click', toggleBtn);
 
-  $('#whether-going').on('click', whetherGoing);
+  $('#not-going').on('click', whetherGoing);
 
 });

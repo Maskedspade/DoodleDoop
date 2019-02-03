@@ -18,21 +18,32 @@
     </header>
 
     <section class="container content-wrapper">
-      <div class="row">
-        <h3 class="col-auto text-center">Event Invitation</h3>
+      <div class="row user-input">
+        <h2 class="text-center">Event Invitation</h2>
       </div>
 
-      <div class="row">
-        <button id="whether-going">I'm not going.</button>
+      <div class="row user-input">
+        <h3 class="text-center">EVENT TITLE</h3>
       </div>
 
-      <form class="user-input" id="timeslot-form">
-        <div class="row">
+      <div class="row user-input">
+        <p>Event description</p>
+      </div>
+
+      <form class="container user-input" id="timeslot-form" style="margin-left: 10px">
+
+        <div class="row btn-group-toggle user-input" data-toggle="buttons">
+          <label class="btn btn-sm" style="background:#f7e9c0 !important">
+            <input type="radio" name="not-going" id="not-going" autocomplete="off">I'm not going
+          </label>
+        </div>
+
+        <div class="row user-input">
           <input class="form-check-input" type="checkbox" value="" id="timeslotcheck1">
           <label class="form-check-label" for="timeslotcheck1">first timeslot here</label>
         </div>
 
-        <div class="row">
+        <div class="row user-input">
           <input class="form-check-input" type="checkbox" value="" id="timeslotcheck2">
           <label class="form-check-label" for="timeslotcheck2">second timeslot here</label>
         </div>

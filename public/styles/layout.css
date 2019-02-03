@@ -66,6 +66,9 @@ input:focus, button:focus, textarea:focus {
 .btn-sm:focus {
   outline: none;
 }
+.btn-sm:active {
+  background-color: #f8e2a3 !important;
+}
 
 .btn-lg {
   border: none;
