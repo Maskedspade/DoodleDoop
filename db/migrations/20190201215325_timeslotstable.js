@@ -1,12 +1,12 @@
 
 exports.up = function(knex, Promise) {
   return knex.schema.createTable('timeslots', function (t) {
-    t.integer('id').unique().primary();
+    t.integer('identity').unique().primary();
     t.string("slot");
     t.integer("count");
 
-    t.integer('event_id').unsigned();
-    t.foreign('event_id').references('events.id').onDelete('CASCADE');
+    t.integer('event_identity').unsigned();
+    t.foreign('event_identity').references('events.identity').onDelete('CASCADE');
   });
 };
 

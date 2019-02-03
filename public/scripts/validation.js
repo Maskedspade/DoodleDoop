@@ -18,7 +18,7 @@ $(() => {
           if (hint === 'success') {
             window.location.href = '/';
           }
-          else {
+          if (hint !== 'success') {
             const errorMsg = $(`<p class="row justify-content-center error-msg"> ${hint} </p>`);
             $('#before-err-msg').after(errorMsg);
           }
