@@ -79,11 +79,11 @@ $(() => {
           timeslots: timeslots,
         },
         success: (hint) => {
-          if (hint === 'success') {
-            // window.location.href = '/';
+          if (hint.message === 'success') {
+            window.location.href = `/event/${hint.hostURL}`;
           }
           else {
-            const errorMsg = $(`<p class="error-msg"> ${hint} </p>`);
+            const errorMsg = $(`<p class="error-msg"> ${hint.message} </p>`);
             $('#create-event').append(errorMsg);
           }
         }

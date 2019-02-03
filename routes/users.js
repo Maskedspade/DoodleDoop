@@ -135,9 +135,8 @@ module.exports = (knex) => {
 
     if (checkEmpty(eventTitle, eventDes, eventLo, timeslots)) {
       if(checkForRepeated(timeslots)) {
-        res.send('Please make sure all timeslots are unique');
+        res.json({message: 'Please make sure all timeslots are unique', hostURL: null});
       } else {
-
 
         // INPUTS ALL VALID AND GOOD TO GO INSIDE DATABASE
           const uniqueIDForEvent = helpers.genRandomNum();
@@ -145,7 +144,7 @@ module.exports = (knex) => {
           const uniqueGuestURL = helpers.genGuestURL();
 
         if (req.session.user === undefined) {
-
+          //WRITE GUEST DATA TO SERVER
           const newEventObj = {
             id: uniqueIDForEvent,
             hosturl: uniqueHostURL,
@@ -153,7 +152,7 @@ module.exports = (knex) => {
             title: eventTitle,
             description: eventDes,
             location: eventLo,
-            user_id: 0,
+            user_id: 0,  // ASSIGN USER ID TO ROOTUSER
           };
 
           let uniqueTimeslots = [];
@@ -162,6 +161,7 @@ module.exports = (knex) => {
             let newObj = {
               id: helpers.genRandomNum(),
               slot: slot,
+              count: 1,  // USE COUNT 1 TO INDICATE "TIMESLOT IS STILL ON"
               event_id: uniqueIDForEvent,
             };
             uniqueTimeslots.push(newObj);
@@ -170,6 +170,7 @@ module.exports = (knex) => {
           let newObjNotGOING = {
             id: helpers.genRandomNum(),
             slot: 'NOT GOING',
+            count: 1,
             event_id: uniqueIDForEvent,
           };
 
@@ -180,32 +181,65 @@ module.exports = (knex) => {
             .then(() => {
               knex('timeslots')
                 .insert(uniqueTimeslots)
-                .then( () => res.send('success')   );
+                .then(() => {
+                  res.json({message: 'success', hostURL: uniqueHostURL});
+                });
             });
 
         } else {
-          // knex() HERE PUT W
+          //WRITE LOGGED IN USERS DATA TO SERVER
+          knex
+            .select("id")
+            .from("users")
+            .where('email', req.session.user)
+            .then((results) => {
+
+              const newEventObj = {
+                id: uniqueIDForEvent,
+                hosturl: uniqueHostURL,
+                guesturl: uniqueGuestURL,
+                title: eventTitle,
+                description: eventDes,
+                location: eventLo,
+                user_id: results['id'],
+              };
+
+              let uniqueTimeslots = [];
+
+              timeslots.forEach((slot) => {
+                let newObj = {
+                  id: helpers.genRandomNum(),
+                  slot: slot,
+                  count: 0,
+                  event_id: uniqueIDForEvent,
+                };
+                uniqueTimeslots.push(newObj);
+              });
+
+              let newObjNotGOING = {
+                id: helpers.genRandomNum(),
+                slot: 'NOT GOING',
+                count: 0,
+                event_id: uniqueIDForEvent,
+              };
+
+              uniqueTimeslots.push(newObjNotGOING);
+
+            knex('events')
+              .insert(newEventObj)
+              .then(() => {
+                knex('timeslots')
+                  .insert(uniqueTimeslots)
+                  .then(() => {
+                    res.json({message: 'success', hostURL: uniqueHostURL});
+                  });
+              });
+
+          });
         }
-        // if (req.session.user === undefined) {
-
-        //   const uniqueIDForEvent = helpers.createTimestamp();
-
-        //   knex('events')
-        //     .insert({id: uniqueIDForEvent, hosturl: helpers.genHostURL(), title: eventTitle, description: eventDes, location: eventLo, user_id: 0})
-        //     .then(() => {
-        //       knex('timeslots')
-        //         .insert({id: helper.createTimestamp(), slot: 'NOT GOING', count: 0, event_id: })
-        //     });
-        //   return;
-
-        // } else {
-        //   // knex()
-        // }
-
-
       }
     } else {
-      res.send('Please fill all required');
+      res.json({message: 'Please fill all required', hostURL: null});
     }
   });
 
