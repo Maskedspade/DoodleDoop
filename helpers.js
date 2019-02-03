@@ -6,9 +6,9 @@ module.exports = {
       return div.innerHTML;
   },
 
-  createTimestap: () => {
+  createTimestamp: () => {
       const date = new Date();
-      return date;
+      return date.getTime();
   },
 
   calcDaysAgo: (timestamp) => {
@@ -34,17 +34,22 @@ module.exports = {
       return 'today';
     },
 
-  generateRandomString: (digit) => {
+  genHostURL: () => {
     let text = '';
     let possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    for (let i = 0; i < digit; i ++) {
+    for (let i = 0; i < 100; i ++) {
       text = text + possible.charAt(Math.floor(Math.random() * possible.length));
     }
     return text;
   },
 
-  generateRandomURL: () => {
-    return 'doodledoop' + generateRandomString(13);
+  genGuestURL: () => {
+    let text = '';
+    let possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    for (let i = 0; i < 25; i ++) {
+      text = text + possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+    return text;
   },
 
   validateEmail: (email) => {

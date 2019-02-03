@@ -17,6 +17,7 @@ module.exports = (knex) => {
   //   });
   // });
 
+//LOGIN AND REGISTER DATA GOES IN HERE
   router.post("/", (req, res) => {
     if (!req.body.form) {
       res.status(400).json({ error: 'invalid request'});
@@ -81,6 +82,7 @@ module.exports = (knex) => {
       }
   });
 
+  //POST NEW EVENT DATA GOES IN HERE
   router.post("/new-event", (req, res) => {
     if (req.body.form !== 'new-event') {
       res.status(400).json({ error: 'invalid request'});
@@ -135,22 +137,27 @@ module.exports = (knex) => {
       if(checkForRepeated(timeslots)) {
         res.send('Please make sure all timeslots are unique');
       } else {
+        if (req.session.user === undefined) {
+
+          const uniqueIDForEvent = helpers.createTimestamp();
+
           knex('events')
-            .insert({id: 4, name: userName, email: userEmail, password: userPassword})
-            .then(() => res.send('success'));
+            .insert({id: uniqueIDForEvent, hosturl: helpers.genHostURL(), title: eventTitle, description: eventDes, location: eventLo, user_id: 0})
+            .then(() => {
+              knex('timeslots')
+                .insert({id: helper.createTimestamp(), slot: 'NOT GOING', count: 0, event_id: })
+            });
           return;
+
+        } else {
+          // knex()
+        }
+
+        res.send('success');
       }
     } else {
       res.send('Please fill all required');
     }
-
-
-    knex
-      .select("*")
-      .from("users")
-      .then((results) => {
-        res.json(results);
-    });
   });
 
   return router;

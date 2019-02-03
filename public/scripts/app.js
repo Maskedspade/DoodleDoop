@@ -50,43 +50,6 @@ $(() => {
     $(this).text($(this).text() === 'Edit' ? 'Save' : 'Edit');
   });
 
-
- // const submitEvent = (event) => {
- //    event.preventDefault();
- //    $('.error-msg').remove();
-
- //    const eventTitle = $("#create-event input[name='title']").val();
- //    const eventDes = $("#create-event input[name='description']").val();
- //    const eventLo = $("#create-event input[name='location']").val();
- //    const slotArray = document.querySelectorAll('input[name="timeslot"]');
-
- //    let timeSlots = [];
-
- //    slotArray.forEach( key => timeSlots.push(key.value));
- //    console.log(timeSlots);
-
- //    $.ajax(
- //      { method: 'POST',
- //        url: '/api/users/new-event',
- //        data:{
- //          form: 'new-event',
- //          eventTitle: eventTitle,
- //          eventDes: eventDes,
- //          eventLo: eventLo,
- //          eventTS: eventTS,
- //        },
- //        success: (hint) => {
- //          if (hint === 'success') {
- //            // window.location.href = '/';
- //          }
- //          else {
- //            const errorMsg = $(`<p class="error-msg"> ${hint} </p>`);
- //            $('ul').append(errorMsg);
- //          }
- //        }
- //      }
- //    );
- //  };
  const submitEvent = (event) => {
     event.preventDefault();
     $('.error-msg').remove();
@@ -115,57 +78,18 @@ $(() => {
           eventLo: eventLo,
           timeslots: timeslots,
         },
-        // success: (hint) => {
-        //   if (hint === 'success') {
-        //     // window.location.href = '/';
-        //   }
-        //   else {
-        //     const errorMsg = $(`<p class="error-msg"> ${hint} </p>`);
-        //     $('ul').append(errorMsg);
-        //   }
-        // }
+        success: (hint) => {
+          if (hint === 'success') {
+            // window.location.href = '/';
+          }
+          else {
+            const errorMsg = $(`<p class="error-msg"> ${hint} </p>`);
+            $('#create-event').append(errorMsg);
+          }
+        }
       }
     );
   };
-
-
-
- // const submitEvent = (event) => {
- //    event.preventDefault();
- //    $('.error-msg').remove();
-
- //    const eventTitle = $("#create-event input[name='title']").val();
- //    const eventDes = $("#create-event input[name='description']").val();
- //    const eventLo = $("#create-event input[name='location']").val();
- //    const slotArray = document.querySelectorAll('input[name="timeslot"]');
-
- //    let timeSlots = [];
-
- //    slotArray.forEach( key => timeSlots.push(key.value));
- //    console.log(timeSlots);
-
- //    $.ajax(
- //      { method: 'POST',
- //        url: '/api/users/new-event',
- //        data:{
- //          form: 'new-event',
- //          eventTitle: eventTitle,
- //          eventDes: eventDes,
- //          eventLo: eventLo,
- //          eventTS: eventTS,
- //        },
- //        success: (hint) => {
- //          if (hint === 'success') {
- //            // window.location.href = '/';
- //          }
- //          else {
- //            const errorMsg = $(`<p class="error-msg"> ${hint} </p>`);
- //            $('ul').append(errorMsg);
- //          }
- //        }
- //      }
- //    );
- //  };
 
   // all inputs on event page have no borders unless on edit mode
   $('.edit-input').prev().addClass('host-input-on-save');
@@ -175,8 +99,5 @@ $(() => {
   $('#add-timeslot').on('click', addTimeslot);
   $('.edit-input').on('click', editInput);
   $('.edit-input').on('click', toggleBtn);
-
-
-
 
 });
