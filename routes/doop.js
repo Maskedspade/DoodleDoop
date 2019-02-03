@@ -13,11 +13,12 @@ module.exports = (knex) => {
     if (req.session.user) { //EJS DATA AS LOGGED-IN USER
       const templateVars = {};
       let eventList = [];
+
       knex
         .select("*")
         .from("users")
-        .innerJoin('events', 'users.id', 'events.user_id')
-        .where('email', req.session.user)
+        .innerJoin('events', 'users.identity', 'events.user_identity')
+        .where('users.identity', req.session.user)
         .then((results) => {
 
           templateVars.userStatus = true;
@@ -92,8 +93,8 @@ module.exports = (knex) => {
       knex
         .select('*')
         .from('events')
-        .innerJoin('timeslots', 'events.id', 'timeslots.event_id')
-        .innerJoin('users', 'events.user_id', 'user.id')
+        .innerJoin('timeslots', 'events.identity', 'timeslots.event_identity')
+        .innerJoin('users', 'events.user_identity', 'user.identity')
         .where('hosturl', hostURL)
         .then((results) => {
 
@@ -161,24 +162,27 @@ module.exports = (knex) => {
     const templateVars = {};
 
       knex
-        .select('hosturl', 'user_id')
+        .select('*')
         .from('events')
         .where('guesturl', guestURL)
         .then((results) => {
-          if (results[0]['id']) {
+          if (results[0]['identity']) {
 
             if (req.session.user) {
-              if (req.session.user === results[0]['user_id']) {
+              //WHEN LOGGED-IN USER VISIT HIS OWN GUEST URL
+              if (req.session.user === results[0]['user_identity']) {
                 res.redirect(`/event/${results[0]['longurl']}`);
+                return;
               }
 
+              //WHEN LOGGED-IN USER VISIT SOMEONE ELSE'S GUEST URL
               templateVars.userStatus = true;
 
               knex
                 .select("*")
                 .from("users")
-                .innerJoin('events', 'users.id', 'events.user_id')
-                .where('id', req.session.user)
+                .innerJoin('events', 'users.identity', 'events.user_identity')
+                .where('identity', req.session.user)
                 .then((results) => {
                   templateVars.userName = results[0]['name'];
                   templateVars.userEmail = results[0]['email'];
@@ -210,6 +214,7 @@ module.exports = (knex) => {
                 });
 
             } else {
+              //WHEN GUEST VISIT GUEST URL
               templateVars.userStatus = false;
               templateVars.userName = null;
               templateVars.userEmail = null;
@@ -221,10 +226,10 @@ module.exports = (knex) => {
 
           }
 
-          if (!results[0]['id']) {
+          //WHEN SHORT URL DOES NOT EXIST IN DB
+          if (!results[0]['identity']) {
             res.render("no_events_found");
           }
-
         });
   });
 
