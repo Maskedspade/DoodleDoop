@@ -62,6 +62,5 @@ $(() => {
   //JQUERY EVENT-EMITTERS BELOW
   $('#login').on('submit', submitLogin);
   $('#registration').on('submit', submitRegistration);
-  // $('.who-is-this').on('submit', submitIdentity);
 
 });
