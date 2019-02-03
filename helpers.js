@@ -34,6 +34,15 @@ module.exports = {
       return 'today';
     },
 
+  genRandomNum: () => {
+    let text = '';
+    let possible = '0123456789';
+    for (let i = 0; i < 6; i ++) {
+      text = text + possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+    return Number(text);
+  },
+
   genHostURL: () => {
     let text = '';
     let possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';

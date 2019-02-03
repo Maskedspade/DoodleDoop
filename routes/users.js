@@ -137,23 +137,55 @@ module.exports = (knex) => {
       if(checkForRepeated(timeslots)) {
         res.send('Please make sure all timeslots are unique');
       } else {
+
+        // INPUTS ALL VALID AND GOOD TO GO INSIDE DATABASE
+          const uniqueIDForEvent = helpers.genRandomNum();
+          const uniqueHostURL = helpers.genHostURL();
+          const uniqueGuestURL = helpers.genGuestURL();
+
         if (req.session.user === undefined) {
 
-          const uniqueIDForEvent = helpers.createTimestamp();
+          const newEventObj = {
+            id: uniqueIDForEvent,
+            hosturl: uniqueHostURL,
+            guesturl: uniqueGuestURL,
+            title: eventTitle,
+            description: eventDes,
+            location: eventLo,
+            user_id: 0,
+          };
+
+          let uniqueTimeslots = [];
+
+          timeslots.forEach((slot) => {
+            let newObj = {
+              id: helpers.genRandomNum(),
+              slot: slot,
+              event_id: uniqueIDForEvent,
+            };
+            uniqueTimeslots.push(newObj);
+          });
+
+          let newObjNotGOING = {
+            id: helpers.genRandomNum(),
+            slot: 'NOT GOING',
+            event_id: uniqueIDForEvent,
+          };
+
+          uniqueTimeslots.push(newObjNotGOING);
 
           knex('events')
-            .insert({id: uniqueIDForEvent, hosturl: helpers.genHostURL(), title: eventTitle, description: eventDes, location: eventLo, user_id: 0})
+            .insert(newEventObj)
             .then(() => {
               knex('timeslots')
-                .insert({id: helper.createTimestamp(), slot: 'NOT GOING', count: 0, event_id: })
+                .insert(uniqueTimeslots)
+                .then( () => res.send('success')   );
             });
-          return;
 
         } else {
-          // knex()
+          // knex() HERE PUT W
         }
 
-        res.send('success');
       }
     } else {
       res.send('Please fill all required');
