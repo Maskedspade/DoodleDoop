@@ -1,7 +1,7 @@
 
 exports.up = function(knex, Promise) {
   return knex.schema.createTable('events', function (t) {
-    t.integer('identity').unique().primary();
+    t.increments('identity');
     t.string('hosturl');
     t.string('guesturl');
     t.string('title');

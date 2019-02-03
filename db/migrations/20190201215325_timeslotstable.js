@@ -1,7 +1,7 @@
 
 exports.up = function(knex, Promise) {
   return knex.schema.createTable('timeslots', function (t) {
-    t.integer('identity').unique().primary();
+    t.increments('identity');
     t.string("slot");
     t.integer("count");
 
