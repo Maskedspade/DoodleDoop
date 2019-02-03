@@ -105,6 +105,20 @@ input, button, textarea {
   @include btn-lg($color-dark-bg-error, $color-dark-bg-error, $color-light-bg-error);
 }
 
+.btn-submit {
+  margin-top: 1.5em;
+  border: none;
+
+  &:hover {
+    color: $color-primary-contrast;
+    border: none;
+    cursor: pointer;
+  }
+  &:focus {
+    border: none;
+  }
+}
+
 .error-msg {
   color: $color-dark-bg-error;
   font-size: $font-size-small;
@@ -162,20 +176,6 @@ input.row {
 
 .user-input {
   margin: 1em 0;
-}
-
-.btn-submit {
-  margin-top: 1.5em;
-  border: none;
-
-  &:hover {
-    color: $color-primary-contrast;
-    border: none;
-    cursor: pointer;
-  }
-  &:focus {
-    border: none;
-  }
 }
 
 label {
