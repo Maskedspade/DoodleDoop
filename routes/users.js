@@ -48,8 +48,8 @@ module.exports = (knex) => {
                 .select('identity')
                 .from('users')
                 .where('email', userEmail)
-                .then(() => {
-              req.session.user = results[0]['identity'];  //SET USER COOKIE TO IDENTITY
+                .then((output) => {
+              req.session.user = output[0]['identity'];  //SET USER COOKIE TO IDENTITY
               res.send('success');
               return;
                 });
