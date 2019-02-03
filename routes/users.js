@@ -17,7 +17,7 @@ module.exports = (knex) => {
   //   });
   // });
 
-//LOGIN AND REGISTER DATA GOES IN HERE
+//LOGIN AND REGISTER DATA GOES IN HERE *******************************
   router.post("/", (req, res) => {
     if (!req.body.form) {
       res.status(400).json({ error: 'invalid request'});
@@ -29,8 +29,8 @@ module.exports = (knex) => {
       const userPassword = req.body.userPassword;
 
       knex
-        .select('email', 'password')
-        .from("users")
+        .select('email', 'password', 'identity')
+        .from('users')
         .then((results) => {
           if(!(userEmail && userPassword)) {
             res.send('Cannot be blank.');
@@ -44,7 +44,7 @@ module.exports = (knex) => {
               res.send('Sorry, wrong password.');
               return;
             } else {
-              req.session.user = userEmail;  //SET USER COOKIE TO EMAIL
+              req.session.user = results[0]['identity'];  //SET USER COOKIE TO IDENTITY
               res.send('success');
               return;
             }
@@ -74,13 +74,17 @@ module.exports = (knex) => {
               res.send('Password does not match');
               return;
             } else {
-              const uniqueIDForUser = helpers.genRandomNum();
 
               knex('users')
-                .insert({id: uniqueIDForUser, name: userName, email: userEmail, password: userPassword})
+                .insert({name: userName, email: userEmail, password: userPassword})
                 .then(() => {
-                  req.session.user = userEmail; //SET USER COOKIE TO EMAIL
-                  res.send('success');
+                  knex
+                    .select('identity')
+                    .from('users')
+                    .then((output) => {
+                      req.session.user = output[0]['identity']; //SET USER COOKIE TO IDENTITY
+                      res.send('success');
+                    });
                 });
               return;
             }
@@ -89,7 +93,7 @@ module.exports = (knex) => {
       }
   });
 
-  //POST NEW EVENT DATA GOES IN HERE
+  //POST NEW EVENT DATA GOES IN HERE *******************************
   router.post("/new-event", (req, res) => {
     if (req.body.form !== 'new-event') {
       res.status(400).json({ error: 'invalid request'});
@@ -146,101 +150,110 @@ module.exports = (knex) => {
       } else {
 
         // INPUTS ALL VALID AND GOOD TO GO INSIDE DATABASE
-          const uniqueIDForEvent = helpers.genRandomNum();
           const uniqueHostURL = helpers.genHostURL();
           const uniqueGuestURL = helpers.genGuestURL();
 
         if (req.session.user === undefined) {
           //WRITE GUEST DATA TO SERVER
           const newEventObj = {
-            id: uniqueIDForEvent,
             hosturl: uniqueHostURL,
             guesturl: uniqueGuestURL,
             title: eventTitle,
             description: eventDes,
             location: eventLo,
-            user_id: 0,  // ASSIGN USER ID TO ROOTUSER
+            user_identity: 4,  // GUEST EVENT HOST ASSIGN TO ROOTUSER
           };
-
-          let uniqueTimeslots = [];
-
-          timeslots.forEach((slot) => {
-            let newObj = {
-              id: helpers.genRandomNum(),
-              slot: slot,
-              count: 1,  // USE COUNT 1 TO INDICATE "TIMESLOT IS STILL ON"
-              event_id: uniqueIDForEvent,
-            };
-            uniqueTimeslots.push(newObj);
-          });
-
-          let newObjNotGOING = {
-            id: helpers.genRandomNum(),
-            slot: 'NOT GOING',
-            count: 1,
-            event_id: uniqueIDForEvent,
-          };
-
-          uniqueTimeslots.push(newObjNotGOING);
 
           knex('events')
             .insert(newEventObj)
             .then(() => {
-              knex('timeslots')
-                .insert(uniqueTimeslots)
-                .then(() => {
-                  res.json({message: 'success', hostURL: uniqueHostURL});
+              knex
+                .select('identity')
+                .from('events')
+                .where('hosturl', uniqueHostURL)
+                .then((results) => {
+                  let uniqueTimeslots = [];
+
+                  timeslots.forEach((slot) => {
+                    let newObj = {
+                      slot: slot,
+                      count: 1,  // USE COUNT 1 TO INDICATE "TIMESLOT IS STILL ON"
+                      event_identity: results[0]['identity'],
+                    };
+                    uniqueTimeslots.push(newObj);
+                  });
+
+                  let newObjNotGOING = {
+                    identity: helpers.genRandomNum(),
+                    slot: 'NOT GOING',
+                    count: 1,
+                    event_identity: results[0]['identity'],
+                  };
+
+                  uniqueTimeslots.push(newObjNotGOING);
+
+                  knex('timeslots')
+                    .insert(uniqueTimeslots)
+                    .then( ()=> {
+                      res.json({message: 'success', hostURL: uniqueHostURL});
+                    });
+
                 });
             });
 
         } else {
-          //WRITE LOGGED IN USERS DATA TO SERVER
+          //WRITE LOGGED-IN USERS DATA TO SERVER
           knex
-            .select('id')
+            .select('identity')
             .from("users")
-            .where('email', req.session.user)
+            .where('identity', req.session.user)
             .then((results) => {
 
               const newEventObj = {
-                id: uniqueIDForEvent,
                 hosturl: uniqueHostURL,
                 guesturl: uniqueGuestURL,
                 title: eventTitle,
                 description: eventDes,
                 location: eventLo,
-                user_id: results['id'],
+                user_identity: results[0]['identity'],
               };
 
-              let uniqueTimeslots = [];
+          knex('events')
+            .insert(newEventObj)
+            .then(() => {
+              knex
+                .select('identity')
+                .from('events')
+                .where('hosturl', uniqueHostURL)
+                .then((results) => {
+                  let uniqueTimeslots = [];
 
-              timeslots.forEach((slot) => {
-                let newObj = {
-                  id: helpers.genRandomNum(),
-                  slot: slot,
-                  count: 1, // USE COUNT 1 TO INDICATE "TIMESLOT IS STILL ON"
-                  event_id: uniqueIDForEvent,
-                };
-                uniqueTimeslots.push(newObj);
-              });
-
-              let newObjNotGOING = {
-                id: helpers.genRandomNum(),
-                slot: 'NOT GOING',
-                count: 1,
-                event_id: uniqueIDForEvent,
-              };
-
-              uniqueTimeslots.push(newObjNotGOING);
-
-            knex('events')
-              .insert(newEventObj)
-              .then(() => {
-                knex('timeslots')
-                  .insert(uniqueTimeslots)
-                  .then(() => {
-                    res.json({message: 'success', hostURL: uniqueHostURL});
+                  timeslots.forEach((slot) => {
+                    let newObj = {
+                      slot: slot,
+                      count: 1,  // USE COUNT 1 TO INDICATE "TIMESLOT IS STILL ON"
+                      event_identity: results[0]['identity'],
+                    };
+                    uniqueTimeslots.push(newObj);
                   });
-              });
+
+                  let newObjNotGOING = {
+                    identity: helpers.genRandomNum(),
+                    slot: 'NOT GOING',
+                    count: 1,
+                    event_identity: results[0]['identity'],
+                  };
+
+                  uniqueTimeslots.push(newObjNotGOING);
+
+                  knex('timeslots')
+                    .insert(uniqueTimeslots)
+                    .then( ()=> {
+                      res.json({message: 'success', hostURL: uniqueHostURL});
+                    });
+
+                });
+            });
 
           });
         }
