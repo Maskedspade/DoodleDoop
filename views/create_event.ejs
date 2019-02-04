@@ -20,30 +20,33 @@
   </head>
 
   <body>
-    <header class="container">
-      <a href="/"><h1 class="row justify-content-start">DoodleDoop</h1></a>
-    </header>
+    <div class="container">
+      <header class="row justify-content-start">
+        <a href="/"><h1>DoodleDoop</h1></a>
+      </header>
 
-    <section class="container content-wrapper">
-      <form name="create" id="create-event">
-        <h3 class="row">Create an Event</h3>
 
-        <input class="row" type="text" name="title" placeholder="EVENT TITLE" style="width: 50%"/>
+      <section class="row">
+          <form class="container" name="create" id="create-event">
+            <h3 class="row">Create an Event</h3>
 
-        <input class="row" type="text" name="description" placeholder="Description here" />
+            <input class="row" type="text" name="title" placeholder="EVENT TITLE" style="width: 50%"/>
 
-        <input class="row" type="text" name="location" placeholder="Location here" style="width: 50%"/>
+            <input class="row" type="text" name="description" placeholder="Description here" />
 
-        <input class="row" type="text" name="datetimes" placeholder="Date and time here" style="width: 50%" id="last-input"/>
+            <input class="row" type="text" name="location" placeholder="Location here" style="width: 50%"/>
 
-        <button class="row" id="add-timeslot">Add timeslot &#43;</button>
+            <input class="row" type="text" name="datetimes" placeholder="Date and time here" style="width: 50%" id="last-input"/>
 
-        <div class="row justify-content-between">
-          <a href="/" name="cancel" class="col-sm-2 text-center" style="margin-top: 35px">Cancel</a>
-          <input class="col-sm-2 btn-submit" type="submit" name="submit" value="Submit" />
-        </div>
-      </form>
-    </section>
+            <button class="row" id="add-timeslot">Add timeslot &#43;</button>
+
+            <div class="row justify-content-between">
+              <a href="/" name="cancel" class="col-sm-2 text-center" style="margin-top: 35px">Cancel</a>
+              <input class="col-sm-2 btn-submit" type="submit" name="submit" value="Submit" />
+            </div>
+          </form>
+      </section>
+    </div>
   </body>
 
 

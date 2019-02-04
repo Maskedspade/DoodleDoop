@@ -66,9 +66,6 @@ input:focus, button:focus, textarea:focus {
 .btn-sm:focus {
   outline: none;
 }
-.btn-sm:active {
-  background-color: #f8e2a3 !important;
-}
 
 .btn-lg {
   border: none;
@@ -100,6 +97,19 @@ input:focus, button:focus, textarea:focus {
 }
 .btn-lg-err:focus {
   outline: none;
+}
+
+.btn-submit {
+  margin-top: 1.5em;
+  border: none;
+}
+.btn-submit:hover {
+  color: #f7e9c0;
+  border: none;
+  cursor: pointer;
+}
+.btn-submit:focus {
+  border: none;
 }
 
 .error-msg {
@@ -160,26 +170,13 @@ input.row {
   margin: 1em 0;
 }
 
-.btn-submit {
-  margin-top: 1.5em;
-  border: none;
-}
-.btn-submit:hover {
-  color: #f7e9c0;
-  border: none;
-  cursor: pointer;
-}
-.btn-submit:focus {
-  border: none;
-}
-
 label {
   color: #fffcf6;
   margin-left: 1.5em;
 }
 
 html {
-  box-sizing: border-box;
+  box-sizing: border-box !important;
 }
 
 *, *:before, *:after {
