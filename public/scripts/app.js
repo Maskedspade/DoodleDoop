@@ -1,9 +1,8 @@
 $(() => {
 
-  // adds a new timeslot input field
   const addTimeslot = (event) => {
     event.preventDefault();
-    console.log('adding timeslot');
+
     const $divPair = $('<div class="row">');
     const $datetimes = $('<input class="col-sm-6" type="text" name="datetimes" placeholder="Date and time here" style="width: 50%"/>');
     const $deletebtn = $('<button class="col-auto delete-input" id="delete-slot">delete</button>');
@@ -28,6 +27,47 @@ $(() => {
     $('#last-input').after($divPair);
   };
 
+   const submitEvent = (event) => {
+      event.preventDefault();
+      $('.error-msg').remove();
+
+      const eventTitle = $("#create-event input[name='title']").val();
+      const eventDes = $("#create-event input[name='description']").val();
+      const eventLo = $("#create-event input[name='location']").val();
+      const slotArray = document.querySelectorAll('input[name="datetimes"]');
+
+      const timeslots = [];
+
+      for (let key in slotArray) {
+        if (key === 'length' || key === 'item' || key === 'entries' || key === 'forEach' || key === 'key' || key === 'values' || key === 'keys') {
+          continue;
+        }
+        timeslots.push(slotArray[key].value);
+      }
+
+      $.ajax(
+        { method: 'POST',
+          url: '/api/users/new-event',
+          data:{
+            form: 'new-event',
+            eventTitle: eventTitle,
+            eventDes: eventDes,
+            eventLo: eventLo,
+            timeslots: timeslots,
+          },
+          success: (hint) => {
+            if (hint.message === 'success') {
+              window.location.href = `/host/${hint.hostURL}`;
+            }
+            else {
+              const errorMsg = $(`<p class="error-msg"> ${hint.message} </p>`);
+              $('#create-event').append(errorMsg);
+            }
+          }
+        }
+      );
+    };
+
   // disable/enable Readonly attribute in input and textarea in event pages
   // saves user input as placeholder
   const editInput = (function(event) {
@@ -49,47 +89,6 @@ $(() => {
     event.preventDefault();
     $(this).text($(this).text() === 'Edit' ? 'Save' : 'Edit');
   });
-
- const submitEvent = (event) => {
-    event.preventDefault();
-    $('.error-msg').remove();
-
-    const eventTitle = $("#create-event input[name='title']").val();
-    const eventDes = $("#create-event input[name='description']").val();
-    const eventLo = $("#create-event input[name='location']").val();
-    const slotArray = document.querySelectorAll('input[name="datetimes"]');
-
-    const timeslots = [];
-
-    for (let key in slotArray) {
-      if (key === 'length' || key === 'item' || key === 'entries' || key === 'forEach' || key === 'key' || key === 'values' || key === 'keys') {
-        continue;
-      }
-      timeslots.push(slotArray[key].value);
-    }
-
-    $.ajax(
-      { method: 'POST',
-        url: '/api/users/new-event',
-        data:{
-          form: 'new-event',
-          eventTitle: eventTitle,
-          eventDes: eventDes,
-          eventLo: eventLo,
-          timeslots: timeslots,
-        },
-        success: (hint) => {
-          if (hint.message === 'success') {
-            window.location.href = `/host/${hint.hostURL}`;
-          }
-          else {
-            const errorMsg = $(`<p class="error-msg"> ${hint.message} </p>`);
-            $('#create-event').append(errorMsg);
-          }
-        }
-      }
-    );
-  };
 
   // guest_event view toggle whether going to disable/enable timeslot selection
   const whetherGoing = (event) => {

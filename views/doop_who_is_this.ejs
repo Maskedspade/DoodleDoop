@@ -1,65 +1,50 @@
 <!DOCTYPE html>
 <html lang="en"><head>
 <meta charset="utf-8">
-  <head>
-    <title>Doodle Doop Login Page</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-
-    <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
-    <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
-    <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
-
-    <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
-    <script type="text/javascript" src="/scripts/app.js"></script>
-    <script type="text/javascript" src="/scripts/whoisthis.js"></script>
-  </head>
-
-  <body >
-    <header class="container">
-      <a href="/"><h1 class="row justify-content-start">DoodleDoop</h1></a>
-    </header>
-
-    <section>
-      <div class="container">
-        <form id="who-is-this">
-          <h3 class="row justify-content-center"> Who is this?</h3>
-
-          <div class="form-check">
-            <input class="form-check-input" type="radio" value="first-time-guest" name="groupOfRadios" checked/>
-            <label class="form-check-label" for="first-time-guest">First-time Guest</label>
-          </div>
-
-          <div class="form-check">
-            <input class="form-check-input" value="returning-guest" type="radio" name="groupOfRadios" />
-            <label class="form-check-label" for="return-guest">Returning Guest</label>
-          </div>
-
-          <input class="row justify-content-end btn-submit" id="who-is-this-next" type="submit" name="submit" value="Next" />
-        </form>
-
-        <form class="user-input" id="returning-guest" style="display:none">
-          <h3 class="row justify-content-center">Hey, friend!</h3>
-          <input class="row" id="before-err-msg" type="email" name="email" placeholder="Your email here"/>
-          <div class="row justify-content-between">
-            <a href="/" name="cancel" class="col-sm btn-submit text-center" style="margin-top: 35px">Cancel</a>
-            <input class="col btn-submit" type="submit" name="submit" value="Submit" />
-          </div>
-        </form>
-
-        <form class="user-input" id="first-time-guest" style="display:none">
-          <h3 class="row justify-content-center">Hey, new friend!</h3>
-          <input class="row" type="email" name="email" placeholder="Email"/>
-          <input class="row" id="before-err-msg" type="text" name="name" placeholder="Name"/>
-          <div class="row justify-content-between">
-            <a href="/" name="cancel" class="col-sm btn-submit text-center" style="margin-top: 35px">Cancel</a>
-            <input class="col btn-submit" type="submit" name="submit" value="Submit" />
-          </div>
-        </form>
-
-      </div>
-    </section>
-
-
-
-  </body>
+ <head>
+  <title>Who is this?</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+​
+  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
+  <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+​
+  <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+  <script type="text/javascript" src="/scripts/app.js"></script>
+  <script type="text/javascript" src="/scripts/whoisthis.js"></script>
+ </head>
+​
+ <body >
+  <header class="container">
+   <a href="/"><h1 class="row justify-content-start">DoodleDoop</h1></a>
+  </header>
+​
+  <section>
+   <div class="container">
+​
+    <form id="who-is-this">
+     <h3 class="row justify-content-center"> Who is this?</h3>
+​
+     <div class="form-check">
+      <input class="form-check-input" type="radio" value="first-time-guest" name="groupOfRadios" checked/>
+      <label class="form-check-label" for="first-time-guest">First-time Guest</label>
+     </div>
+​
+     <div class="form-check">
+      <input class="form-check-input" value="returning-guest" type="radio" name="groupOfRadios" />
+      <label class="form-check-label" for="return-guest">Returning Guest</label>
+     </div>
+​
+     <input class="row justify-content-end btn-submit" id="who-is-this-next" type="submit" name="submit" value="Next" />
+    </form>
+​
+​
+   </div>
+  </section>
+​
+​
+​
+<section id="guest-short-url" style="display: none"><%=guestURL%></section>
+​
+ </body>
 </html>

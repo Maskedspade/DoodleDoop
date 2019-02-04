@@ -2,7 +2,9 @@ $(() => {
 
   const submitLogin = (event) => {
     event.preventDefault();
+
     $('.error-msg').remove();
+
     const userEmail = $("#login input[name='email']").val();
     const userPassword = $("#login input[name='passid']").val();
 
@@ -27,8 +29,9 @@ $(() => {
     );
   };
 
- const submitRegistration = (event) => {
+  const submitRegistration = (event) => {
     event.preventDefault();
+
     $('.error-msg').remove();
 
     const userName = $("#registration input[name='name']").val();
