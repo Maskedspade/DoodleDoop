@@ -46,7 +46,7 @@ module.exports = {
   genHostURL: () => {
     let text = '';
     let possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    for (let i = 0; i < 100; i ++) {
+    for (let i = 0; i < 25; i ++) {
       text = text + possible.charAt(Math.floor(Math.random() * possible.length));
     }
     return text;

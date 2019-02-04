@@ -157,11 +157,12 @@ a {
 
 textarea {
   background-color: $color-black;
-  color: $color-dark-grey;
+  color: $color-white;
 }
 
 input {
   @include input(10px);
+  color: $color-white;
   &:focus,
   &:hover {
     outline: none;
