@@ -169,6 +169,9 @@ input.row {
 .user-input {
   margin: 1em 0;
 }
+.user-input p {
+  margin: 0 auto;
+}
 
 label {
   color: #fffcf6;
@@ -176,7 +179,7 @@ label {
 }
 
 html {
-  box-sizing: border-box !important;
+  box-sizing: border-box;
 }
 
 *, *:before, *:after {

@@ -139,8 +139,8 @@ module.exports = (knex) => {
               timeslotsGroup: timeslotsGroup,
             };
 
-            // res.render('event', templateVars);
-            res.json(templateVars);
+            res.render('event', templateVars);
+            // res.json(templateVars);
 
           } else {
             res.send('ERROR');

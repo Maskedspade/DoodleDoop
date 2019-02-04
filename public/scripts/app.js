@@ -91,6 +91,7 @@ $(() => {
     );
   };
 
+  // guest_event view toggle whether going to disable/enable timeslot selection
   const whetherGoing = (event) => {
     event.preventDefault();
     const timeslotForm = $('#timeslot-form .form-check-input');
