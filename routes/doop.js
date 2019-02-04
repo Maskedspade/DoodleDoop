@@ -139,8 +139,16 @@ module.exports = (knex) => {
               timeslotsGroup: timeslotsGroup,
             };
 
-            // res.render('event', templateVars);
-            res.json(templateVars);
+            if (req.session.user) {
+
+
+
+            } else {
+              templateVars.userStatus = false;
+              templateVars.userName = null;
+              templateVars.userEmail = email;
+            res.render('event', templateVars);
+            }
 
           } else {
             res.send('ERROR');
@@ -214,6 +222,7 @@ module.exports = (knex) => {
                   templateVars.userEvents = eventList;
 
                   templateVars.guestURL = guestURL;
+
                   res.render("doop_who_is_this", templateVars);
                 } else {
                   res.send('ERROR');

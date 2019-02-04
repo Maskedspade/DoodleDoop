@@ -24,6 +24,135 @@ module.exports = (knex) => {
       return;
     }
 
+    if (req.body.form === 'identity') {
+      const userEmail = req.body.email;
+      const userName = req.body['name'];
+      const userStatus = req.body.identity;
+
+    if (userStatus === 'first-time') {
+      const checkEmpty = (userName, userEmail) => {
+        if (!username) {
+          return false;
+        }
+        if (!userEmail) {
+          return false;
+        }
+        if (userName.split(' ').join('') === '') {
+          return false;
+        }
+        if (userEmail.split(' ').join('') === '') {
+          return false;
+        }
+        return true;
+      };
+
+      if (!checkEmpty(userName, userEmail)) {
+        res.json({message: 'Cannot be blank', respondentInfo: null});
+        return;
+      }
+
+      res.json({message: 'success', respondentInfo: [userName, userEmail]});
+
+    }
+
+    if (userStatus === 'returning') {
+      const checkEmpty = (userEmail) => {
+        if (!userEmail) {
+          return false;
+        }
+        if (userEmail.split(' ').join('') === '') {
+          return false;
+        }
+        return true;
+      };
+
+      if (!checkEmpty(userName)) {
+        res.json({message: 'Cannot be blank', respondentInfo: null});
+      }
+
+      knex
+        .select('name', 'email', 'slot', 'event_identity')
+        .from('respondents')
+        .innerJoin('timeslots', 'timeslot_identity', 'timeslots.identity')
+        .where('email', userEmail)
+        .then((results) => {
+          if (results.length > 0) {
+
+            const respondSelect = results[0]['slot'];
+            const respondName = results[0]['name'];
+            const respondEmail = results[0]['email'];
+            const respondEvent = results[0]['event_identity'];
+
+          knex
+            .select("*")
+            .from("events")
+            .innerJoin('timeslots', 'events.identity', 'event_identity')
+            .leftOuterJoin('respondents', 'timeslots.identity', 'timeslot_identity')
+            .where('events.identity', respondEvent)
+            .then((output) => {
+
+              if (output.length > 0) {
+
+            let timeslotsGroup = {};
+
+            output.forEach(key => {
+              if (!timeslotsGroup[key.slot]) {
+                timeslotsGroup[key.slot] = [];
+                timeslotsGroup[key.slot].push([key['name'], key['email']]);
+              } else {
+                timeslotsGroup[key.slot].push([key['name'], key['email']]);
+              }
+            });
+
+            const templateVars = {
+              hostURL: results[0]['hosturl'],
+              guestURL: results[0]['guesturl'],
+              title: results[0]['title'],
+              description: results[0]['description'],
+              location: results[0]['location'],
+              timeslotsGroup: timeslotsGroup,
+            };
+
+              templateVars.userStatus = false;
+              templateVars.userName = null;
+              templateVars.userEmail = null;
+
+            res.json({message: 'success', respondentInfo: templateVars});
+
+          } else {
+            res.send('ERROR');
+          }
+
+        });
+
+
+                    templateVars.userEvents = eventList;
+
+                    templateVars.guestURL = guestURL;
+
+                    res.render("doop_who_is_this", templateVars);
+
+                } else {
+                  res.json({message: 'Something went wrong. Please try again.', respondentInfo: null});
+                }
+              });
+
+
+
+          } else {
+            res.json({message: 'Cannot find matching email. Please try again.', respondentInfo: null});
+          }
+        });
+
+
+
+
+
+
+    };
+
+    }
+
     if (req.body.form === 'login') {
       const userEmail = req.body.userEmail;
       const userPassword = req.body.userPassword;
