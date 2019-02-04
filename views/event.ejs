@@ -10,6 +10,9 @@
 
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
+    <script type="text/javascript" src="/scripts/picktime.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
   </head>
 
   <body>
@@ -17,8 +20,13 @@
       <h1 class="row justify-content-start">DoodleDoop</h1>
     </header>
 
-    <section class="container content-wrapper">
+    <section class="container content-wrapper" id="host-event-page" >
+
       <div class="row">
+        <h2 style="color: #7da5a7">This is your URL: host/<%= hostURL%> <br> Share this URL with your friends: event/<%= guestURL%></h2>
+      </div>
+
+      <div class="row user-input">
         <h3 class="col-auto text-center">Event Invitation</h3>
         <button class="col-sm-3 btn-lg-err" id="delete-event">Delete Event</button>
       </div>
@@ -39,19 +47,23 @@
       </div>
 
       <%for (let slot in timeslotsGroup) {%>
-        <div class="row user-input">
-          <input class="col-sm-4" type="text" name="timeslot" placeholder="<%= slot%>" readonly/>
+        <div class="row justify-content-between user-input">
+          <input class="col-sm-4" id="slot" type="text" name="timeslot" placeholder="<%= slot%>" readonly/>
           <button class="col-auto align-self-end edit-input">Edit</button>
           <button class="col-auto align-self-end delete-input">Delete</button>
-          <% if (timeslotsGroup[slot].length === 1) {%>
-            <%if (timeslotsGroup[slot][0][0] === null) {%>
-              <p class="col-auto align-self-end"><%= 0%></p>
-            <% } else {%>
-              <p class="col-auto align-self-end"><%= timeslotsGroup[slot].length%></p>
-            <% }%>
+          <% if ((timeslotsGroup[slot].length === 1) && (timeslotsGroup[slot][0][0] === null)) {%>
+            <p class="col-auto align-self-end"><%= 0%> People</p>
+          <% } else {%>
+            <% if(timeslotsGroup[slot].length > 1) {%>
+              <p class="col-auto align-self-end"><%= timeslotsGroup[slot].length%> People</p>
+            <% } else { %>
+              <p class="col-auto align-self-end"><%= timeslotsGroup[slot].length%> Person</p>
+              <% } %>
           <% }%>
         </div>
       <% } %>
+
+      <div id="last-input"></div>
 
       <div class="row">
         <button class="col-auto" id="add-timeslot">Add timeslot &#43;</button>

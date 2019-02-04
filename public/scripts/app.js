@@ -3,7 +3,7 @@ $(() => {
   // adds a new timeslot input field
   const addTimeslot = (event) => {
     event.preventDefault();
-
+    console.log('adding timeslot');
     const $divPair = $('<div class="row">');
     const $datetimes = $('<input class="col-sm-6" type="text" name="datetimes" placeholder="Date and time here" style="width: 50%"/>');
     const $deletebtn = $('<button class="col-auto delete-input" id="delete-slot">delete</button>');
@@ -91,22 +91,31 @@ $(() => {
     );
   };
 
+  // guest_event view toggle whether going to disable/enable timeslot selection
   const whetherGoing = (event) => {
     event.preventDefault();
     const timeslotForm = $('#timeslot-form .form-check-input');
     timeslotForm.attr('disabled') ? timeslotForm.removeAttr('disabled', false) : timeslotForm.attr('disabled', true);
   };
 
+  // on events page, if guest chose not going, then deletes edit and delete buttons
+  function displayEvents() {
+    const notGoing = $("#slot[placeholder='NOT GOING']");
+    notGoing.next().css('visibility', 'hidden');
+    notGoing.next().next().css('visibility', 'hidden');
+  }
 
   // all inputs on event page have no borders unless on edit mode
   $('.edit-input').prev().addClass('host-input-on-save');
 
-  //JQUERY EVENT-EMITTERS BELOW
+  //event emitters below
   $('#create-event').on('submit', submitEvent);
   $('#add-timeslot').on('click', addTimeslot);
+
   $('.edit-input').on('click', editInput);
   $('.edit-input').on('click', toggleBtn);
 
   $('#not-going').on('click', whetherGoing);
 
+  displayEvents();
 });

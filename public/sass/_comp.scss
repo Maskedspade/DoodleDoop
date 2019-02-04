@@ -157,11 +157,12 @@ a {
 
 textarea {
   background-color: $color-black;
-  color: $color-dark-grey;
+  color: $color-white;
 }
 
 input {
   @include input(10px);
+  color: $color-white;
   &:focus,
   &:hover {
     outline: none;
@@ -176,6 +177,10 @@ input.row {
 
 .user-input {
   margin: 1em 0;
+
+  p{
+    margin: 0 auto;
+  }
 }
 
 label {

@@ -139,6 +139,7 @@ module.exports = (knex) => {
               timeslotsGroup: timeslotsGroup,
             };
 
+<<<<<<< HEAD
             if (req.session.user) {
 
 
@@ -149,6 +150,10 @@ module.exports = (knex) => {
               templateVars.userEmail = email;
             res.render('event', templateVars);
             }
+=======
+            res.render('event', templateVars);
+            // res.json(templateVars);
+>>>>>>> 446cff6650c89526e6d31aaac26025541f01dd68
 
           } else {
             res.send('ERROR');
