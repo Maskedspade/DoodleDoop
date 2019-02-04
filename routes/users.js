@@ -49,9 +49,13 @@ module.exports = (knex) => {
                 .from('users')
                 .where('email', userEmail)
                 .then((output) => {
-              req.session.user = output[0]['identity'];  //SET USER COOKIE TO IDENTITY
-              res.send('success');
-              return;
+                  if (output.length > 0) {
+                    req.session.user = output[0]['identity'];  //SET USER COOKIE TO IDENTITY
+                    res.send('success');
+                    return;
+                  } else {
+                    res.send('Something went wrong. Please try again');
+                  }
                 });
 
             }
@@ -90,8 +94,12 @@ module.exports = (knex) => {
                     .from('users')
                     .where('email', userEmail)
                     .then((output) => {
-                      req.session.user = output[0]['identity']; //SET USER COOKIE TO IDENTITY
-                      res.send('success');
+                      if (output.length > 0) {
+                        req.session.user = output[0]['identity']; //SET USER COOKIE TO IDENTITY
+                        res.send('success');
+                      } else {
+                        res.send('Something went wrong. Please try again');
+                      }
                     });
                 });
               return;
@@ -180,32 +188,35 @@ module.exports = (knex) => {
                 .from('events')
                 .where('hosturl', uniqueHostURL)
                 .then((results) => {
-                  let uniqueTimeslots = [];
+                  if (results.length > 0) {
+                    let uniqueTimeslots = [];
 
-                  timeslots.forEach((slot) => {
-                    let newObj = {
-                      slot: slot,
-                      count: 1,  // USE COUNT 1 TO INDICATE "TIMESLOT IS STILL ON"
-                      event_identity: results[0]['identity'],
-                    };
-                    uniqueTimeslots.push(newObj);
-                  });
-
-                  let newObjNotGOING = {
-                    identity: helpers.genRandomNum(),
-                    slot: 'NOT GOING',
-                    count: 1,
-                    event_identity: results[0]['identity'],
-                  };
-
-                  uniqueTimeslots.push(newObjNotGOING);
-
-                  knex('timeslots')
-                    .insert(uniqueTimeslots)
-                    .then( ()=> {
-                      res.json({message: 'success', hostURL: uniqueHostURL});
+                    timeslots.forEach((slot) => {
+                      let newObj = {
+                        slot: slot,
+                        count: 1,  // USE COUNT 1 TO INDICATE "TIMESLOT IS STILL ON"
+                        event_identity: results[0]['identity'],
+                      };
+                      uniqueTimeslots.push(newObj);
                     });
 
+                    let newObjNotGOING = {
+                      identity: helpers.genRandomNum(),
+                      slot: 'NOT GOING',
+                      count: 1,
+                      event_identity: results[0]['identity'],
+                    };
+
+                    uniqueTimeslots.push(newObjNotGOING);
+
+                    knex('timeslots')
+                      .insert(uniqueTimeslots)
+                      .then( ()=> {
+                        res.json({message: 'success', hostURL: uniqueHostURL});
+                      });
+                  } else {
+                    console.log('database query error');
+                  }
                 });
             });
 
@@ -216,7 +227,7 @@ module.exports = (knex) => {
             .from("users")
             .where('identity', req.session.user)
             .then((results) => {
-
+            if (results.length > 0) {
               const newEventObj = {
                 hosturl: uniqueHostURL,
                 guesturl: uniqueGuestURL,
@@ -234,6 +245,7 @@ module.exports = (knex) => {
                 .from('events')
                 .where('hosturl', uniqueHostURL)
                 .then((results) => {
+                  if (results.length > 0) {
                   let uniqueTimeslots = [];
 
                   timeslots.forEach((slot) => {
@@ -259,10 +271,14 @@ module.exports = (knex) => {
                     .then( ()=> {
                       res.json({message: 'success', hostURL: uniqueHostURL});
                     });
-
+                  } else {
+                    console.log('database query error');
+                  }
                 });
             });
-
+          } else {
+            console.log('database query error');
+          }
           });
         }
       }

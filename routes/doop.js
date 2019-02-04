@@ -21,6 +21,8 @@ module.exports = (knex) => {
         .where('users.identity', req.session.user)
         .then((results) => {
 
+        if (results.length > 0) {
+
           templateVars.userStatus = true;
           templateVars.userName = results[0]['name'];
           templateVars.userEmail = results[0]['email'];
@@ -41,10 +43,13 @@ module.exports = (knex) => {
 
               eventList.push(obj);
             });
+          } else {
+            res.send('ERROR');
           }
           templateVars.userEvents = eventList;
 
           res.render('index', templateVars);
+        }
       });
     } else { //EJS DATA AS GUEST
       const templateVars = {
@@ -83,15 +88,9 @@ module.exports = (knex) => {
       res.render("create_event");
   });
 
-  // test for 404 no_events_found page
-  // router.get("/no_events_found", (req, res) => {
-  //     res.render("no_events_found");
-  // });
-
   router.get("/event_guest", (req, res) => {
       res.render("event_guest");
   });
-
 
   // // HOST URL BELOW ***********************************************
   // router.get("/event/:hostLongURL", (req, res) => {
@@ -196,6 +195,9 @@ module.exports = (knex) => {
                 .innerJoin('events', 'users.identity', 'events.user_identity')
                 .where('users.identity', req.session.user)
                 .then((results) => {
+
+                  if (results.length > 0) {
+
                   templateVars.userName = results[0]['name'];
                   templateVars.userEmail = results[0]['email'];
 
@@ -223,7 +225,10 @@ module.exports = (knex) => {
 
                   templateVars.guestURL = guestURL;
                   res.render("doop_who_is_this", templateVars);
-                });
+                } else {
+                  res.send('ERROR');
+                }
+              });
 
             } else {
               //WHEN GUEST VISIT GUEST URL
