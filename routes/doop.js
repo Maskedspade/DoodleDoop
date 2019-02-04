@@ -249,6 +249,24 @@ module.exports = (knex) => {
       });
   });
 
+  router.post("/event/:guestShortURL", (req, res) => {
+    const respondentInfo = req.body.respondentInfo;
+    const templateVarsChild = req.body.templateVars;
+
+    let templateVars = {};
+    for (let key in templateVarsChild) {
+      templateVars[key] = templateVarsChild[key];
+    }
+    templateVars.userName = respondentInfo[0];
+    templateVars.userEmail = respondentInfo[1];
+    templateVars.userSelect = respondentInfo[2];
+
+    console.log(templateVars);
+    return;
+
+  });
+
+
   return router;
 
 };

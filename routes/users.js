@@ -20,10 +20,11 @@ module.exports = (knex) => {
       return;
     }
 
-    if (req.body.form === 'identity') {
-      const userEmail = req.body.email;
-      const userName = req.body['name'];
-      const userStatus = req.body.status;
+  if (req.body.form === 'identity') {
+    const userEmail = req.body.email;
+    const userName = req.body['name'];
+    const userStatus = req.body.status;
+    const guestURL = req.body.guestURL;
 
     if (userStatus === 'first-time') {
       const checkEmpty = (userName, userEmail) => {
@@ -46,8 +47,70 @@ module.exports = (knex) => {
 
         res.json({message: 'Cannot be blank', respondentInfo: [userName, userEmail, null], templateVars: null});
         return;
-      }                                                                           ////////////////////
-      res.json({message: 'success', respondentInfo: [userName, userEmail, null], templateVars: null});
+      }
+
+      knex
+        .select('timeslots.identity') //WRITE NEW RESPONDENT TO DB AND SET DEFAULT TO NOT GOING
+        .from('events')
+        .innerJoin('timeslots', 'events.identity', 'timeslots.event_identity')
+        .where('guesturl', guestURL)
+        .where('slot', 'NOT GOING')
+        .then((results)=>{
+          if (results.length > 0) {
+            const slotIDByDefault = results[0].identity;
+
+            knex('respondents')
+               .insert({name: userName, email: userEmail, timeslot_identity: slotIDByDefault})
+               .then(() => {
+                  knex
+                    .select('*')
+                    .from('events')
+                    .innerJoin('timeslots', 'events.identity', 'event_identity')
+                    .leftOuterJoin('respondents', 'timeslots.identity', 'timeslot_identity')
+                    .where('events.guesturl', guestURL)
+                    .then((results)=> {
+                        const respondSelect = 'NOT GOING';
+                        const respondName = userName;
+                        const respondEmail = userEmail;
+                        const respondEvent = results[0]['event_identity'];
+
+                        let timeslotsGroup = {};
+
+                        results.forEach(key => {
+                          if (!timeslotsGroup[key.slot]) {
+                            timeslotsGroup[key.slot] = [];
+                            timeslotsGroup[key.slot].push([key['name'], key['email']]);
+                          } else {
+                            timeslotsGroup[key.slot].push([key['name'], key['email']]);
+                          }
+                        });
+
+                        const templateVars = {
+                          hostURL: results[0]['hosturl'],
+                          guestURL: results[0]['guesturl'],
+                          title: results[0]['title'],
+                          description: results[0]['description'],
+                          location: results[0]['location'],
+                          timeslotsGroup: timeslotsGroup,
+                        };
+
+                        templateVars.userStatus = false;
+                        templateVars.userName = null;
+                        templateVars.userEmail = null;
+
+                        res.json({
+                          message: 'success',
+                          respondentInfo: [userName, userEmail, 'NOT GOING'],
+                          templateVars: templateVars
+                        });
+                    });
+
+              });
+
+          } else {
+            res.json({message: 'Something went wrong.', respondentInfo: [userName, userEmail, null], templateVars: null});
+          };
+        });
     }
 
     if (userStatus === 'returning') {
