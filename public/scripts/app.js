@@ -61,7 +61,7 @@ $(() => {
             }
             else {
               const errorMsg = $(`<p class="error-msg"> ${hint.message} </p>`);
-              $('#create-event').append(errorMsg);
+              $('#before-err-msg').after(errorMsg);
             }
           }
         }
