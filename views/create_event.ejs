@@ -21,9 +21,10 @@
 
   <body>
     <div class="container">
-      <header class="row justify-content-start">
-        <a href="/"><h1>DoodleDoop</h1></a>
-      </header>
+    <header class="container">
+      <a href="/"><h1 class="row justify-content-start">DoodleDoop</h1></a>
+      <% include partials/_header %>
+    </header>
 
 
       <section class="row">
@@ -38,7 +39,7 @@
 
             <input class="row" type="text" name="datetimes" placeholder="Date and time here" style="width: 50%" id="last-input"/>
 
-            <button class="row" id="add-timeslot before-err-msg">Add timeslot &#43;</button>
+            <button class="row" id="add-timeslot">Add timeslot &#43;</button>
 
             <div class="row justify-content-between">
               <a href="/" name="cancel" class="col-sm-2 text-center" style="margin-top: 35px">Cancel</a>

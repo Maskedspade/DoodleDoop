@@ -8,17 +8,13 @@ const helpers = require('../helpers');
 
 module.exports = (knex) => {
 
-  // router.get("/", (req, res) => {
-  //   knex
-  //     .select("*")
-  //     .from("users")
-  //     .then((results) => {
-  //       res.json(results);
-  //   });
-  // });
+  router.get("/event/:guestURL", (req, res) => {
+    res.render('event_guest');
+  });
 
 //LOGIN AND REGISTER DATA GOES IN HERE *******************************
   router.post("/", (req, res) => {
+
     if (!req.body.form) {
       res.status(400).json({ error: 'invalid request'});
       return;
@@ -29,8 +25,7 @@ module.exports = (knex) => {
       const userName = req.body['name'];
       const userStatus = req.body.status;
 
-    if (userStatus === 'first-timer') {
-      console.log('hey');
+    if (userStatus === 'first-time') {
       const checkEmpty = (userName, userEmail) => {
         if (!userName) {
           return false;
@@ -48,6 +43,7 @@ module.exports = (knex) => {
       };
 
       if (!checkEmpty(userName, userEmail)) {
+
         res.json({message: 'Cannot be blank', respondentInfo: [userName, userEmail, null], templateVars: null});
         return;
       }                                                                           ////////////////////
@@ -65,8 +61,11 @@ module.exports = (knex) => {
         return true;
       };
 
-      if (!checkEmpty(userName)) {
-        res.json({message: 'Cannot be blank', respondentInfo: [userName, userEmail, null], templateVars: null});
+      if (!checkEmpty(userEmail)) {
+        res.json({
+          message: 'Cannot be blank',
+          respondentInfo: [userName, userEmail, null],
+          templateVars: null});
         return;
       }
 
@@ -77,7 +76,6 @@ module.exports = (knex) => {
         .where('email', userEmail)
         .then((results) => {
           if (results.length > 0) {
-
             const respondSelect = results[0]['slot'];
             const respondName = results[0]['name'];
             const respondEmail = results[0]['email'];
@@ -135,21 +133,14 @@ module.exports = (knex) => {
 
         } else {
           res.json({
-            message: 'Something went wrong. Please try again.',
-            respondentInfo: [userName, userEmail, null],
+            message: 'Cannot find matching email. Please try again.',
+            respondentInfo: null,
             templateVars: null,
           });
         }
       });
 
-      } else {
-        res.json({
-          message: 'Cannot find matching email. Please try again.',
-          respondentInfo: null,
-          templateVars: null,
-        });
       }
-
     }
 
     if (req.body.form === 'login') {
@@ -206,11 +197,11 @@ module.exports = (knex) => {
             return;
           }
           if (results.find(key => key.email === userEmail)) {
-            res.send('Email already exists');
+            res.send('Email already exists.');
             return;
           } else {
             if (userPassword !== userPassword2) {
-              res.send('Password does not match');
+              res.send('Password does not match.');
               return;
             } else {
 
@@ -226,7 +217,7 @@ module.exports = (knex) => {
                         req.session.user = output[0]['identity']; //SET USER COOKIE TO IDENTITY
                         res.send('success');
                       } else {
-                        res.send('Something went wrong. Please try again');
+                        res.send('Something went wrong. Please try again.');
                       }
                     });
                 });
