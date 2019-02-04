@@ -119,7 +119,7 @@ input:focus, button:focus, textarea:focus {
 }
 
 #add-timeslot {
-  margin: 10px 0;
+  margin: 10px 10px;
 }
 
 .delete-input {

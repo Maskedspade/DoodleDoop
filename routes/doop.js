@@ -83,12 +83,11 @@ module.exports = (knex) => {
     res.redirect('/');
   });
 
-  // to be deleted
   router.get("/who_is_this", (req, res) => {
     req.session = null;
     res.render('doop_who_is_this');
   });
-  // CREATE EVENT BELOW
+  // create event
   router.get("/create_event", (req, res) => {
       res.render("create_event");
   });

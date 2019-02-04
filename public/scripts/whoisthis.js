@@ -49,9 +49,12 @@ $(() => {
   };
 
   const submitAsReturning = (event) => {
+    console.log("inside return");
     event.preventDefault();
     $('.error-msg').remove();
     const guestEmail = $("#first-time-guest input[name='email']").val();
+    console.log("guestemail after");
+    console.log(guestEmail);
     $.ajax({
       method: 'POST',
         url: '/api/users',
