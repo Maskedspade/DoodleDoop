@@ -122,11 +122,11 @@ module.exports = (knex) => {
             let timeslotsGroup = {};
 
             results.forEach(key => {
-              if (!timeslotsGroup[key.timeslot_identity]) {
+              if (!timeslotsGroup[key.slot]) {
                 timeslotsGroup[key.slot] = [];
                 timeslotsGroup[key.slot].push([key['name'], key['email']]);
               } else {
-                timeslotsGroup[key.timeslot_identity].push([key['name'], key['email']]);
+                timeslotsGroup[key.slot].push([key['name'], key['email']]);
               }
             });
 
@@ -139,7 +139,8 @@ module.exports = (knex) => {
               timeslotsGroup: timeslotsGroup,
             };
 
-            res.render('event', templateVars);
+            // res.render('event', templateVars);
+            res.json(templateVars);
 
           } else {
             res.send('ERROR');
