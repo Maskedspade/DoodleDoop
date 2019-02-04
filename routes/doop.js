@@ -95,7 +95,6 @@ module.exports = (knex) => {
   // // HOST URL BELOW ***********************************************
   router.get("/host/:hostLongURL", (req, res) => {
     const hostURL = req.params.hostLongURL;
-    const templateVars = {};
 
       knex
         .select('*')
@@ -109,23 +108,44 @@ module.exports = (knex) => {
         .select("*")
         .from("events")
         .innerJoin('timeslots', 'events.identity', 'event_identity')
-        .innerJoin('respondents', 'timeslots.identity', 'timeslot_identity')
+        .leftOuterJoin('respondents', 'timeslots.identity', 'timeslot_identity')
         .where('events.hosturl', hostURL)
         .then((results) => {
 
+          if (results.length > 0) {
 
+            let timeslotsGroup = {};
 
-    if (req.session.user) { }
+            results.forEach(key => {
+              if (!timeslotsGroup[key.timeslot_identity]) {
+                timeslotsGroup[key.slot] = [];
+                timeslotsGroup[key.slot].push([key['name'], key['email']]);
+              } else {
+                timeslotsGroup[key.timeslot_identity].push([key['name'], key['email']]);
+              }
+            });
 
+            const templateVars = {
+              hostURL: results[0]['hosturl'],
+              guestURL: results[0]['guesturl'],
+              title: results[0]['title'],
+              description: results[0]['description'],
+              location: results[0]['location'],
+              timeslotsGroup: timeslotsGroup,
+            };
 
+            res.render('event', templateVars);
 
+          } else {
+            res.send('ERROR');
+          }
 
+        });
           //WHEN HOST URL DOES NOT EXIST IN DB
         } else {
           res.render("no_events_found");
         }
-
-    });
+      });
   });
 
 
