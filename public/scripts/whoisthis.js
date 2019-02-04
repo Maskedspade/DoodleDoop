@@ -40,10 +40,9 @@ $(() => {
         if (hint.message === 'success') {
             redirectToGuestEvent(hint['respondentInfo'], hint['templateVars']);
         } else {
-          const errorMsg = $(`<p class="row justify-content-center error-msg"> ${hint} </p>`);
-          console.log($('#before-err-msg'), errorMsg);
+          const errorMsg = $(`<p class="row justify-content-center error-msg"> ${hint.message} </p>`);
           $('body').append(errorMsg);
-          $('#before-err-msg').after(errorMsg);
+          $('#first-time-guest #before-err-msg').after(errorMsg);
         }
       }
     });
@@ -67,7 +66,7 @@ $(() => {
             redirectToGuestEvent(hint['respondentInfo'], hint['templateVars']);
         } else {
           const errorMsg = $(`<p class="row justify-content-center error-msg"> ${hint.message} </p>`);
-          $('#before-err-msg').after(errorMsg);
+          $('#returning-guest #before-err-msg').after(errorMsg);
         }
       }
     });
