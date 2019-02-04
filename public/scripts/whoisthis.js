@@ -22,7 +22,7 @@ $(() => {
 
   const submitAsFirstTime = (event) => {
     event.preventDefault();
-
+    $('.error-msg').remove();
     const guestEmail = $("#first-time-guest input[name='email']").val();
     const guestName = $("#first-time-guest input[name='name']").val();
 
@@ -51,7 +51,7 @@ $(() => {
 
   const submitAsReturning = (event) => {
     event.preventDefault();
-
+    $('.error-msg').remove();
     const guestEmail = $("#first-time-guest input[name='email']").val();
     $.ajax({
       method: 'POST',
