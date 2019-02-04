@@ -1,5 +1,7 @@
 $(() => {
 
+  const hiddenURL = $('#guest-short-url');
+
   const submitIdentity = (event) => {
     event.preventDefault();
 
@@ -14,14 +16,20 @@ $(() => {
         $("#returning-guest").fadeIn();
       }
     });
-  }
+  };
 
-  const submitAsFirstTime = () => {
+  const redirectToGuestEvent = (respondentInfo, templateVars) => {};
+
+  const submitAsFirstTime = (event) => {
+    event.preventDefault();
+
     const guestEmail = $("#first-time-guest input[name='email']").val();
-    const guestEname = $("#first-time-guest input[name='name']");
+    const guestName = $("#first-time-guest input[name='name']").val();
+
+    console.log(guestEmail, guestName);
     $.ajax({
       method: 'POST',
-      url: 'api/users',
+      url: '/api/users',
       data: {
         form: 'identity',
         status: 'first-timer',
@@ -29,21 +37,25 @@ $(() => {
         name: guestName
       },
       success: (hint) => {
-        if (hint === 'success') {
-          window.location.href = '/event/guestURL';
+        if (hint.message === 'success') {
+            redirectToGuestEvent(hint['respondentInfo'], hint['templateVars']);
         } else {
           const errorMsg = $(`<p class="row justify-content-center error-msg"> ${hint} </p>`);
+          console.log($('#before-err-msg'), errorMsg);
+          $('body').append(errorMsg);
           $('#before-err-msg').after(errorMsg);
         }
       }
     });
   };
 
-  const submitAsReturning = () => {
+  const submitAsReturning = (event) => {
+    event.preventDefault();
+
     const guestEmail = $("#first-time-guest input[name='email']").val();
     $.ajax({
       method: 'POST',
-      url: 'api/users',
+        url: '/api/users',
       data: {
         form: 'identity',
         status: 'returning',
@@ -51,10 +63,10 @@ $(() => {
         name: null
       },
       success: (hint) => {
-        if (hint === 'success') {
-          window.location.href = '/event/guestURL';
+        if (hint.message === 'success') {
+            redirectToGuestEvent(hint['respondentInfo'], hint['templateVars']);
         } else {
-          const errorMsg = $(`<p class="row justify-content-center error-msg"> ${hint} </p>`);
+          const errorMsg = $(`<p class="row justify-content-center error-msg"> ${hint.message} </p>`);
           $('#before-err-msg').after(errorMsg);
         }
       }

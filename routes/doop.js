@@ -139,21 +139,21 @@ module.exports = (knex) => {
               timeslotsGroup: timeslotsGroup,
             };
 
-<<<<<<< HEAD
-            if (req.session.user) {
+
+            // if (req.session.user) {
 
 
 
-            } else {
-              templateVars.userStatus = false;
-              templateVars.userName = null;
-              templateVars.userEmail = email;
-            res.render('event', templateVars);
-            }
-=======
+            // } else {
+            //   templateVars.userStatus = false;
+            //   templateVars.userName = null;
+            //   templateVars.userEmail = email;
+            // res.render('event', templateVars);
+            // }
+
             res.render('event', templateVars);
             // res.json(templateVars);
->>>>>>> 446cff6650c89526e6d31aaac26025541f01dd68
+
 
           } else {
             res.send('ERROR');

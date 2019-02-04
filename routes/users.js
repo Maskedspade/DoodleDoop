@@ -27,11 +27,12 @@ module.exports = (knex) => {
     if (req.body.form === 'identity') {
       const userEmail = req.body.email;
       const userName = req.body['name'];
-      const userStatus = req.body.identity;
+      const userStatus = req.body.status;
 
-    if (userStatus === 'first-time') {
+    if (userStatus === 'first-timer') {
+      console.log('hey');
       const checkEmpty = (userName, userEmail) => {
-        if (!username) {
+        if (!userName) {
           return false;
         }
         if (!userEmail) {
@@ -47,12 +48,10 @@ module.exports = (knex) => {
       };
 
       if (!checkEmpty(userName, userEmail)) {
-        res.json({message: 'Cannot be blank', respondentInfo: null});
+        res.json({message: 'Cannot be blank', respondentInfo: [userName, userEmail, null], templateVars: null});
         return;
-      }
-
-      res.json({message: 'success', respondentInfo: [userName, userEmail]});
-
+      }                                                                           ////////////////////
+      res.json({message: 'success', respondentInfo: [userName, userEmail, null], templateVars: null});
     }
 
     if (userStatus === 'returning') {
@@ -67,7 +66,8 @@ module.exports = (knex) => {
       };
 
       if (!checkEmpty(userName)) {
-        res.json({message: 'Cannot be blank', respondentInfo: null});
+        res.json({message: 'Cannot be blank', respondentInfo: [userName, userEmail, null], templateVars: null});
+        return;
       }
 
       knex
@@ -117,39 +117,38 @@ module.exports = (knex) => {
               templateVars.userName = null;
               templateVars.userEmail = null;
 
-            res.json({message: 'success', respondentInfo: templateVars});
+            res.json({
+              message: 'success',
+              respondentInfo: [respondName, respondEmail, respondSelect],
+              templateVars: templateVars,
+            });
 
           } else {
-            res.send('ERROR');
+            res.json({
+              message: 'Cannot be blank',
+              respondentInfo: null,
+              templateVars: null
+            });
           }
 
         });
 
+        } else {
+          res.json({
+            message: 'Something went wrong. Please try again.',
+            respondentInfo: [userName, userEmail, null],
+            templateVars: null,
+          });
+        }
+      });
 
-                    templateVars.userEvents = eventList;
-
-                    templateVars.guestURL = guestURL;
-
-                    res.render("doop_who_is_this", templateVars);
-
-                } else {
-                  res.json({message: 'Something went wrong. Please try again.', respondentInfo: null});
-                }
-              });
-
-
-
-          } else {
-            res.json({message: 'Cannot find matching email. Please try again.', respondentInfo: null});
-          }
+      } else {
+        res.json({
+          message: 'Cannot find matching email. Please try again.',
+          respondentInfo: null,
+          templateVars: null,
         });
-
-
-
-
-
-
-    };
+      }
 
     }
 
