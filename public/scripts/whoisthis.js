@@ -15,10 +15,11 @@ $(() => {
         status: 'returning',
         name: null,
         email: guestEmail,
+        guestURL: hiddenURL,
       },
       success: (hint) => {
         if (hint.message === 'success') {
-            redirectToGuestEvent(hint.respondentInfo, hint.templateVars);
+            redirectToGuestEvent(hint.respondentInfo, hint.templateVars, hiddenURL);
         } else {
           const errorMsg = $(`<p class="row justify-content-center error-msg"> ${hint.message} </p>`);
           $('#returning-guest #before-err-msg').after(errorMsg);
@@ -42,10 +43,11 @@ $(() => {
         status: 'first-time',
         name: guestName,
         email: guestEmail,
+        guestURL: hiddenURL,
       },
       success: (hint) => {
         if (hint.message === 'success') {
-            redirectToGuestEvent(hint.respondentInfo, hint.templateVars);
+            redirectToGuestEvent(hint.respondentInfo, hint.templateVars, hiddenURL);
         } else {
           const errorMsg = $(`<p class="row justify-content-center error-msg"> ${hint.message} </p>`);
           $('#before-err-msg').after(errorMsg);
@@ -54,18 +56,30 @@ $(() => {
     });
   }
 
-  const redirectToGuestEvent = (respondentInfo, templateVars) => {
-      $.ajax({
-      method: 'GET',
-      url: `/api/users/event/${hiddenURL}`,
-      data:{
-        respondentInfo: respondentInfo,
-        templateVars: templateVars,
-      },
-      success: (results) => {
-        console.log('successWOW');
-      }
-    });
+  const redirectToGuestEvent = (respondentInfo, templateVars, hiddenURL) => {
+
+
+    // const $newform = $(`<form id="ready-to-submit-to-server" style="display: none" action="/event/${hiddenURL}" method="POST"></form>`);
+
+    // const $newsubmitbtn = $('<input type="submit" name="submit-to-server" value="click to submit"/>');
+
+    // const $newinput1 = $('<input name="respondentInfo-userName"/>');
+    // const $newinput2 = $('<input name="respondentInfo-userEmail"/>');
+    // const $newinput3 = $('<input name="">');
+
+
+    // const $newinput2 = $('<input name="templateVars" value="templateVars"/>');
+    // $newinput2.val(JSON.parse(templateVars));
+
+    // $newform.append($newinput1);
+    // $newform.append($newinput2);
+    // $newform.append($newsubmitbtn);
+
+    // $('body').append($newform);
+
+    // $('#ready-to-submit-to-server').submit();
+
+    // return;
 
   };
 
