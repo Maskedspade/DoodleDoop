@@ -3,11 +3,11 @@
 <meta charset="utf-8">
   <head>
     <title>Create an Event</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
     <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
     <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
@@ -20,15 +20,14 @@
   </head>
 
   <body>
-    <div class="container">
     <header class="container">
       <a href="/"><h1 class="row justify-content-start">DoodleDoop</h1></a>
       <% include partials/_header %>
     </header>
 
 
-      <section class="row">
-          <form class="container" name="create" id="create-event">
+        <section class="container">
+          <form name="create" id="create-event">
             <h3 class="row">Create an Event</h3>
 
             <input class="row" type="text" name="title" placeholder="EVENT TITLE" style="width: 50%"/>
@@ -50,7 +49,7 @@
               <input class="col-sm-2 btn-submit" type="submit" name="submit" value="Submit" />
             </div>
           </form>
-      </section>
+        </section>
     </div>
   </body>
 
