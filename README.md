@@ -34,6 +34,17 @@ Project Setup skeleton from Lighthouse Labs repo.
 !['our database setup'](https://github.com/Maskedspade/DoodleDoop/blob/master/docs/data-structure.png)
 This is our database Setup.
 
+Database Migrations:
+1. Create 'Users' table
+2. Create 'Events' table 
+3. Create 'Timeslots' table
+4. Create 'Respondents' table
+
+Logic: One-to-many Relations
+  - Each user can have multiple events.
+  - Each event can have multiple timeslots -> We store users' choice + a by default it generates a "NOT GOING" timeslot to keep track of the number of people going on certain times/not going.
+  - Each Timeslots can have multiple respondents.
+
 ## Project Showcase
 
 !['Login from Home'](https://github.com/Maskedspade/DoodleDoop/blob/master/docs/Login'.gif)
