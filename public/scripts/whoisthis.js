@@ -2,66 +2,70 @@ $(() => {
 
   const submitIdentity = (event) => {
     event.preventDefault();
-    // $('.error-msg').remove();
 
-    const radioValue = $('#who-is-this input:checked').val();
+    // value is either first-time-guest or returning-guest
+    const radioValue = $("#who-is-this input[name='groupOfRadios']:checked").val();
+
+      $('#who-is-this').fadeOut("slow", function() {
+      if (radioValue === 'first-time-guest') {
+        $("#first-time-guest").fadeIn();
+      }
+      if(radioValue === 'returning-guest') {
+        $("#returning-guest").fadeIn();
+      }
+    });
+  }
 
 
-  //   $.ajax(
-  //     { method: 'POST',
-  //       url: '/api/users',
-  //       data:{
-  //         form: 'login',
-  //         userEmail: userEmail,
-  //         userPassword: userPassword,
-  //       },
-  //       success: (hint) => {
-  //         if (hint === 'success') {
-  //           window.location.href = '/';
-  //         }
-  //         else {
-  //           const errorMsg = $(`<p class="row justify-content-center error-msg"> ${hint} </p>`);
-  //           $('#before-err-msg').after(errorMsg);
-  //         }
-  //       }
-  //     }
-  //   );
-  // };
+  const submitAsFirstTime = () => {
+    const guestEmail = $("#first-time-guest input[name='email']").val();
+    const guestEname = $("#first-time-guest input[name='name']");
+    $.ajax({
+      method: 'POST',
+      url: 'api/users',
+      data: {
+        form: 'identity',
+        status: 'first-timer',
+        email: guestEmail,
+        name: guestName
+      },
+      success: (hint) => {
+        if (hint === 'success') {
+          window.location.href = '/event/guestURL';
+        } else {
+          const errorMsg = $(`<p class="row justify-content-center error-msg"> ${hint} </p>`);
+          $('#before-err-msg').after(errorMsg);
+        }
+      }
+    });
+  };
 
- // const submitRegistration = (event) => {
- //    event.preventDefault();
- //    $('.error-msg').remove();
+  const submitAsReturning = () => {
+    const guestEmail = $("#first-time-guest input[name='email']").val();
+    $.ajax({
+      method: 'POST',
+      url: 'api/users',
+      data: {
+        form: 'identity',
+        status: 'returning',
+        email: guestEmail,
+        name: null
+      },
+      success: (hint) => {
+        if (hint === 'success') {
+          window.location.href = '/event/guestURL';
+        } else {
+          const errorMsg = $(`<p class="row justify-content-center error-msg"> ${hint} </p>`);
+          $('#before-err-msg').after(errorMsg);
+        }
+      }
+    });
+  };
 
- //    const userName = $("#registration input[name='name']").val();
- //    const userEmail = $("#registration input[name='email']").val();
- //    const userPassword = $("#registration input[name='passid']").val();
- //    const userPassword2 = $("#registration input[name='passid2']").val();
 
- //    $.ajax(
- //      { method: 'POST',
- //        url: '/api/users',
- //        data:{
- //          form: 'registration',
- //          userName: userName,
- //          userEmail: userEmail,
- //          userPassword: userPassword,
- //          userPassword2: userPassword2,
- //        },
- //        success: (hint) => {
- //          if (hint === 'success') {
- //            window.location.href = '/';
- //          }
- //          else {
- //            const errorMsg = $(`<p class="row justify-content-center error-msg"> ${hint} </p>`);
- //            $('#before-err-msg').after(errorMsg);
- //          }
- //        }
- //      }
- //    );
- //  };
 
   //JQUERY EVENT-EMITTERS BELOW
-  $('#who-is-this input[name='submit']').on('submit', submitIdentity);
-  // $('#registration').on('submit', submitRegistration);
-
+  $('#who-is-this').on('submit', submitIdentity);
+  $('#first-time-guest').on('submit', submitAsFirstTime);
+  $('#returning-guest').on('submit', submitAsReturning);
 });
