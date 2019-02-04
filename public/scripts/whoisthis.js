@@ -7,26 +7,26 @@ $(() => {
     const radioValue = $('#who-is-this input:checked').val();
 
 
-  //   $.ajax(
-  //     { method: 'POST',
-  //       url: '/api/users',
-  //       data:{
-  //         form: 'login',
-  //         userEmail: userEmail,
-  //         userPassword: userPassword,
-  //       },
-  //       success: (hint) => {
-  //         if (hint === 'success') {
-  //           window.location.href = '/';
-  //         }
-  //         else {
-  //           const errorMsg = $(`<p class="row justify-content-center error-msg"> ${hint} </p>`);
-  //           $('#before-err-msg').after(errorMsg);
-  //         }
-  //       }
-  //     }
-  //   );
-  // };
+    $.ajax(
+      { method: 'POST',
+        url: '/api/users',
+        data:{
+          form: 'login',
+          userEmail: userEmail,
+          userPassword: userPassword,
+        },
+        success: (hint) => {
+          if (hint === 'success') {
+            window.location.href = '/';
+          }
+          else {
+            const errorMsg = $(`<p class="row justify-content-center error-msg"> ${hint} </p>`);
+            $('#before-err-msg').after(errorMsg);
+          }
+        }
+      }
+    );
+  };
 
  // const submitRegistration = (event) => {
  //    event.preventDefault();

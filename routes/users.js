@@ -201,7 +201,6 @@ module.exports = (knex) => {
                     });
 
                     let newObjNotGOING = {
-                      identity: helpers.genRandomNum(),
                       slot: 'NOT GOING',
                       count: 1,
                       event_identity: results[0]['identity'],
@@ -258,7 +257,6 @@ module.exports = (knex) => {
                   });
 
                   let newObjNotGOING = {
-                    identity: helpers.genRandomNum(),
                     slot: 'NOT GOING',
                     count: 1,
                     event_identity: results[0]['identity'],

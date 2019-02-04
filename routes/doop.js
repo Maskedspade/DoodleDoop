@@ -96,7 +96,37 @@ module.exports = (knex) => {
   router.get("/host/:hostLongURL", (req, res) => {
     const hostURL = req.params.hostLongURL;
     const templateVars = {};
-})
+
+      knex
+        .select('*')
+        .from('events')
+        .where('hosturl', hostURL)
+        .then((results) => {
+
+        // ERROR HANDLING IF DATA NOT PRESENT IN DB
+        if (results.length > 0) {
+          knex
+        .select("*")
+        .from("events")
+        .innerJoin('timeslots', 'events.identity', 'event_identity')
+        .innerJoin('respondents', 'timeslots.identity', 'timeslot_identity')
+        .where('events.hosturl', hostURL)
+        .then((results) => {
+
+
+
+    if (req.session.user) { }
+
+
+
+
+          //WHEN HOST URL DOES NOT EXIST IN DB
+        } else {
+          res.render("no_events_found");
+        }
+
+    });
+  });
 
 
   // SHORT URL BELOW ***********************************************
@@ -109,8 +139,6 @@ module.exports = (knex) => {
         .from('events')
         .where('guesturl', guestURL)
         .then((results) => {
-
-          console.log(results[0]);
 
         // ERROR HANDLING IF DATA NOT PRESENT IN DB
         if (results.length > 0) {
@@ -177,7 +205,7 @@ module.exports = (knex) => {
               res.render("doop_who_is_this", templateVars);
             }
 
-          //WHEN SHORT URL DOES NOT EXIST IN DB
+          //WHEN GUEST URL DOES NOT EXIST IN DB
         } else {
           res.render("no_events_found");
         }
