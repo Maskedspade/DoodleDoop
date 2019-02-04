@@ -259,6 +259,13 @@ module.exports = (knex) => {
 
   });
 
+  router.get("/event/:guestShortURL", (req, res) => {
+    const respondentInfo = req.body.respondentInfo;
+    const templateVarsChild = req.body.templateVars;
+
+    return;
+
+  });
 
   return router;
 
