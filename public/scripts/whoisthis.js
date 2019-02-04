@@ -16,30 +16,6 @@ $(() => {
     });
   }
 
-<<<<<<< HEAD
-    $.ajax(
-      { method: 'POST',
-        url: '/api/users',
-        data:{
-          form: 'login',
-          userEmail: userEmail,
-          userPassword: userPassword,
-        },
-        success: (hint) => {
-          if (hint === 'success') {
-            window.location.href = '/';
-          }
-          else {
-            const errorMsg = $(`<p class="row justify-content-center error-msg"> ${hint} </p>`);
-            $('#before-err-msg').after(errorMsg);
-          }
-        }
-      }
-    );
-  };
-=======
->>>>>>> e596124f5f48769937b4e8e4d9686bd211fc1355
-
   const submitAsFirstTime = () => {
     const guestEmail = $("#first-time-guest input[name='email']").val();
     const guestEname = $("#first-time-guest input[name='name']");
