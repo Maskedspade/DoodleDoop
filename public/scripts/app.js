@@ -80,7 +80,7 @@ $(() => {
         },
         success: (hint) => {
           if (hint.message === 'success') {
-            window.location.href = `/event/${hint.hostURL}`;
+            window.location.href = `/host/${hint.hostURL}`;
           }
           else {
             const errorMsg = $(`<p class="error-msg"> ${hint.message} </p>`);

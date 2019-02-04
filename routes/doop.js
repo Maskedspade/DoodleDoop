@@ -93,77 +93,11 @@ module.exports = (knex) => {
   });
 
   // // HOST URL BELOW ***********************************************
-  // router.get("/event/:hostLongURL", (req, res) => {
-  //   const hostURL = req.params.hostLongURL;
+  router.get("/host/:hostLongURL", (req, res) => {
+    const hostURL = req.params.hostLongURL;
+    const templateVars = {};
+})
 
-  //   const templateVars = {};
-
-  //   if (req.session.user) {
-  //     knex
-  //       .select('*')
-  //       .from('events')
-  //       .innerJoin('timeslots', 'events.identity', 'timeslots.event_identity')
-  //       .innerJoin('users', 'events.user_identity', 'users.identity')
-  //       .where('hosturl', hostURL)
-  //       .then((results) => {
-
-  //         // templateVars.userStatus = true;
-  //         // templateVars.userName = resu
-
-  //   //       console.log(results);
-
-  //   //   knex
-  //   //     .select("*")
-  //   //     .from("users")
-  //   //     .innerJoin('events', 'users.id', 'events.user_id')
-  //   //     .where('email', req.session.user)
-  //   //     .then((results) => {
-
-  //   //       templateVars.userStatus = true;
-  //   //       templateVars.userName = results[0]['name'];
-  //   //       templateVars.userEmail = results[0]['email'];
-
-  //   //       if (results[0]['hosturl'] !== undefined) {
-  //   //         results.forEach( (key) => {
-  //   //           let obj = {
-  //   //             eventTitle: null,
-  //   //             eventUrl: null,
-  //   //             eventDes: null,
-  //   //             eventLo: null,
-  //   //           };
-
-  //   //           obj.eventTitle = key['title'];
-  //   //           obj.eventUrl = key['hosturl'];
-  //   //           obj.eventDes = key['description'];
-  //   //           obj.eventLo = key['location'];
-
-  //   //           eventList.push(obj);
-  //   //         });
-  //   //       }
-  //   //       templateVars.userEvents = eventList;
-
-  //   //       res.render('index', templateVars);
-  //   //   });
-  //   // } else {
-  //   //   templateVars.userStatus = false;
-  //   //   templateVars.userName = null;
-  //   //   templateVars.userEmail = null;
-  //   //   templateVars.userEvents = eventList;
-  //   // knex
-  //   //   .select('*')
-  //   //   .from('events')
-  //   //   .innerJoin('timeslots', 'events.id', 'timeslots.event_id')
-  //   //   .innerJoin('respondents', 'timeslots.id', 'respondents.timeslot_id')
-  //   //   .where('hosturl', hostURL)
-  //   //   .then((results) => {
-  //   //     console.log(results);
-
-  //   //     res.render("event");
-  //   //   });
-
-  //     });
-  //   }
-  // });
 
   // SHORT URL BELOW ***********************************************
   router.get("/event/:guestShortURL", (req, res) => {
@@ -175,6 +109,8 @@ module.exports = (knex) => {
         .from('events')
         .where('guesturl', guestURL)
         .then((results) => {
+
+          console.log(results[0]);
 
         // ERROR HANDLING IF DATA NOT PRESENT IN DB
         if (results.length > 0) {
