@@ -31,12 +31,13 @@ Project Setup skeleton from Lighthouse Labs repo.
 - pg
 
 ## Database Breakdown
-!['our database setup']()
+!['our database setup'](https://github.com/Maskedspade/DoodleDoop/blob/master/docs/data-structure.png)
+This is our database Setup.
 
 ## Project Showcase
 
-!['Login from Home']()
+!['Login from Home'](https://github.com/Maskedspade/DoodleDoop/blob/master/docs/Login'.gif)
 Logging in fro.m the home page -> starts a cookie session and shows all current user's created events.
 
-!["Creating new events"]()
-Create new events, options include inputting strings and use of a calendar select date and time API
+!['Creating new events'](https://github.com/Maskedspade/DoodleDoop/blob/master/docs/create-new-event.gif)
+Create new events, options include inputting strings and use of a calendar select date and time API.
