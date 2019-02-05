@@ -89,7 +89,8 @@ module.exports = (knex) => {
 
   router.get("/submitted", (req,res) => {
     res.render("submitted");
-  })
+  });
+
   // create event
   router.get("/create_event", (req, res) => {
     const templateVars = {};
