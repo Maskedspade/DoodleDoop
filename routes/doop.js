@@ -74,17 +74,13 @@ module.exports = (knex) => {
   });
 
   router.post("/logout", (req, res) => {
-    req.session = null;
+    req.session.user = null;
     res.redirect('/');
   });
 
   router.get("/logout", (req, res) => {
-    req.session = null;
+    req.session.user = null;
     res.redirect('/');
-  });
-
-  router.get("/event/guest/yuhanseventguest", (req, res) => {
-    res.render("event_guest");
   });
 
   router.get("/submitted", (req,res) => {
@@ -203,11 +199,25 @@ module.exports = (knex) => {
   router.get("/event/:guestShortURL", (req, res) => {
     const guestURL = req.params.guestShortURL;
 
-    knex
-      .select('user_identity', 'hosturl')
-      .from('events')
-      .where('guesturl', guestURL)
-      .then((results) => {
+    if (req.session.templateVars && req.session.respondentInfo) {
+      const templateVars = req.session.templateVars;
+      const respondentInfo = req.session.respondentInfo;
+
+      templateVars.userName = respondentInfo[0];
+      templateVars.userEmail = respondentInfo[1];
+      templateVars.userSelect = respondentInfo[2];
+
+      req.session.templateVars = null;
+      req.session.respondentInfo = null;
+      console.log(templateVars);
+
+      res.render('event_guest', templateVars);
+    } else {
+      knex
+        .select('user_identity', 'hosturl')
+        .from('events')
+        .where('guesturl', guestURL)
+        .then((results) => {
 
         // ERROR HANDLING IF DATA NOT PRESENT IN DB
         if (results.length > 0) {
@@ -248,6 +258,7 @@ module.exports = (knex) => {
           res.render("no_events_found");
         }
       });
+    }
   });
 
   router.post("/event/:guestShortURL", (req, res) => {
@@ -267,6 +278,13 @@ module.exports = (knex) => {
 
   });
 
+  router.get("/event/:guestShortURL", (req, res) => {
+    const respondentInfo = req.body.respondentInfo;
+    const templateVarsChild = req.body.templateVars;
+
+    return;
+
+  });
 
   return router;
 
