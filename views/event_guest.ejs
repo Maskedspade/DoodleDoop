@@ -32,36 +32,25 @@
 
       <form class="container user-input" id="timeslot-form" style="margin-left: 10px">
 
-  <%for (let slot in timeslotsGroup) {%>
-
-      <%if(slot === 'NOT GOING') {%>
-
-        <div class="row btn-group-toggle user-input" data-toggle="buttons">
-          <label class="btn btn-sm" style="background:#f7e9c0 !important">
-            <input type="radio" name="not-going" id="not-going" autocomplete="off">I'm not going
-          </label>
-        <%if ((timeslotsGroup[slot].length === 1) && (timeslotsGroup[slot][0][0] === null)) {%>
-            <p class="col-auto align-self-end"><%= 0%> People</p>
-        <%} else {%>
-          <%if timeslotsGroup[slot].length > 1 {%>
-              <p class="col-auto align-self-end"><%= timeslotsGroup[slot].length%> People</p>
-          <%} else {%>
-              <p class="col-auto align-self-end"><%= timeslotsGroup[slot].length%> Person</p>
-          <%}%>
-        <%}%>
-
-        </div>
-
-      <%} else {%>
-
+      <%for (let slot in timeslotsGroup) {%>
         <div class="row user-input">
-          <input class="form-check-input" type="checkbox" value="" id="timeslotcheck1">
-          <label class="form-check-label" for="timeslotcheck1"><%=slot%></label>
+          <input class="form-check-input" type="radio" id="timeslotcheck">
+<!--           if (slot === userSelect) -->
+
+          <label class="form-check-label" for="timeslotcheck"><%=slot%></label>
         </div>
-      <%}%>
 
-   <%}%>
-
+        <% if ((timeslotsGroup[slot].length === 1) && (timeslotsGroup[slot][0][0] === null)) {%>
+          <p class="col-auto align-self-end"><%= 0%> People</p>
+        <% } else {%>
+          <% if(timeslotsGroup[slot].length > 1) {%>
+            <p class="col-auto align-self-end"><%= timeslotsGroup[slot].length%> People</p>
+          <% } else { %>
+            <p class="col-auto align-self-end"><%= timeslotsGroup[slot].length%> Person</p>
+            <% } %>
+        <% }%>
+      </div>
+    <% } %>
 
         <div class="row justify-content-end">
           <a class="col-auto align-self-center btn-submit" href="/">Cancel</a>
@@ -70,5 +59,9 @@
       </form>
 
     </section>
+
+    <section id="respondent-name" style="display: none"><%=userName%></section>
+    <section id="respondent-select" style="display: none"><%=userSelect%></section>
+    <section id="respondent-email" style="display: none"><%=userEmail%></section>
   </body>
 </html>
