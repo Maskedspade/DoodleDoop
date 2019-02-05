@@ -24,7 +24,15 @@
     <section class="container content-wrapper" id="host-event-page" >
 
       <div class="row">
-        <h2 style="color: #7da5a7">This is your URL: host/<%= hostURL%> <br> Share this URL with your friends: event/<%= guestURL%></h2>
+        <h2 style="color: #7da5a7">
+          This is your Secret URL: <br>
+          <a href="host/<%=hostURL%> ">host/<%= hostURL%></a>
+        </h2>
+      </div>
+
+      <div class="row">
+        <h2 style="color: #7da5a7">
+          Share this URL with your friends: <br>event/<%= guestURL%></h2>
       </div>
 
       <div class="row user-input">
