@@ -44,8 +44,7 @@ module.exports = (knex) => {
       };
 
       if (!checkEmpty(userName, userEmail)) {
-
-        res.json({message: 'Cannot be blank', respondentInfo: [userName, userEmail, null], templateVars: null});
+        res.send('Cannot be blank.');
         return;
       }
 
@@ -68,7 +67,9 @@ module.exports = (knex) => {
                     .innerJoin('timeslots', 'events.identity', 'event_identity')
                     .leftOuterJoin('respondents', 'timeslots.identity', 'timeslot_identity')
                     .where('events.guesturl', guestURL)
-                    .then((results)=> {
+                    .then((output)=> {
+
+
                         const respondSelect = 'NOT GOING';
                         const respondName = userName;
                         const respondEmail = userEmail;
@@ -86,11 +87,11 @@ module.exports = (knex) => {
                         });
 
                         const templateVars = {
-                          hostURL: results[0]['hosturl'],
-                          guestURL: results[0]['guesturl'],
-                          title: results[0]['title'],
-                          description: results[0]['description'],
-                          location: results[0]['location'],
+                          hostURL: output[0]['hosturl'],
+                          guestURL: output[0]['guesturl'],
+                          title: output[0]['title'],
+                          description: output[0]['description'],
+                          location: output[0]['location'],
                           timeslotsGroup: timeslotsGroup,
                         };
 
@@ -98,18 +99,16 @@ module.exports = (knex) => {
                         templateVars.userName = null;
                         templateVars.userEmail = null;
 
-                        res.json({
-                          message: 'success',
-                          respondentInfo: [userName, userEmail, 'NOT GOING'],
-                          templateVars: templateVars
-                        });
+                        req.session.templateVars = templateVars; //SET COOKIE TO GUEST BEFORE REDIRECT
+                        req.session.respondentInfo = [userName, userEmail, 'NOT GOING'],
+                        res.send('success');
                     });
 
               });
 
           } else {
-            res.json({message: 'Something went wrong.', respondentInfo: [userName, userEmail, null], templateVars: null});
-          };
+            res.send('Something went wrong.');
+          }
         });
     }
 
@@ -125,10 +124,7 @@ module.exports = (knex) => {
       };
 
       if (!checkEmpty(userEmail)) {
-        res.json({
-          message: 'Cannot be blank',
-          respondentInfo: [userName, userEmail, null],
-          templateVars: null});
+        res.send('Cannot be blank');
         return;
       }
 
@@ -166,11 +162,11 @@ module.exports = (knex) => {
             });
 
             const templateVars = {
-              hostURL: results[0]['hosturl'],
-              guestURL: results[0]['guesturl'],
-              title: results[0]['title'],
-              description: results[0]['description'],
-              location: results[0]['location'],
+              hostURL: output[0]['hosturl'],
+              guestURL: output[0]['guesturl'],
+              title: output[0]['title'],
+              description: output[0]['description'],
+              location: output[0]['location'],
               timeslotsGroup: timeslotsGroup,
             };
 
@@ -178,28 +174,18 @@ module.exports = (knex) => {
               templateVars.userName = null;
               templateVars.userEmail = null;
 
-            res.json({
-              message: 'success',
-              respondentInfo: [respondName, respondEmail, respondSelect],
-              templateVars: templateVars,
-            });
+              req.session.templateVars = templateVars; //SET COOKIE TO GUEST BEFORE REDIRECT
+              req.session.respondentInfo = [userName, userEmail, 'NOT GOING'],
+              res.send('success');
 
           } else {
-            res.json({
-              message: 'Cannot be blank',
-              respondentInfo: null,
-              templateVars: null
-            });
+            res.send('Cannot be blank.');
           }
 
         });
 
         } else {
-          res.json({
-            message: 'Cannot find matching email. Please try again.',
-            respondentInfo: null,
-            templateVars: null,
-          });
+          res.send('Cannot find matching email. Please try again.');
         }
       });
 
