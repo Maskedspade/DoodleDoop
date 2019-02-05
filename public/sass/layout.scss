@@ -63,6 +63,11 @@ body {
 .host-input-on-save {
   border: none;
 }
+.event-urls {
+  color: $color-primary;
+  margin: 0;
+  border: none;
+}
 
 // locally on whoisthis.ejs
 .form-check {

@@ -38,7 +38,9 @@ input:focus, button:focus, textarea:focus {
 
 #add-timeslot,
 .edit-input,
-.delete-input {
+.delete-input,
+.copy-url,
+.responded-people {
   background-color: Transparent;
   background-repeat: no-repeat;
   border: none;
@@ -118,6 +120,10 @@ input:focus, button:focus, textarea:focus {
   margin: 0;
 }
 
+.copy-url:focus {
+  outline: none;
+}
+
 #add-timeslot {
   margin: 10px 10px;
 }
@@ -140,6 +146,10 @@ a:hover {
 }
 a:visited {
   color: #f7e9c0;
+}
+
+p.row {
+  margin: 0;
 }
 
 textarea {
@@ -234,6 +244,12 @@ body p {
 }
 
 .host-input-on-save {
+  border: none;
+}
+
+.event-urls {
+  color: #7da5a7;
+  margin: 0;
   border: none;
 }
 

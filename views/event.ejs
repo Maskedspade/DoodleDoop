@@ -23,16 +23,18 @@
 
     <section class="container content-wrapper" id="host-event-page" >
 
+      <p class="row">Please save the host link, and do not share with anyone else❗❗</p>
+      <h3 class="row text-center event-urls" style="margin: 0">This is your secret host link: </h3>
       <div class="row">
-        <h2 style="color: #7da5a7">
-          This is your Secret URL: <br>
-          <a href="host/<%=hostURL%> ">host/<%= hostURL%></a>
-        </h2>
-      </div>
+        <input class="col-auto event-urls" type="text" value="host/<%= hostURL%>" />
+        <button class="col-auto copy-url" onclick="">&#128203;</button>
+    </div>
 
+
+      <h3 class="row text-center event-urls" style="margin:0">Please share this link with your friends:</h3>
       <div class="row">
-        <h2 style="color: #7da5a7">
-          Share this URL with your friends: <br>event/<%= guestURL%></h2>
+        <input class="col-auto event-urls" type="text" value="event/<%= guestURL%>" />
+        <button class="col-auto copy-url" onclick="">&#128203;</button>
       </div>
 
       <div class="row user-input">
@@ -41,32 +43,39 @@
       </div>
 
       <div class="row user-input">
-        <input class="col-sm-4" type="text" name="title" placeholder="<%= title%>" id="readonly-input" readonly/>
+        <label class="col-auto align-self-end" for="event-title">Event Title: </label>
+        <input class="col-sm-4" type="text" name="title" value="<%= title%>" id="event-title readonly-input" readonly/>
         <button class="col-auto align-self-end edit-input">Edit</button>
       </div>
 
       <div class="row user-input">
-        <textarea class="col-sm-8" type="text" name="description" rows="3" placeholder="<%= description%>" readonly/></textarea>
+        <label class="col-auto align-self-start" for="event-description">Description: </label>
+        <textarea class="col-sm-8" id="event-description" type="text" name="description" rows="3" value="<%= description%>" readonly/></textarea>
         <button class="col-auto align-self-end edit-input" >Edit</button>
       </div>
 
       <div class="row user-input">
-        <input class="col-sm-4" type="text" name="location" placeholder="<%= location%>" readonly/>
+        <label class="col-auto align-self-end" for="event-location">Location: </label>
+        <input class="col-sm-4" type="text" name="location" value="<%= location%>" readonly/>
         <button class="col-auto align-self-end edit-input">Edit</button>
       </div>
 
       <%for (let slot in timeslotsGroup) {%>
-        <div class="row justify-content-between user-input">
-          <input class="col-sm-4" id="slot" type="text" name="timeslot" placeholder="<%= slot%>" readonly/>
+        <div class="row justify-content-start user-input">
+          <label class="col-auto align-self-end" for="slot">Timeslot: </label>
+          <input class="col-sm-4" id="slot" type="text" name="timeslot" value="<%= slot%>" readonly/>
           <button class="col-auto align-self-end edit-input">Edit</button>
           <button class="col-auto align-self-end delete-input">Delete</button>
+        </div>
+
+        <div class="row justify-content-start">
           <% if ((timeslotsGroup[slot].length === 1) && (timeslotsGroup[slot][0][0] === null)) {%>
-            <p class="col-auto align-self-end"><%= 0%> People</p>
+            <button class="col-auto responded-people"><%= 0%> People</button>
           <% } else {%>
             <% if(timeslotsGroup[slot].length > 1) {%>
-              <p class="col-auto align-self-end"><%= timeslotsGroup[slot].length%> People</p>
+              <button class="col-auto responded-people"><%= timeslotsGroup[slot].length%> People</button>
             <% } else { %>
-              <p class="col-auto align-self-end"><%= timeslotsGroup[slot].length%> Person</p>
+              <button class="col-auto responded-people"><%= timeslotsGroup[slot].length%> Person</button>
               <% } %>
           <% }%>
         </div>

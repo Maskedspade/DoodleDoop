@@ -127,8 +127,16 @@ input, button, textarea {
 
 #add-timeslot,
 .edit-input,
-.delete-input {
+.delete-input,
+.copy-url,
+.responded-people {
   @extend %button-to-link;
+}
+
+.copy-url {
+  &:focus {
+    outline: none;
+  }
 }
 
 #add-timeslot {
@@ -153,6 +161,10 @@ a {
   &:visited {
     color: $color-primary-contrast;
   }
+}
+
+p.row {
+  margin: 0;
 }
 
 textarea {
