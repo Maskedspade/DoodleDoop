@@ -83,6 +83,13 @@ module.exports = (knex) => {
     res.redirect('/');
   });
 
+  router.get("/event/guest/yuhanseventguest", (req, res) => {
+    res.render("event_guest");
+  });
+
+  router.get("/submitted", (req,res) => {
+    res.render("submitted");
+  })
   // create event
   router.get("/create_event", (req, res) => {
     const templateVars = {};
