@@ -10,31 +10,37 @@
 
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
-    <script type="text/javascript" src="/scripts/picktime.js"></script>
+    <script type="text/javascript" src="/scripts/hostevent.js"></script>
+
+    <script type="text/javascript" src="/scripts/clipboard.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
   </head>
 
   <body>
     <header class="container">
-      <h1 class="row justify-content-start">DoodleDoop</h1>
+      <a href="/"><h1 class="row justify-content-start">DoodleDoop</h1></a>
       <% include partials/_header %>
     </header>
 
     <section class="container content-wrapper" id="host-event-page" >
 
-      <p class="row">Please save the host link, and do not share with anyone else❗❗</p>
+      <p class="row">Please save your host link and remember NOT to share with anyone else❗❗</p>
       <h3 class="row text-center event-urls" style="margin: 0">This is your secret host link: </h3>
-      <div class="row">
+    <div class="row">
         <input class="col-auto event-urls" type="text" value="host/<%= hostURL%>" />
-        <button class="col-auto copy-url" onclick="">&#128203;</button>
+        <button class="col-auto copy-url" id="btn-copy-host-event" data-clipboard-text="http://localhost:8080/host/<%=hostURL%>">&#128203;</button>
     </div>
 
 
       <h3 class="row text-center event-urls" style="margin:0">Please share this link with your friends:</h3>
       <div class="row">
         <input class="col-auto event-urls" type="text" value="event/<%= guestURL%>" />
-        <button class="col-auto copy-url" onclick="">&#128203;</button>
+        <button class="col-auto copy-url" id="btn-copy-guest-event" data-clipboard-text="http://localhost:8080/event/<%=guestURL%>">&#128203;</button>
+      </div>
+
+      <div class="row">
+        <hr>
       </div>
 
       <div class="row user-input justify-content-between">
@@ -61,14 +67,13 @@
       </div>
 
       <%for (let slot in timeslotsGroup) {%>
-        <div class="row justify-content-start user-input">
-          <label class="col-auto align-self-end" for="slot">Timeslot: </label>
-          <input class="col-sm-4" id="slot" type="text" name="timeslot" value="<%= slot%>" readonly/>
-          <button class="col-auto align-self-end edit-input">Edit</button>
-          <button class="col-auto align-self-end delete-input">Delete</button>
-        </div>
+          <%if (slot === 'NOT GOING') {%>
+             <div class="row justify-content-start user-input">
+                <label class="col-auto align-self-end" for="slot">Timeslot: </label>
+                <input class="col-sm-4" id="slot" type="text" name="timeslot" value="<%= slot%>" readonly/>
+             </div>
 
-        <div class="row justify-content-start">
+        <div class="col-auto responded-people">
           <% if ((timeslotsGroup[slot].length === 1) && (timeslotsGroup[slot][0][0] === null)) {%>
             <button class="col-auto responded-people"><%= 0%> People</button>
           <% } else {%>
@@ -79,7 +84,28 @@
               <% } %>
           <% }%>
         </div>
-      <% } %>
+      <%}}%>
+
+      <%for (let slot in timeslotsGroup) {%>
+        <%if (slot !== 'NOT GOING') {%>
+          <div class="row justify-content-start user-input">
+            <label class="col-auto align-self-end" for="slot">Timeslot: </label>
+            <input class="col-sm-4" id="slot" type="text" name="timeslot" value="<%= slot%>" readonly/>
+            <button class="col-auto align-self-end delete-input">Delete</button>
+          </div>
+
+        <div class="col-auto responded-people">
+          <% if ((timeslotsGroup[slot].length === 1) && (timeslotsGroup[slot][0][0] === null)) {%>
+            <button class="col-auto responded-people"><%= 0%> People</button>
+          <% } else {%>
+            <% if(timeslotsGroup[slot].length > 1) {%>
+              <button class="col-auto responded-people"><%= timeslotsGroup[slot].length%> People</button>
+            <% } else { %>
+              <button class="col-auto responded-people"><%= timeslotsGroup[slot].length%> Person</button>
+              <% } %>
+          <% }%>
+        </div>
+      <%}}%>
 
       <div id="last-input"></div>
 
@@ -87,12 +113,12 @@
         <button class="col-auto" id="add-timeslot">Add timeslot &#43;</button>
       </div>
 
-      <div class="row justify-content-end">
+      <div class="row justify-content-end" id="before-err-msg">
         <a class="col-auto align-self-center btn-submit" href="/">Back To DoodleDoop</a>
-
-        <input class="col-auto btn-submit" type="submit" name="submit" values="Save Change" />
+        <form id="modify-event-submit">
+          <input class="col-auto btn-submit" type="submit" name="submit" values="Save Change" />
+        </form>
       </div>
-
 
     </section>
   </body>

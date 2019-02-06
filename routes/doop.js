@@ -7,64 +7,57 @@ const helpers = require('../helpers');
 
 module.exports = (knex) => {
 
-  //VISIT HOME PAGE
   router.get("/", (req, res) => {
-
-    if (req.session.user) { //EJS DATA AS LOGGED-IN USER
+    if (req.session.user) { // recognize logged-in user and prepare data to render ejs
       const templateVars = {};
       let eventList = [];
 
       knex
         .select("*")
         .from("users")
-        .innerJoin('events', 'users.identity', 'events.user_identity')
+        .leftOuterJoin('events', 'users.identity', 'events.user_identity')
         .where('users.identity', req.session.user)
         .then((results) => {
 
         if (results.length > 0) {
-
           templateVars.userStatus = true;
-          templateVars.userName = results[0]['name'];
-          templateVars.userEmail = results[0]['email'];
+          templateVars.userName = results[0].name;
+          templateVars.userEmail = results[0].email;
 
-          if (results[0]['hosturl'] !== undefined) {
-            results.forEach( (key) => {
+          eventList = [];
+          results.forEach((key) => {
+            if (key.hosturl) {
               let obj = {
                 eventTitle: null,
                 eventUrl: null,
                 eventDes: null,
                 eventLo: null,
               };
-
-              obj.eventTitle = key['title'];
-              obj.eventUrl = key['hosturl'];
-              obj.eventDes = key['description'];
-              obj.eventLo = key['location'];
-
+              obj.eventTitle = key.title;
+              obj.eventUrl = key.hosturl;
+              obj.eventDes = key.description;
+              obj.eventLo = key.location;
               eventList.push(obj);
-            });
-          } else {
-            res.send('ERROR');
-          }
+            }
+          });
           templateVars.userEvents = eventList;
-
+          console.log('USER',templateVars);
           res.render('index', templateVars);
         }
       });
-    } else { //EJS DATA AS GUEST
-      const templateVars = {
+    }
+    if (!req.session.user) {
+       const templateVars = {
         userStatus: false,
         userName: null,
         userEmail: null,
         userEvents: [],
       };
-
-     res.render('index', templateVars);
+      console.log('NON-user');
+      res.render('index', templateVars);
     }
-
   });
 
-  //LOG-IN LOG-OUT REGISTER BELOW
   router.get("/register", (req, res) => {
     res.render("doop_register");
   });
@@ -84,7 +77,12 @@ module.exports = (knex) => {
   });
 
   router.get("/submitted", (req,res) => {
-    res.render("submitted");
+    const redirectLink = req.session.redirectLink;
+    const templateVars = {
+      redirectLink: redirectLink,
+    };
+    req.session.redirectLink = null;
+    res.render("submitted", templateVars);
   });
 
   // create event
@@ -98,8 +96,8 @@ module.exports = (knex) => {
         .then((results) => {
           if (results.length > 0) {
             templateVars.userStatus = true;
-            templateVars.userName = results[0]['name'];
-            templateVars.userEmail = results[0]['email'];
+            templateVars.userName = results[0].name;
+            templateVars.userEmail = results[0].email;
 
             res.render('create_event', templateVars);
             return;
@@ -120,7 +118,6 @@ module.exports = (knex) => {
     }
   });
 
-  // HOST URL BELOW ***********************************************
   router.get("/host/:hostLongURL", (req, res) => {
     const hostURL = req.params.hostLongURL;
 
@@ -130,7 +127,7 @@ module.exports = (knex) => {
       .where('hosturl', hostURL)
       .then((results) => {
 
-      // ERROR HANDLING IF DATA NOT PRESENT IN DB
+      // error handling if data is not present in DB
       if (results.length > 0) {
         knex
           .select("*")
@@ -140,62 +137,41 @@ module.exports = (knex) => {
           .where('events.hosturl', hostURL)
           .then((results) => {
 
-        if (results.length > 0) {
-          let timeslotsGroup = {};
+              if (results.length > 0) {
+                const timeslotsGroup = helpers.createTimeslots(results);
+                if (req.session.user) {
+                   knex
+                    .select('*')
+                    .from('users')
+                    .where('users.identity', req.session.user)
+                    .then((output) => {
+                      if (output.length > 0) {
+                        const userStatus = true;
+                        const userName = output[0].name;
+                        const userEmail = output[0].email;
 
-          results.forEach(key => {
-            if (!timeslotsGroup[key.slot]) {
-              timeslotsGroup[key.slot] = [];
-              timeslotsGroup[key.slot].push([key['name'], key['email']]);
-            } else {
-              timeslotsGroup[key.slot].push([key['name'], key['email']]);
-            }
-          });
-
-          const templateVars = {
-            hostURL: results[0]['hosturl'],
-            guestURL: results[0]['guesturl'],
-            title: results[0]['title'],
-            description: results[0]['description'],
-            location: results[0]['location'],
-            timeslotsGroup: timeslotsGroup,
-          };
-
-          if (req.session.user) {
-            knex
-              .select('*')
-              .from('users')
-              .where('users.identity', req.session.user)
-              .then((results) => {
-                if (results.length > 0) {
-                  templateVars.userStatus = true;
-                  templateVars.userName = results[0]['name'];
-                  templateVars.userEmail = results[0]['email'];
-                  res.render('event', templateVars);
-                } else {
-                  res.send('ERROR');
+                        const templateVars = helpers.createTempVars(results, timeslotsGroup, userStatus, userName, userEmail);
+                        res.render('event', templateVars);
+                      } else {
+                        res.send('ERROR');
+                      }
+                    });
                 }
-              });
-
-          } else {
-            templateVars.userStatus = false;
-            templateVars.userName = null;
-            templateVars.userEmail = null;
-            res.render('event', templateVars);
-          }
-        } else {
-          res.send('ERROR');
-        }
-
-      });
-        //WHEN HOST URL DOES NOT EXIST IN DB
+                if (!req.session.user) {
+                  const templateVars = helpers.createTempVars(results, timeslotsGroup, false, null, null);
+                  res.render('event', templateVars);
+                }
+              } else {
+                res.status(400).json({ error: 'invalid request'});
+                return;
+              }
+        });
       } else {
         res.render("no_events_found");
       }
     });
   });
 
-  // SHORT URL BELOW ***********************************************
   router.get("/event/:guestShortURL", (req, res) => {
     const guestURL = req.params.guestShortURL;
 
@@ -203,13 +179,12 @@ module.exports = (knex) => {
       const templateVars = req.session.templateVars;
       const respondentInfo = req.session.respondentInfo;
 
-      templateVars.userName = respondentInfo[0];
-      templateVars.userEmail = respondentInfo[1];
-      templateVars.userSelect = respondentInfo[2];
+      templateVars.respondentName = respondentInfo[0];
+      templateVars.respondentEmail = respondentInfo[1];
+      templateVars.respondentSelect = respondentInfo[2];
 
       req.session.templateVars = null;
       req.session.respondentInfo = null;
-      console.log(templateVars);
 
       res.render('event_guest', templateVars);
     } else {
@@ -218,46 +193,46 @@ module.exports = (knex) => {
         .from('events')
         .where('guesturl', guestURL)
         .then((results) => {
+            // error handling if data is not present
+            if (results.length > 0) {
+              const templateVars = {};
 
-        // ERROR HANDLING IF DATA NOT PRESENT IN DB
-        if (results.length > 0) {
-          const templateVars = {};
+              if (!req.session.user) {
+                templateVars.userStatus = false;
+                templateVars.userName = null;
+                templateVars.userEmail = null;
 
-          if (!req.session.user) {
-            templateVars.userStatus = false;
-            templateVars.userName = null;
-            templateVars.userEmail = null;
-
-            templateVars.guestURL = guestURL;
-            res.render('doop_who_is_this', templateVars);
-            return;
-          }
-          if (req.session.user) { //LOGGED-IN USER REDIRECTED TO HOST PAGE WHEN TRYING TO ACCESS OWN GUEST PAGE
-            if (results[0]['user_identity'] === req.session.user) {
-              res.redirect(`/host/${results[0]['hosturl']}`);
-              return;
-
-            } else {
-              knex
-                .select('*')
-                .from("users")
-                .where('users.identity', req.session.user)
-                .then((results) => {
-                  templateVars.userStatus = true;
-                  templateVars.userName = results[0]['name'];
-                  templateVars.userEmail = results[0]['email'];
-
-                  templateVars.guestURL = guestURL;
-                  res.render('doop_who_is_this', templateVars);
+                templateVars.guestURL = guestURL;
+                res.render('doop_who_is_this', templateVars);
+                return;
+              }
+                // when logged-in user trying to access his own guest page
+              if (req.session.user) {
+                if (results[0]['user_identity'] === req.session.user) {
+                  res.redirect(`/host/${results[0]['hosturl']}`);
                   return;
-                });
+                } else {
+                  knex
+                    .select('*')
+                    .from("users")
+                    .where('users.identity', req.session.user)
+                    .then((results) => {
+                      templateVars.userStatus = true;
+                      templateVars.userName = results[0].name;
+                      templateVars.userEmail = results[0].email;
+
+                      templateVars.guestURL = guestURL;
+                      res.render('doop_who_is_this', templateVars);
+                      return;
+                    });
+                }
+              }
+            //WHEN GUEST URL DOES NOT EXIST IN DB
+            if (!req.session.user) {
+              res.render("no_events_found");
             }
           }
-        //WHEN GUEST URL DOES NOT EXIST IN DB
-        } else {
-          res.render("no_events_found");
-        }
-      });
+        });
     }
   });
 
@@ -274,14 +249,6 @@ module.exports = (knex) => {
     templateVars.userSelect = respondentInfo[2];
 
     console.log(templateVars);
-    return;
-
-  });
-
-  router.get("/event/:guestShortURL", (req, res) => {
-    const respondentInfo = req.body.respondentInfo;
-    const templateVarsChild = req.body.templateVars;
-
     return;
 
   });

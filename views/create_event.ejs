@@ -10,8 +10,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
-    <script type="text/javascript" src="/scripts/app.js"></script>
-    <script type="text/javascript" src="/scripts/picktime.js"></script>
+    <script type="text/javascript" src="/scripts/createevent.js"></script>
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
@@ -25,34 +24,27 @@
       <% include partials/_header %>
     </header>
 
+    <section class="container">
+      <form name="create" id="create-event">
+        <h3 class="row">Create an Event</h3>
 
-        <section class="container">
-          <form name="create" id="create-event">
-            <h3 class="row">Create an Event</h3>
+        <input class="row" type="text" name="title" placeholder="EVENT TITLE" style="width: 50%"/>
+        <input class="row" type="text" name="description" placeholder="Description here" />
+        <input class="row" type="text" name="location" placeholder="Location here" style="width: 50%"/>
+        <input class="row" type="text" name="datetimes" placeholder="Date and time here" style="width: 50%" id="last-input"/>
 
-            <input class="row" type="text" name="title" placeholder="EVENT TITLE" style="width: 50%"/>
+        <div class="row">
+          <button class="col-auto" id="add-timeslot">Add timeslot &#43;</button>
+        </div>
 
-            <input class="row" type="text" name="description" placeholder="Description here" />
+        <div id="before-err-msg"></div>
 
-            <input class="row" type="text" name="location" placeholder="Location here" style="width: 50%"/>
-
-            <input class="row" type="text" name="datetimes" placeholder="Date and time here" style="width: 50%" id="last-input"/>
-
-            <div class="row">
-              <button class="col-auto" id="add-timeslot">Add timeslot &#43;</button>
-            </div>
-
-            <div id="before-err-msg"></div>
-
-            <div class="row justify-content-between">
-              <a href="/" name="cancel" class="col-sm-2 text-center" style="margin-top: 35px">Cancel</a>
-              <input class="col-sm-2 btn-submit" type="submit" name="submit" value="Submit" />
-            </div>
-          </form>
-        </section>
-    </div>
+        <div class="row justify-content-between">
+          <a href="/" name="cancel" class="col-sm-2 text-center" style="margin-top: 35px">Cancel</a>
+          <input class="col-sm-2 btn-submit" type="submit" name="submit" value="Submit" />
+        </div>
+      </form>
+    </section>
   </body>
-
-
 
 </html>

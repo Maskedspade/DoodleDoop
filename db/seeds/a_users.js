@@ -6,7 +6,7 @@ exports.seed = async function(knex, Promise) {
 
   await knex('users').insert({name: 'Lindsey Cai', email: 'lindsey.cai94@gmail.com', password: 222222});
 
-  await knex('users').insert({name: 'Nick Leard', email: 'nickleard@gmail.com', password: 333333});
+  await knex('users').insert({name: 'Sydney Crosby', email: 'besthockeyplayer@gmail.com', password: 333333});
 
-  await knex('users').insert({name: 'rootuser',email: 'rootuser@gmail.com', password: 0});
+  await knex('users').insert({name: 'rootuser', email: 'rootuser@gmail.com', password: 0});
 };

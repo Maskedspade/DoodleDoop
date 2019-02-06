@@ -9,62 +9,83 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
-    <script type="text/javascript" src="/scripts/app.js"></script>
+    <script type="text/javascript" src="/scripts/guestevent.js"></script>
+    <script type="text/javascript" src="/scripts/clipboard.min.js"></script>
   </head>
 
   <body>
     <header class="container">
-     <a href="/"><h1 class="row justify-content-start">DoodleDoop</h1></a>
+      <a href="/"><h1 class="row justify-content-start">DoodleDoop</h1></a>
     </header>
 
-    <section class="container content-wrapper">
-      <div class="row justify-content-center user-input">
-        <h2 class="guest-event-attributes text-center">Invitation</h2>
-        <h3 class="guest-event-attributes text-center"><%=title%></h3>
-      </div>
+  <section class="container content-wrapper" id="guest-event-page" >
 
+    <p class="row">Please save the respondent link to track updates and modify your decision, <%=respondentName%></p>
+    <h3 class="row text-center event-urls" style="margin: 0">This is your link: </h3>
+
+    <div class="row">
+      <input class="col-auto event-urls" type="text" value="/event/<%= guestURL%>"/>
+      <button id="btn-copy-guest-event" class="col-auto copy-url" data-clipboard-text="http://localhost:8080/event/<%=guestURL%>">&#128203;</button>
+    </div>
+
+    <p class="row">Be sure to use the same email next time you come back as a returning guest:</p>
+
+    <div class="row">
+      <input class="col-auto event-urls" type="text" value="<%= respondentEmail%>" />
+      <button id="btn-respondent-email" class="col-auto copy-url" data-clipboard-text="<%=respondentEmail%>">&#128203;</button>
+    </div>
+
+    <div class="row user-input">
+      <h2 class="guest-event-attributes text-center">Invitation</h2>
+      <h3 class="guest-event-attributes text-center"><%=title%></h3>
+    </div>
+
+    <div class="row user-input">
+      <span class="col-auto guest-event-attributes">Description: </span>
+      <span class="col-auto guest-event-properties"><%=description%></span>
+    </div>
+
+    <div class="row user-input">
+      <span class="col-auto guest-event-attributes">Location: </span>
+      <span class="col-auto guest-event-properties"><%=location%></span>
+    </div>
+
+
+    <form class="container user-input" id="timeslot-form" style="margin-left: 10px">
+<%for (let slot in timeslotsGroup) {%>
       <div class="row justify-content-start user-input">
-        <span class="col-auto guest-event-attributes">Description: </span>
-        <span class="col-auto guest-event-properties"><%=description%></span>
+    <%if (slot === respondentSelect) {%>
+        <input class="form-check-input" type="radio" name="groupOfSlots" value="<%=slot%>" checked/>
+        <label class="form-check-label" for="slot-<%=slot%>">Timeslot:  <%=slot%></label>
+
+    <%} else {%>
+        <input class="form-check-input" type="radio" name="groupOfSlots" value="<%=slot%>">
+        <label class="form-check-label" for="slot-<%=slot%>">Timeslot:  <%=slot%></label>
+    <%}%>
       </div>
 
-      <div class="row justify-content-start user-input">
-        <span class="col-auto guest-event-attributes">Location: </span>
-        <span class="col-auto guest-event-properties"><%=location%></span>
-      </div>
-
-      <form class="container user-input" id="timeslot-form" style="margin-left: 10px">
-
-      <%for (let slot in timeslotsGroup) {%>
-        <div class="row user-input">
-          <input class="form-check-input" type="checkbox" id="timeslotcheck">
-           <!-- if (slot === userSelect) -->
-
-          <label class="form-check-label" for="timeslotcheck">Timeslot:  <%=slot%></label>
-        </div>
-
-        <% if ((timeslotsGroup[slot].length === 1) && (timeslotsGroup[slot][0][0] === null)) {%>
+      <%if ((timeslotsGroup[slot].length === 1) && (timeslotsGroup[slot][0][0] === null)) {%>
           <button class="col-auto responded-people"><%= 0%> People</button>
-        <% } else {%>
-          <% if(timeslotsGroup[slot].length > 1) {%>
+      <% } else {%>
+        <% if(timeslotsGroup[slot].length > 1) {%>
             <button class="col-auto responded-people"><%= timeslotsGroup[slot].length%> People</button>
-          <% } else { %>
+        <% } else { %>
             <button class="col-auto responded-people"><%= timeslotsGroup[slot].length%> Person</button>
-            <% } %>
-        <% }%>
+        <% } %>
+      <% }%>
       </div>
     <% } %>
 
         <div class="row justify-content-end">
           <a class="col-auto align-self-center btn-submit" href="/">Cancel</a>
-          <a href="/submitted" class="col-auto btn-submit" style="color: #ffffff"> Submit</a>
+          <input class="col-auto btn-submit" style="color: #ffffff" type="submit" value="Submit"/>
         </div>
       </form>
 
     </section>
-
-    <section id="respondent-name" style="display: none"><%=userName%></section>
-    <section id="respondent-select" style="display: none"><%=userSelect%></section>
-    <section id="respondent-email" style="display: none"><%=userEmail%></section>
+      <section id="respondent-email" style="display: none"><%=respondentEmail%></section>
+      <section id="respondent-name" style="display: none"><%=respondentName%></section>
+      <section id="guest-url" style="display: none"><%=guestURL%></section>
+    </section>
   </body>
 </html>

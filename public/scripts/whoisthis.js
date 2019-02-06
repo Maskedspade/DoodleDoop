@@ -1,12 +1,31 @@
 $(() => {
+  // front-end helper function
+  const appendError = (errorContent) => {
+    const errorMsg = $(`<p class="row justify-content-center error-msg">${errorContent}</p>`);
+    $('#before-err-msg').after(errorMsg);
+  };
 
-  const hiddenURL = $('#guest-short-url')[0].textContent;
+   const checkEmpty = (content) => {
+    if (!content) {
+      return false;
+    }
+    if (content.split(' ').join('') === '') {
+      return false;
+    }
+    return true;
+  };
 
   function submitAsReturning (event) {
     event.preventDefault();
     $('.error-msg').remove();
+
     const guestEmail = $('input[name="email"]').val();
-    console.log(guestEmail, 'hey');
+    const hiddenURL = $('#guest-short-url')[0].textContent;
+
+    if (!checkEmpty(guestEmail)) {
+      appendError('Cannot be blank');
+      return;
+    }
 
     $.ajax({
       method: 'POST',
@@ -22,8 +41,7 @@ $(() => {
         if (hint === 'success') {
             window.location.href = `/event/${hiddenURL}`;
         } else {
-          const errorMsg = $(`<p class="row justify-content-center error-msg"> ${hint}</p>`);
-          $('#before-err-msg').after(errorMsg);
+          appendError(hint);
         }
       }
     });
@@ -36,6 +54,9 @@ $(() => {
     const guestEmail = $('input[name="email"]').val();
     const guestName = $('input[name="name"]').val();
 
+    if (!(checkEmpty(guestEmail) && checkEmpty(guestName))) {
+      appendError('Cannot be blank.');
+    }
     $.ajax({
       method: 'POST',
       url: '/api/users',
@@ -50,8 +71,7 @@ $(() => {
         if (hint === 'success') {
             window.location.href = `/event/${hiddenURL}`;
         } else {
-          const errorMsg = $(`<p class="row justify-content-center error-msg"> ${hint} </p>`);
-          $('#before-err-msg').after(errorMsg);
+          appendError(hint);
         }
       }
     });
@@ -96,7 +116,5 @@ $(() => {
     }
   };
 
-  //JQUERY EVENT-EMITTERS BELOW
   $('#who-is-this').on('submit', submitIdentity);
-
 });

@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
-    <script type="text/javascript" src="/scripts/app.js"></script>
   </head>
 
   <body>
@@ -27,7 +26,7 @@
         <button class="btn-lg" style="margin-left: auto; transform: translateX(-0.8em); display: none;">Create an Event &#43;</button>
       </div>
 
-<% if (userStatus === true && userEvents[0] !== undefined)
+<% if (userStatus === true && userEvents.length > 0)
 {for (let key in userEvents){%>
 
       <div class="row event-wrapper justify-content-around">

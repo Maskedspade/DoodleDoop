@@ -14,6 +14,7 @@
   "dependencies": {
     "bcrypt": "2.0.0",
     "body-parser": "^1.15.2",
+    "clipboard": "^2.0.4",
     "cookie-parser": "^1.4.3",
     "cookie-session": "^2.0.0-beta.3",
     "dotenv": "^2.0.0",
