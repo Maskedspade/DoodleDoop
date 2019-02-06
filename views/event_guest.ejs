@@ -18,35 +18,38 @@
     </header>
 
     <section class="container content-wrapper">
-      <div class="row user-input">
-        <h2 class="text-center">Event Invitation</h2>
+      <div class="row justify-content-center user-input">
+        <h2 class="guest-event-attributes text-center">Invitation</h2>
+        <h3 class="guest-event-attributes text-center"><%=title%></h3>
       </div>
 
-      <div class="row user-input">
-        <h3 class="text-center"><%=title%></h3>
+      <div class="row justify-content-start user-input">
+        <span class="col-auto guest-event-attributes">Description: </span>
+        <span class="col-auto guest-event-properties"><%=description%></span>
       </div>
 
-      <div class="row user-input">
-        <p style="margin: 0"><%=description%></p>
+      <div class="row justify-content-start user-input">
+        <span class="col-auto guest-event-attributes">Location: </span>
+        <span class="col-auto guest-event-properties"><%=location%></span>
       </div>
 
       <form class="container user-input" id="timeslot-form" style="margin-left: 10px">
 
       <%for (let slot in timeslotsGroup) {%>
         <div class="row user-input">
-          <input class="form-check-input" type="radio" id="timeslotcheck">
-<!--           if (slot === userSelect) -->
+          <input class="form-check-input" type="checkbox" id="timeslotcheck">
+           <!-- if (slot === userSelect) -->
 
-          <label class="form-check-label" for="timeslotcheck"><%=slot%></label>
+          <label class="form-check-label" for="timeslotcheck">Timeslot:  <%=slot%></label>
         </div>
 
         <% if ((timeslotsGroup[slot].length === 1) && (timeslotsGroup[slot][0][0] === null)) {%>
-          <p class="col-auto align-self-end"><%= 0%> People</p>
+          <button class="col-auto responded-people"><%= 0%> People</button>
         <% } else {%>
           <% if(timeslotsGroup[slot].length > 1) {%>
-            <p class="col-auto align-self-end"><%= timeslotsGroup[slot].length%> People</p>
+            <button class="col-auto responded-people"><%= timeslotsGroup[slot].length%> People</button>
           <% } else { %>
-            <p class="col-auto align-self-end"><%= timeslotsGroup[slot].length%> Person</p>
+            <button class="col-auto responded-people"><%= timeslotsGroup[slot].length%> Person</button>
             <% } %>
         <% }%>
       </div>

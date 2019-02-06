@@ -257,4 +257,12 @@ body p {
   margin: 0;
 }
 
+.guest-event-attributes {
+  color: #7da5a7;
+}
+
+.guest-event-properties {
+  color: #fffcf6;
+}
+
 /*# sourceMappingURL=layout.css.map */
