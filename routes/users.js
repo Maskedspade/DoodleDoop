@@ -79,7 +79,7 @@ router.post("/", (req, res) => {
         .then((output1) => { // check is first-time guest is actually returning respondent
           if (output1.length > 0) {
             output1.forEach( key => {
-              if (key['email'] === respondentEmail) {
+              if (key.email === respondentEmail) {
                 res.send('Email seems to have existed already for this event. Are you a returning guest?');
               }
             });
@@ -108,7 +108,6 @@ router.post("/", (req, res) => {
 
                             // setting as none logged-in guest
                             const templateVars = helpers.createTempVars(output, timeslotsGroup, false, null, null);
-
                             req.session.templateVars = templateVars; //set cookie for rendering next ejs
                             req.session.respondentInfo = [respondentName, respondentEmail, respondSelect];
                             res.send('success');
@@ -128,18 +127,18 @@ router.post("/", (req, res) => {
         .where('email', respondentEmail)
         .then((results) => {
           if (results.length > 0) {
-            const respondSelect = results[0]['slot'];
-            const respondName = results[0]['name'];
-            const respondEmail = results[0]['email'];
-            const respondEvent = results[0]['event_identity'];
+            const respondSelect = results[0].slot;
+            const respondName = results[0].name;
+            const respondEmail = results[0].email;
           knex
             .select("*")
             .from("events")
             .innerJoin('timeslots', 'events.identity', 'event_identity')
             .leftOuterJoin('respondents', 'timeslots.identity', 'timeslot_identity')
-            .where('events.identity', respondEvent)
+            .where('guesturl', guestURL)
             .then((output) => {
               if (output.length > 0) {
+
                 const timeslotsGroup = helpers.createTimeslots(output);
                 const templateVars = helpers.createTempVars(output, timeslotsGroup, false, null, null);
 
@@ -352,73 +351,182 @@ router.post("/modify-event", (req, res) => {
     res.status(400).json({ error: 'invalid request'});
     return;
   }
-
+  const hostURL = req.body.hostURL.slice(5);
   const eventTitle = req.body.eventTitle;
   const eventDes = req.body.eventDes;
   const eventLo = req.body.eventLo;
   const timeslots = req.body.timeslots;
+  const storeOldSlot = req.body.storeOldSlot;
 
-  const checkForRepeated = (timeslots) => {
-    let counts = [];
-    for(let i = 0; i <= timeslots.length; i++) {
-        if(counts[timeslots[i]] === undefined) {
-            counts[timeslots[i]] = 1;
-        } else {
-            return true;
-        }
-    }
-    return false;
-  };
+  knex
+    .select('identity')
+    .from('events')
+    .where('hosturl', hostURL)
+    .then((output) => {
+      if (output.length > 0) {
+        const eventID = output[0].identity;
 
-  const checkEmpty = (eventTitle, eventDes, eventLo) => {
-    if (!eventTitle) {
-      return false;
-    }
-    if (!eventDes) {
-      return false;
-    }
-    if (!eventLo) {
-      return false;
-    }
+          knex('events')
+            .where('hosturl', hostURL)
+            .update({
+              title: eventTitle,
+              description: eventDes,
+              location: eventLo,
+            })
+            .then(() => { // A) if event host only wishes to add new timeslots
+              if (timeslots.length > 1 && storeOldSlot.length === 1) {
+                let newSlots = [];
+                timeslots.slice(1).forEach(item => {
+                    const newSlot = {
+                      slot: item,
+                      count: 1,
+                      event_identity: eventID
+                    };
+                    newSlots.push(newSlot);
+                });
 
-    if (eventTitle.split(' ').join('') === '') {
-      return false;
-    }
-    if (eventDes.split(' ').join('') === '') {
-      return false;
-    }
-    if (eventLo.split(' ').join('') === '') {
-      return false;
-    }
-    return true;
-  };
+                knex('timeslots')
+                  .insert(newSlots)
+                  .then(() => {
+                    req.session.redirectLink = `/host/${hostURL}`;
+                    res.send('success');
+                    return;
+                  });
+              }
 
-  const checkEmptyForSlots = (timeslots) => {
-    for (let key in timeslots) {
-      if (timeslots[key] === undefined) {
-        return false;
-      }
-    }
-    return true;
-  };
+                // B) if event host only wishes to delete existing timeslots
+              if (timeslots.length === 1 && storeOldSlot.length > 1) {
 
-  if (timeslots.length > 0) {
-    if (checkEmpty(eventTitle, eventDes, eventLo) && checkEmptyForSlots(timeslots)) {
-      if(checkForRepeated(timeslots)) {
-        res.json({message: 'Please make sure all timeslots are unique', hostURL: null});
+                let prepToFeedRecursion = storeOldSlot.slice(1);
+                let counter = prepToFeedRecursion.length - 1;
+                // use recursion to chain knex jqueries together
+                const callback = (counter) => {
+                  if (counter < 0) {
+                    req.session.redirectLink = `/host/${hostURL}`;
+                    res.send('success');
+                    return;
+                  } else {
+                    let counter1 = counter - 1;
+                    knex('timeslots')
+                      .update({count: 0}) // bring back the "ongoing status" to 0 to indicate expiry slot
+                      .where('slot', prepToFeedRecursion[counter])
+                      .then(callback(counter1));
+                  }
+                };
+                callback(counter);
+              }
+
+              // C) if event host wishes to delete existing timeslots AND to add new slots
+              // ensure slots that are ready to be deleted are not overlapping with those being added in
+              if (timeslots.length > 1 && storeOldSlot.length > 1) {
+                const siftResult = helpers.siftCommonArray(timeslots.slice(1), storeOldSlot.slice(1));
+                const timeslotsUpdate = siftResult[0];
+                const storeOldSlotUpdate = siftResult[1];
+
+                // 1) case where after processing the overlaps - still need to update BOTH those to to added and those to be deleted;
+                if (timeslotsUpdate.length > 0 && storeOldSlotUpdate.length > 0) {
+                  let brandNewSlots = [];
+                  timeslotsUpdate.forEach(item => {
+                    const brandNewSlot = {
+                      slot: item,
+                      count: 1,
+                      event_identity: eventID
+                    };
+                    brandNewSlots.push(brandNewSlot);
+                  });
+
+                  knex('timeslots')
+                    .insert(brandNewSlots)
+                    .then(() => {
+                        let counter2 = storeOldSlotUpdate.length - 1;
+                        const callback2 = (counter2) => {
+                          if (counter2 < 0) {
+                            req.session.redirectLink = `/host/${hostURL}`;
+                            res.send('success');
+                            return;
+                          } else {
+                            let counter3 = counter2 - 1;
+                            knex('timeslots')
+                              .update({count: 0}) // bring back the "ongoing status" to 0 to indicate expiry slot
+                              .where('slot', storeOldSlotUpdate[counter2])
+                              .then(callback(counter3));
+                          }
+                        };
+                        callback(counter2);
+                    });
+                }
+                // 2) case where after processing the overlaps - only need to update those to be added
+                if (timeslotsUpdate.length > 0 && storeOldSlotUpdate.length === 0) {
+                  let newSlots = [];
+                  timeslotsUpdate.forEach( item => {
+                    const newSlot = {
+                      slot: item,
+                      count: 1,
+                      event_identity: eventID
+                    };
+                    newSlots.push(newSlot);
+                  });
+                  knex('timeslots')
+                    .insert(newSlots)
+                    .then(() => {
+                      req.session.redirectLink = `/host/${hostURL}`;
+                      res.send('success');
+                      return;
+                  });
+                }
+                // 3) case where after processing the overlaps - only need to update those to be deleted
+                if (storeOldSlotUpdate.length > 0 && timeslotsUpdate.length === 0) {
+                  let counter3 = storeOldSlotUpdate.length - 1;
+                  const callback = (counter3) => {
+                    if (counter3 < 0) {
+                      req.session.redirectLink = `/host/${hostURL}`;
+                      res.send('success');
+                      return;
+                    } else {
+                      let counter4 = counter3 - 1;
+                      knex('timeslots')
+                        .update({count: 0}) // bring back the "ongoing status" to 0 to indicate expiry
+                        .where('slot', storeOldSlotUpdate[counter])
+                        .then(callback(counter4));
+                    }
+                  };
+                  callback(counter3);
+                }
+              }
+          });
       } else {
-        res.json({message:'success', hosrURL: null})
+        res.send('Something went wrong. Please try again later.')
       }
-    } else {
-      res.json({message: 'Please fill all required', hostURL: null});
-    }
-  } else {
-
-
-
-  }
-
+    });
 });
+
+router.post("/delete-event", (req, res) => {
+  if (req.body.form !== 'delete-event') {
+    res.status(400).json({ error: 'invalid request'});
+    return;
+  }
+  const hostURL = req.body.hostURL.slice(5);
+
+  knex
+    .select('events.identity')
+    .from ('events')
+    .where('hosturl', hostURL)
+    .then((results) => {
+      if (results.length > 0) {
+        const targetEventID = results[0].identity;
+        knex('timeslots')
+          .update({count: 0}) // bring back "ongoing status" of all slots including "NOT GOING" to 0 to indicate EVENT expired
+          .where('event_identity', targetEventID)
+          .then(() => {
+            req.session.redirectLink = `/host/${hostURL}`;
+            res.send('success');
+          });
+      } else {
+        res.send('Something went wrong. Please try again later.')
+      }
+    });
+
+})
 
   return router;
 };

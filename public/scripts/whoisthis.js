@@ -15,12 +15,13 @@ $(() => {
     return true;
   };
 
+  const hiddenURL = $('#guest-short-url')[0].textContent;
+
   function submitAsReturning (event) {
     event.preventDefault();
     $('.error-msg').remove();
 
     const guestEmail = $('input[name="email"]').val();
-    const hiddenURL = $('#guest-short-url')[0].textContent;
 
     if (!checkEmpty(guestEmail)) {
       appendError('Cannot be blank');
@@ -56,6 +57,7 @@ $(() => {
 
     if (!(checkEmpty(guestEmail) && checkEmpty(guestName))) {
       appendError('Cannot be blank.');
+      return;
     }
     $.ajax({
       method: 'POST',
@@ -79,7 +81,6 @@ $(() => {
 
   const submitIdentity = (event) => {
     event.preventDefault();
-
     const $radioValue = $("#who-is-this input[name='groupOfRadios']:checked").val();
 
     if ($radioValue === 'returning-guest') {

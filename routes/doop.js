@@ -41,8 +41,10 @@ module.exports = (knex) => {
             }
           });
           templateVars.userEvents = eventList;
-          console.log('USER',templateVars);
           res.render('index', templateVars);
+        } else {
+          res.session = null;
+          res.send('Something went wrong. Please click <a href="/">here</a> to go back to home page');
         }
       });
     }
@@ -53,7 +55,6 @@ module.exports = (knex) => {
         userEmail: null,
         userEvents: [],
       };
-      console.log('NON-user');
       res.render('index', templateVars);
     }
   });
@@ -153,7 +154,8 @@ module.exports = (knex) => {
                         const templateVars = helpers.createTempVars(results, timeslotsGroup, userStatus, userName, userEmail);
                         res.render('event', templateVars);
                       } else {
-                        res.send('ERROR');
+                        res.session = null;
+                        res.send('Something went wrong. Please click <a href="/">here</a> to go back to home page');
                       }
                     });
                 }
@@ -227,30 +229,12 @@ module.exports = (knex) => {
                     });
                 }
               }
-            //WHEN GUEST URL DOES NOT EXIST IN DB
-            if (!req.session.user) {
-              res.render("no_events_found");
-            }
+          } else { // when attempted guest url is not present in DB
+            req.session = null;
+            res.render("no_events_found");
           }
         });
     }
-  });
-
-  router.post("/event/:guestShortURL", (req, res) => {
-    const respondentInfo = req.body.respondentInfo;
-    const templateVarsChild = req.body.templateVars;
-
-    let templateVars = {};
-    for (let key in templateVarsChild) {
-      templateVars[key] = templateVarsChild[key];
-    }
-    templateVars.userName = respondentInfo[0];
-    templateVars.userEmail = respondentInfo[1];
-    templateVars.userSelect = respondentInfo[2];
-
-    console.log(templateVars);
-    return;
-
   });
 
   return router;

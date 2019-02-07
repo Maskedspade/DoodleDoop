@@ -28,7 +28,7 @@
       <p class="row">Please save your host link and remember NOT to share with anyone else❗❗</p>
       <h3 class="row text-center event-urls" style="margin: 0">This is your secret host link: </h3>
     <div class="row">
-        <input class="col-auto event-urls" type="text" value="host/<%= hostURL%>" />
+        <input class="col-auto event-urls" type="text" id= "hostURL" value="host/<%= hostURL%>" />
         <button class="col-auto copy-url" id="btn-copy-host-event" data-clipboard-text="http://localhost:8080/host/<%=hostURL%>">&#128203;</button>
     </div>
 
@@ -91,7 +91,7 @@
           <div class="row justify-content-start user-input">
             <label class="col-auto align-self-end" for="slot">Timeslot: </label>
             <input class="col-sm-4" id="slot" type="text" name="timeslot" value="<%= slot%>" readonly/>
-            <button class="col-auto align-self-end delete-input">Delete</button>
+            <button class="col-auto align-self-end delete-input" id="delete-old-slot">Delete</button>
           </div>
 
         <div class="col-auto responded-people">

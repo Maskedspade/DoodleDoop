@@ -1,7 +1,7 @@
 $(() => {
   //FRONT-END HELPER FUNCTIONS
   const appendError = (errorContent) => {
-    const errorMsg = $(`<p class="error-msg">${errorContent}</p>`);
+    const errorMsg = $(`<p class="row justify-content-center error-msg">${errorContent}</p>`);
     $('#before-err-msg').after(errorMsg);
   };
 
@@ -27,8 +27,7 @@ $(() => {
         if (hint === 'success') {
           window.location.href = `/submitted`;
         } else {
-          const errorMsg = $(`<p class="row justify-content-center error-msg"> ${hint} </p>`);
-          $('#before-err-msg').after(errorMsg);
+          appendError(hint);
         }
       }
     });
