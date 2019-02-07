@@ -1,5 +1,13 @@
 module.exports = {
 
+  checkLengthForObj: (obj) => {
+    let size = 0;
+    for (key in obj) {
+        if (obj.hasOwnProperty(key)) size++;
+    }
+    return size;
+  },
+
   siftCommonArray: (array1, array2) => {
     let array1update = array1.filter( arrayItem => {
       if (array2.find(key => key === arrayItem) === undefined) {

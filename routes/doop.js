@@ -152,7 +152,12 @@ module.exports = (knex) => {
                         const userEmail = output[0].email;
 
                         const templateVars = helpers.createTempVars(results, timeslotsGroup, userStatus, userName, userEmail);
-                        res.render('event', templateVars);
+                        if (helpers.checkLengthForObj(timeslotsGroup) > 0) {
+                          res.render('event', templateVars);
+                        } else {
+                          res.render('event_deleted', templateVars);
+                        }
+
                       } else {
                         res.session = null;
                         res.send('Something went wrong. Please click <a href="/">here</a> to go back to home page');
@@ -161,7 +166,12 @@ module.exports = (knex) => {
                 }
                 if (!req.session.user) {
                   const templateVars = helpers.createTempVars(results, timeslotsGroup, false, null, null);
-                  res.render('event', templateVars);
+                  if (helpers.checkLengthForObj(timeslotsGroup) > 0) {
+                    res.render('event', templateVars);
+                  } else {
+                    res.render('event_deleted', templateVars);
+                  }
+
                 }
               } else {
                 res.status(400).json({ error: 'invalid request'});
