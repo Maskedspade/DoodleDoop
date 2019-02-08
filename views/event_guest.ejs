@@ -55,6 +55,39 @@
 
 
     <form class="container user-input" id="timeslot-form" style="margin-left: 10px">
+
+<%let noLongerExist = true;
+  for (let slot in timeslotsGroup) {
+    if (slot === respondentSelect) {
+      noLongerExist = false;
+    }
+  }
+
+if (noLongerExist) {%>
+<%for (let slot in timeslotsGroup) {%>
+      <div class="row justify-content-start user-input">
+        <input class="form-check-input" type="radio" name="groupOfSlots" value="<%=slot%>">
+        <label class="form-check-label" for="slot-<%=slot%>">Timeslot:  <%=slot%></label>
+      </div>
+
+      <%if ((timeslotsGroup[slot].length === 1) && (timeslotsGroup[slot][0][0] === null)) {%>
+          <button class="col-auto responded-people"><%= 0%> People</button>
+      <% } else {%>
+        <% if(timeslotsGroup[slot].length > 1) {%>
+            <button class="col-auto responded-people"><%= timeslotsGroup[slot].length%> People</button>
+        <% } else { %>
+            <button class="col-auto responded-people"><%= timeslotsGroup[slot].length%> Person</button>
+        <% } %>
+      <% }%>
+      </div>
+    <% } %>
+
+<div class="row user-input">
+  <span class="col-auto guest-event-attributes">Sorry, the timeslot you've selected has been cancelled: </span>
+  <span class="col-auto guest-event-properties"><%=respondentSelect%></span>
+</div>
+
+<%} else {%>
 <%for (let slot in timeslotsGroup) {%>
       <div class="row justify-content-start user-input">
     <%if (slot === respondentSelect) {%>
@@ -78,10 +111,12 @@
       <% }%>
       </div>
     <% } %>
+<%}%>
 
-        <div class="row justify-content-end">
+
+        <div class="row justify-content-end" id="before-err-msg">
           <a class="col-auto align-self-center btn-submit" href="/">Cancel</a>
-          <input class="col-auto btn-submit" style="color: #ffffff" type="submit" value="Submit"/>
+          <input class="col-auto btn-submit" style="color: #ffffff" type="submit" value="Submit"/ id='#before-err-msg'>
         </div>
       </form>
 

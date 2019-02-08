@@ -449,10 +449,10 @@ router.post("/modify-event", (req, res) => {
                             knex('timeslots')
                               .update({count: 0}) // bring back the "ongoing status" to 0 to indicate expiry slot
                               .where('slot', storeOldSlotUpdate[counter2])
-                              .then(callback(counter3));
+                              .then(callback2(counter3));
                           }
                         };
-                        callback(counter2);
+                        callback2(counter2);
                     });
                 }
                 // 2) case where after processing the overlaps - only need to update those to be added
@@ -477,7 +477,7 @@ router.post("/modify-event", (req, res) => {
                 // 3) case where after processing the overlaps - only need to update those to be deleted
                 if (storeOldSlotUpdate.length > 0 && timeslotsUpdate.length === 0) {
                   let counter3 = storeOldSlotUpdate.length - 1;
-                  const callback = (counter3) => {
+                  const callback3 = (counter3) => {
                     if (counter3 < 0) {
                       req.session.redirectLink = `/host/${hostURL}`;
                       res.send('success');
@@ -487,10 +487,10 @@ router.post("/modify-event", (req, res) => {
                       knex('timeslots')
                         .update({count: 0}) // bring back the "ongoing status" to 0 to indicate expiry
                         .where('slot', storeOldSlotUpdate[counter])
-                        .then(callback(counter4));
+                        .then(callback3(counter4));
                     }
                   };
-                  callback(counter3);
+                  callback3(counter3);
                 }
               }
           });

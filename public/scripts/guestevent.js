@@ -7,11 +7,18 @@ $(() => {
 
   function submitTimeslot (event) {
     event.preventDefault();
+    $('.error-msg').remove();
 
     const timeslotModify = $('input[name="groupOfSlots"]:checked').val();
     const respondentEmail = $('#respondent-email')[0].innerHTML;
     const respondentName = $('#respondent-name')[0].innerHTML;
     const guestURL = $('#guest-url')[0].innerHTML;
+
+    if (timeslotModify === undefined) {
+      console.log('error');
+      appendError('Please select a timeslot.');
+      return;
+    }
 
     $.ajax({
       method: 'POST',

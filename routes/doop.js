@@ -152,7 +152,7 @@ module.exports = (knex) => {
                         const userEmail = output[0].email;
 
                         const templateVars = helpers.createTempVars(results, timeslotsGroup, userStatus, userName, userEmail);
-                        if (helpers.checkLengthForObj(timeslotsGroup) > 0) {
+                        if (helpers.checkLengthForObj(templateVars.timeslotsGroup) > 0) {
                           res.render('event', templateVars);
                         } else {
                           res.render('event_deleted', templateVars);
@@ -166,7 +166,7 @@ module.exports = (knex) => {
                 }
                 if (!req.session.user) {
                   const templateVars = helpers.createTempVars(results, timeslotsGroup, false, null, null);
-                  if (helpers.checkLengthForObj(timeslotsGroup) > 0) {
+                  if (helpers.checkLengthForObj(templateVars.timeslotsGroup) > 0) {
                     res.render('event', templateVars);
                   } else {
                     res.render('event_deleted', templateVars);
@@ -197,8 +197,12 @@ module.exports = (knex) => {
 
       req.session.templateVars = null;
       req.session.respondentInfo = null;
-
-      res.render('event_guest', templateVars);
+      console.log(templateVars);
+      if (helpers.checkLengthForObj(templateVars.timeslotsGroup) > 0) {
+        res.render('event_guest', templateVars);
+      } else {
+        res.render('event_deleted', templateVars);
+      }
     } else {
       knex
         .select('user_identity', 'hosturl')
