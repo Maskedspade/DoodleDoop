@@ -52,3 +52,34 @@ Logging in fro.m the home page -> starts a cookie session and shows all current 
 
 !['Creating new events'](https://github.com/Maskedspade/DoodleDoop/blob/master/docs/create-new-event.gif)
 Create new events, options include inputting strings and use of a calendar select date and time API.
+
+## Test Our Site As...
+
+  # A first time user who doesn't want to register but still want the service: 
+    - Index: Create an Event + 
+    - New Event Page: Fill out the event form, various error messages may be thrown (e.g. timeslots cannot be the same, cannot leave blanks, etc.)
+    - Generated Event Page: 
+      1. user will be automatically considered as a host
+      2. user will be given a secret host link which they need to save in order to check back on the event
+      3. user will be given a guest link which they can share with guests
+    - Secret Host Page: user can modify their own event(can toggle edit and save). Changes will override old version and show on both host and guest links.
+
+  # A guest who receives a guest link from the event host
+    - Who-Is-This Page: 
+      1. This is to find out if it's the first time the guest is responding to the event invitation
+      2. The "first-time-guest" option takes the guest's name and email, and saves them for later use and guest validation
+      3. The "returning-guest" option takes in the guest's email, and if it's in the database, then guest gets sent to the guest page
+    - Guest Event Page: 
+      1. The first-time guest will see number of respondents in each timeslot; choose the timeslot(s) that works for them, or choose to not go (which will disable all timeslot options); and save response
+      2. The returning guest will see the same as first-timers but also their own previous choice.
+
+  # A returning user that has an account with DoodleDoop: 
+    (we highly recommend for people to register as a user cause they won't have to keep track of their own events url themselves)
+    - Login
+    - Index: shows all events they have created, and can "View" each event
+    - Generated Event Page: (see first time user who creates events)
+
+
+
+
+
